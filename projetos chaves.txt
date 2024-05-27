@@ -1,0 +1,54 @@
+Programa para registro do controle de chaves:
+
+*pesquisar como funciona esses sistemas
+*lembrar que deve ter sensores para dizer que a chave esta ocupada
+*fazer um fluxograma
+*fazer uma pagina de configurações de cor, fontes e seus tamanhos 
+*fazer o  prototipo
+*no layout utilizar as cores do campus
+
+página de login:
+-fazer uma pagina de login simples para o pessoal que fica na portaria
+
+observações: 
+-essa página de login pode ser um unico login, que apenas o pessoal da portaria tenha acesso
+
+página inícial: 
+-aqui vai ser iserido dados como MÊS, DATA, SETOR, entrega, devolução...
+-qunado inserir os dados que estão em caixa alta vai para ENTREGA OU DEVOLUÇÃO
+-ENTREGA deve ter o horario em que a chave foi pega e por quem
+-DEVOLUÇÃO da mesma forma 
+-para saber quem pegou ou devolveu a chave deve esta logado com alguem que esteja na portaria,
+-depois seleciona se é para entrega pu devolução, em ambas devem ter a hora e quem pegou, que também devem estar cadastrados
+
+observações:
+- quando a chave estiver ocupada deve aparecer um símbolo vermelho e quando estiver livre um verde
+- como sao chaves de salas pode ter um campo de comom cadastrar novas chaves ou pessoas
+- https://youtu.be/6ZNyKnorf_s?si=NhJOW93GIXEzDik_ 
+  https://youtu.be/UYBstxUhghM?si=QNrW7nkwrrwPSS8I 
+(acessar esse vídeo, pq mostra mais ou menos como deve funcionar essa ultima parte)
+
+
+
+-Criar uma estrutura de dados: 
+Você pode criar uma estrutura para armazenar as informações de cada registro de chave, como nome da pessoa, horário, sala e se é uma entrega ou devolução.
+
+-Implementar a funcionalidade de registro de entrega:
+ Crie uma função ou método que permita registrar a entrega de uma chave, solicitando e armazenando o nome da pessoa, o horário e a sala.
+
+-Implementar a funcionalidade de registro de devolução:
+ Da mesma forma, crie outra função ou método para registrar a devolução da chave, solicitando e armazenando o nome da pessoa, o horário e a sala.
+
+(para identificar a chave, criar um sensor que detecta qual a chave, dessa forma apenas inserindo qual a hr e pessoa que pegou,
+"seria interesante na hr que passar a chave no detector ela alto registrar que esta ocupada")
+
+-Adicionar uma identificação visual:
+ Você pode adicionar uma representação visual das chaves (como um array de booleanos), onde cada posição do array representa uma chave e seu valor (true/false) 
+indica se está disponível ou não. Isso pode ser útil para visualizar rapidamente quais chaves estão emprestadas.
+
+-Implementar uma interface de usuário: (aqui no caso viria primeiro que os passos anteriores)
+ Crie uma interface simples para interagir com o programa, permitindo que o usuário escolha entre registrar a entrega ou devolução de uma chave e fornecendo os 
+campos necessários para cada ação.
+
+-Adicionar funcionalidades extras: 
+Você também pode adicionar funcionalidades extras, como a possibilidade de cadastrar novas chaves ou pessoas, gerar relatórios de uso das chaves, entre outros.

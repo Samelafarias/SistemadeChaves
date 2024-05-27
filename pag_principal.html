@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <title>Controle de chaves</title>
+</head>
+<body >
+    <header class="header">
+        <h1 id="h1_pag_princ">Controle do Registro de Chaves</h1><!--Título da página padrão-->
+    </header>
+
+    <main id="main_pag_princ">
+                <form id="form_pag_princ">
+                    <p id="dados_line_sup">
+                    
+                    <label for="data" class="label_pag_princ">Data:</label><!--Inserir dia-->
+                          <input type="date" name="data" class="dados_pag_princ">
+                    <label for="setor" class="label_pag_princ">Setor:</label><!--Inserir sala / setor-->
+                    <select name="setor" id="setor_pag_princ">
+                        <option value="setor" selected>Setor</option>
+                        <option value="01">Sala 01</option>
+                        <option value="02">Sala 02</option>
+                        <option value="03">Sala 03</option>
+                        <option value="04">Sala 04</option>
+                        <option value="05">Sala 05</option>
+                        <option value="06">Sala 06</option>
+                        <option value="07">Sala 07</option>
+                        <option value="08">Sala 08</option>
+                        <option value="09">Sala 09</option>
+                        <option value="10">Sala 010</option>
+                        <option value="11">Sala 011</option>
+                        <option value="12">Sala 012</option>
+                        <option value="13">Sala 013</option>
+                        <option value="14">Sala 014</option>
+                        <option value="15">Sala 015</option>
+                        <option value="16">Sala 016</option>
+                        <option value="17">Sala 017</option>
+                        <option value="18">Sala 018</option>
+                        <option value="19">Sala 019</option>
+                        <option value="20">Sala 020</option>
+                    </select>
+                            </p>
+                    <br>
+                    <br><br>
+                     <p><!--selecionar a entrega ou devolução-->
+                        
+                       <label for="operacao" class="label_pag_princ">Selecione a operação requerida:</label>
+                        <!--fazer connfiguração de quando clicar mudar de cor para seber que foi seleciondo-->
+                        <button class="oper_pag_princ" id="entrega" name="operacao" onclick="clicar(this)">Entrega</button>
+                        <button class="oper_pag_princ" id="devolucao" name="operacao" onclick="clicar(this)">Devolução</button>
+                     </p>
+                     <br>
+                     <p>
+                    <label for="responsavel" class="label_pag_princ">Responsável:</label><!--Preeencher quem é o responsável-->
+                          <input type="text" id="resp_pag_princ" name="responsavel">
+                    <label for="horario" class="label_pag_princ">Horário: </label><!--Preencher o horário em que a chave foi pega/devolvida-->
+                          <input type="time" class="dados_pag_princ" name="horario">
+                        </p>
+                        <br>
+                        <br>
+                        <p>
+                    <button class="decisoes_pag_princ">Registrar</button><!--Para registar a entrega ou devolução da chave-->
+                    <br>
+                        <button target="_blank" class="decisoes_pag_princ" class="link_pag_princ" onclick="abrir_pag_chave()">Ver chaves</button><!--Para ir para a página chaves-->
+                    <br>
+                       <button target="_blank" class="decisoes_pag_princ" class="link_pag_princ" onclick="abrir_pag_registros()">Registros de Chaves</button><!--Para ir para a página de registros-->
+                     </p>
+                </form>
+    </main>
+    <br>
+    <script src="script.js"></script>
+   <!-- <footer></footer>-->
+</body>
+</html>

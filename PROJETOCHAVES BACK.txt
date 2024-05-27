@@ -1,0 +1,5 @@
+*criar o banco de dados no powershell
+*ver s codigos no chat
+*implementar os bancos de dados
+*link para as pesqusas no chat:
+https://chat.openai.com/share/b0fd1ce0-625c-4f8b-822c-330f97b27246
