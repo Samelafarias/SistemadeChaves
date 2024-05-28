@@ -32,36 +32,67 @@ db.connect((error) => {
     console.log('Conectado ao banco de dados com sucesso!!!');
 });
 
+  
+
 // API PARA LOGIN
 app.post(`/pag_login`, async (req, res) => {
+  //extraímos o nome de usuario e a senha do corpo da requisição
   const { username, password } = req.body;
   console.log('Nome de usuário:', username);
   console.log('Senha:', password);
 
-  const query = `SELECT * FROM users WHERE username = ?`;
-  db.query(query, [username], async (error, results) => {
-      if (error) {
-          console.error('Erro ao buscar usuário:', error);
-          res.status(500).send({ message: 'Erro ao realizar login' });
-      } else if (results.length === 0) {
-          console.log('Usuário não encontrado');
-          res.status(401).send({ message: 'Usuário ou senha inválidos' });
-      } else {
-          const user = results[0];
-          if (await bcrypt.compare(password, user.password)) {
-              console.log('Login realizado com sucesso para o usuário:', username);
-              res.send({ message: 'Login realizado com sucesso!' });
-          } else {
-              console.log('Senha incorreta para o usuário:', username);
-              res.status(401).send({ message: 'Usuário ou senha inválidos' });
-          }
-      }
-  });
+  //verifica se o nome de usuario e a senha foram fornecidos
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Por favor, forneça um nome de usuário e uma senha.' });
+}
+
+//define a query SQL para buscar o usuario pelo nome de usuario
+const query = 'SELECT * FROM users WHERE username = ?';
+
+//executa a query no banco de dados
+db.query(query, [username], async (error, results) => {
+    if (error) {
+      //se houver erro ao buscar o usuario, registramos o erro e enviamos uma requisição
+        console.error('Erro ao buscar usuário:', error);
+        return res.status(500).send({ message: 'Erro ao realizar login' });
+    }
+
+    //verificamos se o usuario foi encontrado
+    if (results.length === 0) {
+      //se o usuario nao for encontrado, registramos isso e enviamos uma resposta 401
+        console.log('Usuário não encontrado');
+        return res.status(401).send({ message: 'Usuário ou senha inválidos' });
+    }
+//se o usuario for encontrado, extraimos seus dados
+    const user = results[0];
+    console.log('Usuário encontrado:', user);
+
+    // Verificando o hash da senha armazenada
+    try {
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        console.log('Comparação de senha:', passwordMatch);
+//se a senha for correta, enviamos uma resposta de sucesso 
+        if (passwordMatch) {
+            console.log('Login realizado com sucesso para o usuário:', username);
+            return res.send({ message: 'Login realizado com sucesso!' });
+        } else {
+          //se a senha estiver incorreta, enviamos uma resposta 401
+            console.log('Senha incorreta para o usuário:', username);
+            return res.status(401).send({ message: 'Usuário ou senha inválidos' });
+        }
+    } catch (compareError) {
+      //se houver erro ao comparar senhas, registramos o erro e enviamos uma resposta 500
+        console.error('Erro ao comparar as senhas:', compareError);
+        return res.status(500).send({ message: 'Erro no servidor ao verificar senha' });
+    }
+});
 });
 
-  
+
+
+/*
   // API PARA CADASTRAR CHAVE
-  /*app.post('/keys', (req, res) => {
+  app.post('/keys', (req, res) => {
     const { user_id, key_name, key_value } = req.body;
     const query = `INSERT INTO keys (user_id, key_name, key_value) VALUES (?, ?, ?)`;
     db.query(query, [user_id, key_name, key_value], (err, results) => {
@@ -72,9 +103,9 @@ app.post(`/pag_login`, async (req, res) => {
       }
     });
   });*/
-  
+  /*
   // API PARA RECEBER DADOS
-  app.post('/db_pj_chaves/dados', (req, res) => {
+  app.post('/pag_principal', (req, res) => {
     const { user_id, data_value } = req.body;
     const query = `INSERT INTO data (user_id, data_value) VALUES (?, ?)`;
     db.query(query, [user_id, data_value], (error, results) => {
@@ -85,9 +116,11 @@ app.post(`/pag_login`, async (req, res) => {
       }
     });
   });
-  
+  */
   // INICIAR O SERVIDOR
 const port = 5500;
   app.listen(port, () => {
     console.log(`Servidor iniciado na porta http://localhost:${port}/`);
   });
+
+  

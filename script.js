@@ -17,8 +17,9 @@ async function login(button) {
                 'Content-Type': 'application/json' // Tipo de conteúdo da requisição
             },
             body: JSON.stringify({ username, password }) // Corpo da requisição, convertido para JSON
-        });
 
+        })
+    
         const data = await response.json();
         // Verifica se a resposta da requisição foi bem-sucedida
         if (response.ok) {
@@ -35,10 +36,8 @@ async function login(button) {
     }
 }
 
-
-
-
 /*
+
 //script página principal
 // script.js
 // Função para mudar a cor dos botões e aplicar a mudança em outra página
@@ -72,7 +71,7 @@ async function registrar() {
     }
 
     try {
-        const response = await fetch(``, {
+        const response = await fetch(`http://localhost:5500/pag_principal`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -119,7 +118,7 @@ document.getElementById('submitBtn').addEventListener('click', async (event) => 
     event.preventDefault();
     const formData = new FormData(document.getElementById('dataForm'));
     const dados = Object.fromEntries(formData.entries());
-    const response = await fetch('/dados', {
+    const response = await fetch('http://localhost:5500/pag_registros', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -137,7 +136,7 @@ document.getElementById('submitBtn').addEventListener('click', async (event) => 
 // Função para carregar os registros da API e atualizar a tabela na página
 function carregarRegistros() {
     // Faz uma requisição GET para a API de registros
-    fetch('http://localhost:5500')
+    fetch('http://localhost:5500/pag_registros')
         // Processa a resposta da requisição como JSON
         .then(response => response.json())
         // Quando os registros são recebidos com sucesso, executa o seguinte bloco de código
@@ -160,6 +159,7 @@ function carregarRegistros() {
 
 // Adiciona um event listener para chamar a função carregarRegistros quando a página é carregada
 window.addEventListener('load', carregarRegistros);
+
+
+
 */
-
-
