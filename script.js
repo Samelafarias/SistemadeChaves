@@ -2,7 +2,7 @@
 
 
 // login.js
-document.getElementById('enter_login').addEventListener('click',login)
+    document.getElementById('enter').addEventListener('click', login);
 // Função assíncrona para lidar com o login
 async function login(button) {
     // Obtém o valor dos campos de usuário e senha
@@ -36,7 +36,7 @@ async function login(button) {
     }
 }
 
-/*
+
 
 //script página principal
 // script.js
@@ -58,7 +58,7 @@ function clicar(btnClicado) {
 
 
 // Função para registrar os dados no banco de dados
-async function registrar() {
+async function registrar_dados() {
     const data = document.getElementById('data').value;
     const setor = document.getElementById('setor_pag_princ').value;
     const responsavel = document.getElementById('resp_pag_princ').value;
@@ -76,7 +76,7 @@ async function registrar() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ mes, data, setor, nome, hora })
+            body: JSON.stringify({ data, setor, nome, hora })
         });
 
         if (response.ok) {
@@ -100,7 +100,7 @@ function abrir_pag_chave() {
 function abrir_pag_registros() {
     window.open('pag_registros.html');
 }
-
+/*
 //script página de chaves
 //para registrar a mudança de status
 //fazer com que ela apareça quando registrar a operação
@@ -131,7 +131,7 @@ document.getElementById('submitBtn').addEventListener('click', async (event) => 
 
     // Após enviar os dados, recarrega os registros para atualizar a tabela
     carregarRegistros();
-});
+});*/
 
 // Função para carregar os registros da API e atualizar a tabela na página
 function carregarRegistros() {
@@ -162,4 +162,3 @@ window.addEventListener('load', carregarRegistros);
 
 
 
-*/

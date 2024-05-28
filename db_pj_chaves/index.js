@@ -88,35 +88,9 @@ db.query(query, [username], async (error, results) => {
 });
 });
 
-
-
-/*
-  // API PARA CADASTRAR CHAVE
-  app.post('/keys', (req, res) => {
-    const { user_id, key_name, key_value } = req.body;
-    const query = `INSERT INTO keys (user_id, key_name, key_value) VALUES (?, ?, ?)`;
-    db.query(query, [user_id, key_name, key_value], (err, results) => {
-      if (err) {
-        res.status(500).send({ message: 'Erro ao cadastrar chave' });
-      } else {
-        res.send({ message: 'Chave cadastrada com sucesso!' });
-      }
-    });
-  });*/
-  /*
-  // API PARA RECEBER DADOS
-  app.post('/pag_principal', (req, res) => {
-    const { user_id, data_value } = req.body;
-    const query = `INSERT INTO data (user_id, data_value) VALUES (?, ?)`;
-    db.query(query, [user_id, data_value], (error, results) => {
-      if (error) {
-        res.status(500).send({ message: 'Erro ao receber dados' });
-      } else {
-        res.send({ message: 'Dados recebidos com sucesso!' });
-      }
-    });
-  });
-  */
+//API PARA PAGINA PRINCIPAL
+//API PARA PAGINA DE CHAVES 
+//API PARA PAGINA DE REGISTROS
   // INICIAR O SERVIDOR
 const port = 5500;
   app.listen(port, () => {
