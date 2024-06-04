@@ -1,8 +1,6 @@
 /*Esse não será o script usado, sera refeito e depois, alterado no codigo real!!!!!!!!!!. Ele será soomente para ter uma base de como ficará o programa na prática, já implemetado ao banco de dados*/
-
-
-// login.js
-    document.getElementById('enter').addEventListener('click', login);
+//script pagina de login
+//document.getElementById('enter').addEventListener('click', login);
 // Função assíncrona para lidar com o login
 async function login(button) {
     // Obtém o valor dos campos de usuário e senha
@@ -36,49 +34,46 @@ async function login(button) {
     }
 }
 
-
-
 //script página principal
 // script.js
-// Função para mudar a cor dos botões e aplicar a mudança em outra página
-function clicar(btnClicado) {
-    // Seleciona os elementos HTML dos botões
-    const entrega = document.getElementById('entrega');
-    const devolucao = document.getElementById('devolucao');
-  
-    // Verifica qual botão foi clicado e aplica a mudança de cor
-    if (btnClicado === entrega) {
-      entrega.classList.add('ativo');
-      devolucao.classList.remove('ativo');
-    } else if (btnClicado === devolucao) {
-      devolucao.classList.add('ativo');
-      entrega.classList.remove('ativo');
-    }
-  }
-
 
 // Função para registrar os dados no banco de dados
 async function registrar_dados() {
+    // Obtém os valores dos campos de entrada
     const data = document.getElementById('data').value;
     const setor = document.getElementById('setor_pag_princ').value;
     const responsavel = document.getElementById('resp_pag_princ').value;
     const horario = document.getElementById('horario').value;
-    const operacao = localStorage.getItem('operacao');
+    const entrega = document.getElementById('entrega').classList.contains('ativo');
+    const devolucao = document.getElementById('devolucao').classList.contains('ativo');
 
-    if(!data || !setor || !responsavel || !horario || !operacao){
-        alert("Porfavor, preencha todos os campos e selecione uma operação.");
+    // Verifica se todos os campos estão preenchidos
+    if (!data || !setor || !responsavel || !horario || (!entrega && !devolucao)) {
+        alert("Por favor, preencha todos os campos e selecione uma operação.");
         return;
     }
 
+    // Cria um objeto com os dados
+    const dados = {
+        data: data,
+        setor: setor,
+        responsavel: responsavel,
+        horario: horario,
+        entrega: entrega,
+        devolucao: devolucao
+    };
+
     try {
-        const response = await fetch(`http://localhost:5500/pag_principal`, {
+        // Envia os dados para a API usando uma requisição POST
+        const response = await fetch('http://localhost:5500/pag_principal', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ data, setor, nome, hora })
+            body: JSON.stringify(dados)
         });
 
+        // Verifica a resposta da API
         if (response.ok) {
             alert("Dados registrados com sucesso!");
             // Redirecionar para outra página (opcional)
@@ -92,15 +87,41 @@ async function registrar_dados() {
     }
 }
 
+// Função para mudar a cor dos botões e aplicar a mudança em outra página
+function clicar(btnClicado) {
+    // Seleciona os elementos HTML dos botões
+    const entrega = document.getElementById('entrega');
+    const devolucao = document.getElementById('devolucao');
+
+    // Verifica qual botão foi clicado e aplica a mudança de cor
+    if (btnClicado === entrega) {
+        entrega.classList.add('ativo');
+        devolucao.classList.remove('ativo');
+    } else if (btnClicado === devolucao) {
+        devolucao.classList.add('ativo');
+        entrega.classList.remove('ativo');
+    }
+}
+
 // Funções para abrir as páginas
 function abrir_pag_chave() {
-    window.open('pag_chaves.html');
+    window.open('pag_chaves.html', '_blank');
 }
 
 function abrir_pag_registros() {
-    window.open('pag_registros.html');
+    window.open('pag_registros.html', '_blank');
 }
-/*
+
+// Adiciona os ouvintes de eventos aos botões
+document.getElementById('entrega').addEventListener('click', function() {
+    clicar(this);
+});
+document.getElementById('devolucao').addEventListener('click', function() {
+    clicar(this);
+});
+document.getElementById('bnt_registrar').addEventListener('click', registrar_dados);
+
+
 //script página de chaves
 //para registrar a mudança de status
 //fazer com que ela apareça quando registrar a operação
@@ -109,9 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (operacao === 'entrega') {
         document.getElementById('cor-chave2').style.backgroundColor = 'red';
     } else if (operacao === 'devolucao') {
-        document.getElementById('cor-chave1').style.backgroundColor = 'green';
+        document.getElementById('cor-chave').style.backgroundColor = 'green';
     }
 });
+
 
 // script página de registros
 document.getElementById('submitBtn').addEventListener('click', async (event) => {
@@ -131,7 +153,7 @@ document.getElementById('submitBtn').addEventListener('click', async (event) => 
 
     // Após enviar os dados, recarrega os registros para atualizar a tabela
     carregarRegistros();
-});*/
+});
 
 // Função para carregar os registros da API e atualizar a tabela na página
 function carregarRegistros() {

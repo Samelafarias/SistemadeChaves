@@ -102,97 +102,6 @@ aside.login{
     text-decoration: none;
 }
 
-/*CSS DA PÁGINA DE CADASTROS*/
-/*Estilo específico para página de cadastro*/
-body.pag_cadastro{
-    background-color: #00350A; 
-}
-/*Estilo da seção de cadastro*/
-aside.cadastro{
-    background-color: white;
-    border-radius: 25px;
-    width: 391px;
-    height: 621px;
-    position: absolute;
-    display: block;
-    top: 6%;
-    left: 20%;
-}
-
-/*Estilo da imagem do campus*/
-#img_cadastro{
-   background-position: right;
-   background: fixed;
-   float: right;
-   display: block;
-   width: 545px;
-   height: auto;
-}
-
-/*Estilo do título do cadastro*/
-#h1_cadastro{
-    text-align: center;
-    padding: 18% 0 0 0;
-    font-size: 1.4rem;
-    font-weight: 750;
-}
-
-/*Estilo da logo do IFCE*/
-#logo_cadastro{
-    margin: auto;
-    width: 250px;
-    height: auto;
-    align-items: center;
-    display: block;
-}
-
-/*Estilos dos títulos de input*/
-.h4_cadastro{
-    text-align: left;
-    font-size: 1rem;
-    padding-left: 20%;
-}
-
-/*Estilos do campus de entrada de dados*/
-.dados_cadastro{
-    align-items: center;
-    display: block;
-    margin: auto;
-    margin-top: 4%;
-    position: relative;
-    width: 240px;
-    height: 35px;
-    font-size: 16px;
-    border-radius: 7px;
-    background-color: lightgray;
-    color: black;
-    text-align: justify;
-}
-
-/*Estilo do botão de cadastro*/
-#bnt_cadastro{
-    width: 170px;
-    height: 36px;
-    border-radius: 7px;
-    align-items: center;
-    display: block;
-    margin: auto;
-    margin-top: 8%;
-    position: relative;
-    background-color: #00350A;
-    border-color: #00350A;
-    box-shadow: none;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/*Estilo de link de cadastro*/
-#link_cadastro{
-    color: white;
-    text-decoration: none;
-}
-
 /*CSS DA PÁGINA PRINCIPAL*/
 /*Estilo de cabeçalho*/
 .header{
@@ -287,6 +196,23 @@ aside.cadastro{
 }
 
 /*Estilo dos botões de decisão*/
+#bnt_registrar{
+    width: 170px;
+    height: 35px;
+    display: grid;
+    margin-left: 10px;
+    border-radius: 6px;
+    font-size: 0.90rem;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    background-color: #00350A;
+    box-shadow: none;
+    text-decoration: none;
+    border-color: #002908;
+}
+
 .decisoes_pag_princ{
     width: 170px;
     height: 35px;
@@ -303,6 +229,24 @@ aside.cadastro{
     text-decoration: none;
     border-color: #002908;
 }
+
+.bnt_link_pag_principal{
+    width: 170px;
+    height: 35px;
+    display: grid;
+    margin-left: 10px;
+    border-radius: 6px;
+    font-size: 0.90rem;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    background-color: #00350A;
+    box-shadow: none;
+    text-decoration: none;
+    border-color: #002908;
+}
+
 
 /*Link d página principal*/
 .link_pag_princ{

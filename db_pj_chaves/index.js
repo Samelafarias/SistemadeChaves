@@ -89,8 +89,41 @@ db.query(query, [username], async (error, results) => {
 });
 
 //API PARA PAGINA PRINCIPAL
+app.post('/pag_principal', (req, res) => {
+  const dados = req.body;
+  console.log('Dados recebidos:', dados);
+  res.json({ message: 'Dados registrados com sucesso!', dados: dados });
+});
+
 //API PARA PAGINA DE CHAVES 
 //API PARA PAGINA DE REGISTROS
+app.post('/pag_registros', (req, res) => {
+  const newRecord = req.body;
+  const query = 'INSERT INTO registros (id, data_value, date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const values = [newRecord.user_id, newRecord.data_value, newRecord.date, newRecord.sector, newRecord.operation, newRecord.responsible, newRecord.time];
+
+  db.query(query, values, (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(201).json({ message: 'Registro criado com sucesso', id: result.insertId });
+  });
+});
+
+// Endpoint para obter todos os registros
+app.get('/pag_registros', (req, res) => {
+  const query = 'SELECT * FROM registros';
+
+  db.query(query, (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json(results);
+  });
+});
+
+
+
   // INICIAR O SERVIDOR
 const port = 5500;
   app.listen(port, () => {
