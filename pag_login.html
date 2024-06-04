@@ -16,14 +16,16 @@
             <img src="img/Boa Viagem-02-pq.png" alt="logo ifce" id="logo_login">
             <form id="loginForm"> <!-- Formulário de login -->
                 <h4 class="h4_login">
-                    <label for="username">Usuário</label></h4>
-                <input type="text" class="dados_login" id="username" name="user" required>
-                <br>
-                <h4 class="h4_login">
-                    <label for="password">Senha</label></h4>
-                <input type="password" class="dados_login" id="password" name="password" required>
-                <br>
-                <button type="button" id="enter">Entrar</button>
+                    <form action="/login" method="post">
+                        <label for="username">Usuário</label></h4>
+                         <input type="text" class="dados_login" id="username" name="user" required>
+                            <br>
+                            <h4 class="h4_login">
+                        <label for="password">Senha</label></h4>
+                        <input type="password" class="dados_login" id="password" name="password" required>
+                             <br>
+                           <button type="button" id="enter" value="login">Entrar</button>
+                    </form>
             </form>
            </aside> 
         </div>

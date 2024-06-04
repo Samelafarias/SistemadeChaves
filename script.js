@@ -1,6 +1,6 @@
 /*Esse não será o script usado, sera refeito e depois, alterado no codigo real!!!!!!!!!!. Ele será soomente para ter uma base de como ficará o programa na prática, já implemetado ao banco de dados*/
 //script pagina de login
-//document.getElementById('enter').addEventListener('click', login);
+document.getElementById('enter').addEventListener('click', login);
 // Função assíncrona para lidar com o login
 async function login(button) {
     // Obtém o valor dos campos de usuário e senha

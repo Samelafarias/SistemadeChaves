@@ -95,7 +95,6 @@ app.post('/pag_principal', (req, res) => {
   res.json({ message: 'Dados registrados com sucesso!', dados: dados });
 });
 
-//API PARA PAGINA DE CHAVES 
 //API PARA PAGINA DE REGISTROS
 app.post('/pag_registros', (req, res) => {
   const newRecord = req.body;
