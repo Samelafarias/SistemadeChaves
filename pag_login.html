@@ -11,21 +11,23 @@
 <body class="pag_login">
     <main>
         <div id="login">
-           <aside class="login">
-            <h1 id="h1_login">Controle do Registro de Chaves</h1>
-            <img src="img/Boa Viagem-02-pq.png" alt="logo ifce" id="logo_login">
-            <form id="loginForm"> <!-- Formulário de login -->
-                <h4 class="h4_login">
-                    <form action="/login" method="post">
-                        <label for="username">Usuário</label></h4>
-                         <input type="text" class="dados_login" id="username" name="user" required>
-                            <br>
-                            <h4 class="h4_login">
-                        <label for="password">Senha</label></h4>
-                        <input type="password" class="dados_login" id="password" name="password" required>
-                             <br>
-                           <button type="button" id="enter" value="login">Entrar</button>
-           </aside> 
+            <aside class="login">
+                <h1 id="h1_login">Controle do Registro de Chaves</h1>
+                <img src="img/Boa Viagem-02-pq.png" alt="logo ifce" id="logo_login">
+                <form id="loginForm" onsubmit="return false;"> <!-- Formulário de login -->
+                    <h4 class="h4_login">
+                        <label for="username">Usuário</label>
+                    </h4>
+                    <input type="text" class="dados_login" id="username" name="user" required>
+                    <br>
+                    <h4 class="h4_login">
+                        <label for="password">Senha</label>
+                    </h4>
+                    <input type="password" class="dados_login" id="password" name="password" required>
+                    <br>
+                    <button type="button" id="enter" onclick="login()">Entrar</button>
+                </form>
+            </aside>
         </div>
         <div>
             <img src="img/Foto_Nova_IF.jpg" alt="foto do campus boa viagem" id="img_login">

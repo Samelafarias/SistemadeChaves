@@ -1,40 +1,34 @@
 /*Esse não será o script usado, sera refeito e depois, alterado no codigo real!!!!!!!!!!. Ele será soomente para ter uma base de como ficará o programa na prática, já implemetado ao banco de dados*/
 //script pagina de login
-/*
-//document.getElementById('enter').addEventListener('click', login);
-// Função assíncrona para lidar com o login
-async function login(button) {
-    // Obtém o valor dos campos de usuário e senha
+async function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
     try {
-        // Envia uma requisição POST para a URL especificada, com os dados de usuário e senha no corpo da requisição
-        const response = await fetch(`http://localhost:5500/pag_login`, {
-            method: 'POST', // Método da requisição
+        const response = await fetch('http://localhost:5500/pag_login', {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json' // Tipo de conteúdo da requisição
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password }) // Corpo da requisição, convertido para JSON
+            body: JSON.stringify({ username, password })
+        });
 
-        })
-    
         const data = await response.json();
-        // Verifica se a resposta da requisição foi bem-sucedida
+
         if (response.ok) {
-            // Redireciona para a página principal
+            alert(data.message);
+            // Redireciona para a página principal apenas se o login for bem-sucedido
             window.location.href = "pag_principal.html";
         } else {
-            // Se a resposta não foi bem-sucedida, exibe uma mensagem de usuário ou senha inválidos
             alert(data.message || "Erro ao fazer login.");
         }
-    }catch (error) {
-        // Se ocorrer um erro durante a requisição, exibe uma mensagem de erro genérica
-        /*console.error('Erro ao fazer login:', error);
-        alert('Erro ao fazer login.');*/
- /*   }
+    } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao fazer login.');
+    }
 }
-*/
+
+
 //script página principal
 // script.js
 

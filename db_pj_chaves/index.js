@@ -33,50 +33,44 @@ db.connect((error) => {
     console.log('Conectado ao banco de dados com sucesso!!!');
 });
 
-  
-/*
-// API PARA LOGIN
-app.post(`/pag_login`, async (req, res) => {
-  const { username, password } = req.body;
+  //API PAGINA DE LOGIN
+  // API de Login
+app.post('/pag_login', (req, res) => {
+    const { username, password } = req.body;
 
-  if (!username || !password) {
-      return res.status(400).json({ message: 'Por favor, forneça um nome de usuário e uma senha.' });
-  }
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Por favor, forneça um nome de usuário e uma senha.' });
+    }
 
-  const query = 'SELECT * FROM users WHERE username = ?';
+    const query = 'SELECT * FROM login WHERE username = ?';
 
-  db.query(query, [username], async (error, results) => {
-      if (error) {
-          console.error('Erro ao buscar usuário:', error);
-          return res.status(500).send({ message: 'Erro ao realizar login' });
-      }
+    db.query(query, [username], async (error, results) => {
+        if (error) {
+            console.error('Erro ao buscar usuário:', error);
+            return res.status(500).json({ message: 'Erro ao realizar login' });
+        }
 
-      if (results.length === 0) {
-          console.log('Usuário não encontrado');
-          return res.status(401).send({ message: 'Usuário ou senha inválidos' });
-      }
+        if (results.length === 0) {
+            return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+        }
 
-      const user = results[0];
-      console.log('Usuário encontrado:', user);
+        const user = results[0];
 
-      try {
-          const passwordMatch = await bcrypt.compare(password, user.password);
-          console.log('Comparação de senha:', passwordMatch);
+        try {
+            const passwordMatch = await bcrypt.compare(password, user.password);
 
-          if (passwordMatch) {
-              console.log('Login realizado com sucesso para o usuário:', username);
-              return res.send({ message: 'Login realizado com sucesso!' });
-          } else {
-              console.log('Senha incorreta para o usuário:', username);
-              return res.status(401).send({ message: 'Usuário ou senha inválidos' });
-          }
-      } catch (compareError) {
-          console.error('Erro ao comparar as senhas:', compareError);
-          return res.status(500).send({ message: 'Erro no servidor ao verificar senha' });
-      }
-  });
+            if (passwordMatch) {
+                return res.json({ message: 'Login realizado com sucesso!' });
+            } else {
+                return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+            }
+        } catch (compareError) {
+            console.error('Erro ao comparar as senhas:', compareError);
+            return res.status(500).json({ message: 'Erro no servidor ao verificar senha' });
+        }
+    });
 });
-*/
+
 
 //pesquisar sobre: se esssa é a api correta para a pagina principal
 //API PARA PAGINA PRINCIPAL
