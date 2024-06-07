@@ -1,6 +1,7 @@
 /*Esse não será o script usado, sera refeito e depois, alterado no codigo real!!!!!!!!!!. Ele será soomente para ter uma base de como ficará o programa na prática, já implemetado ao banco de dados*/
 //script pagina de login
-document.getElementById('enter').addEventListener('click', login);
+/*
+//document.getElementById('enter').addEventListener('click', login);
 // Função assíncrona para lidar com o login
 async function login(button) {
     // Obtém o valor dos campos de usuário e senha
@@ -31,15 +32,13 @@ async function login(button) {
         // Se ocorrer um erro durante a requisição, exibe uma mensagem de erro genérica
         /*console.error('Erro ao fazer login:', error);
         alert('Erro ao fazer login.');*/
-    }
+ /*   }
 }
-
+*/
 //script página principal
 // script.js
 
-// Função para registrar os dados no banco de dados
 async function registrar_dados() {
-    // Obtém os valores dos campos de entrada
     const data = document.getElementById('data').value;
     const setor = document.getElementById('setor_pag_princ').value;
     const responsavel = document.getElementById('resp_pag_princ').value;
@@ -47,24 +46,22 @@ async function registrar_dados() {
     const entrega = document.getElementById('entrega').classList.contains('ativo');
     const devolucao = document.getElementById('devolucao').classList.contains('ativo');
 
-    // Verifica se todos os campos estão preenchidos
     if (!data || !setor || !responsavel || !horario || (!entrega && !devolucao)) {
         alert("Por favor, preencha todos os campos e selecione uma operação.");
         return;
     }
 
-    // Cria um objeto com os dados
+    const dataFormatada = new Date(data).toISOString().split('T')[0];
+
     const dados = {
-        data: data,
-        setor: setor,
-        responsavel: responsavel,
-        horario: horario,
-        entrega: entrega,
-        devolucao: devolucao
+        date: dataFormatada,
+        sector: setor,
+        responsible: responsavel,
+        time: horario,
+        operation: entrega ? 'entrega' : 'devolucao'
     };
 
     try {
-        // Envia os dados para a API usando uma requisição POST
         const response = await fetch('http://localhost:5500/pag_principal', {
             method: 'POST',
             headers: {
@@ -73,11 +70,8 @@ async function registrar_dados() {
             body: JSON.stringify(dados)
         });
 
-        // Verifica a resposta da API
         if (response.ok) {
             alert("Dados registrados com sucesso!");
-            // Redirecionar para outra página (opcional)
-            // window.location.href = "outra_pagina.html";
         } else {
             alert("Erro ao registrar dados.");
         }
@@ -181,6 +175,3 @@ function carregarRegistros() {
 
 // Adiciona um event listener para chamar a função carregarRegistros quando a página é carregada
 window.addEventListener('load', carregarRegistros);
-
-
-
