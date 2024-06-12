@@ -1,34 +1,37 @@
 /*Esse não será o script usado, sera refeito e depois, alterado no codigo real!!!!!!!!!!. Ele será soomente para ter uma base de como ficará o programa na prática, já implemetado ao banco de dados*/
 //script pagina de login
-async function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+/*
+document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
 
-    try {
-        const response = await fetch('http://localhost:5500/pag_login', {
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:5500/pag_login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username: username, password: password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Login bem-sucedido') {
+                window.location.href = '/pag_principal.html'; // Redireciona para a página principal
+            } else {
+                alert('Usuário ou senha inválidos');
+            }
+        })
+        .catch((error) => {
+            console.error('Erro:', error);
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert(data.message);
-            // Redireciona para a página principal apenas se o login for bem-sucedido
-            window.location.href = "pag_principal.html";
-        } else {
-            alert(data.message || "Erro ao fazer login.");
-        }
-    } catch (error) {
-        console.error('Erro ao fazer login:', error);
-        alert('Erro ao fazer login.');
-    }
-}
-
-
+    });
+});
+*/
+/*
 //script página principal
 // script.js
 
@@ -108,64 +111,42 @@ document.getElementById('devolucao').addEventListener('click', function() {
     clicar(this);
 });
 document.getElementById('bnt_registrar').addEventListener('click', registrar_dados);
-
-
+*/
+/*
 //script página de chaves
 //para registrar a mudança de status
 //fazer com que ela apareça quando registrar a operação
 document.addEventListener('DOMContentLoaded', function() {
     const operacao = localStorage.getItem('operacao');
-    if (operacao === 'entrega') {
-        document.getElementById('cor-chave2').style.backgroundColor = 'red';
-    } else if (operacao === 'devolucao') {
-        document.getElementById('cor-chave').style.backgroundColor = 'green';
-    }
-});
+    const chaveElements = document.querySelectorAll('.disp_chave', '.cor_chave');
 
+    chaveElements.forEach((chaveElement) => {
+        if (operacao === 'entrega') {
+            chaveElement.style.backgroundColor = 'red';
+        } else if (operacao === 'devolucao') {
+            chaveElement.style.backgroundColor = 'green';
+        }
+    });
+});
+*/
 
 // script página de registros
-document.getElementById('submitBtn').addEventListener('click', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(document.getElementById('dataForm'));
-    const dados = Object.fromEntries(formData.entries());
-    const response = await fetch('http://localhost:5500/pag_registros', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dados)
-    });
-    const result = await response.json();
-    alert(result.message);
-
-
-    // Após enviar os dados, recarrega os registros para atualizar a tabela
-    carregarRegistros();
-});
-
-// Função para carregar os registros da API e atualizar a tabela na página
-function carregarRegistros() {
-    // Faz uma requisição GET para a API de registros
+document.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:5500/pag_registros')
-        // Processa a resposta da requisição como JSON
         .then(response => response.json())
-        // Quando os registros são recebidos com sucesso, executa o seguinte bloco de código
         .then(data => {
-            const tableBody = document.getElementById('body_table');
-            tableBody.innerHTML = ''; // Limpa o conteúdo atual da tabela
-            // Para cada registro recebido, cria uma nova linha na tabela e insere os dados nas células
-            data.forEach(row => {
+            const tbody = document.getElementById('body_table');
+            data.forEach(registro => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.id}</td><td>${row.user_id}</td><td>${row.data_value}</td><td>${row.date}</td><td>${row.sector}</td><td>${row.operation}</td><td>${row.responsible}</td><td>${row.time}</td>`;
-                tableBody.appendChild(tr);
+                tr.innerHTML = `
+                    <td>${registro.date}</td>
+                    <td>${registro.setor}</td>
+                    <td>${registro.operacao}</td>
+                    <td>${registro.time}</td>
+                    <td>${registro.responsavel}</td>
+                `;
+                tbody.appendChild(tr);
             });
         })
-        .catch(error => {
-            console.error('Erro ao carregar registros:', error);
-            // Exibe um alerta para o usuário informando sobre o erro
-            alert('Erro ao carregar registros.');
-        });
-}
-
-// Adiciona um event listener para chamar a função carregarRegistros quando a página é carregada
-window.addEventListener('load', carregarRegistros);
+        .catch(error => console.error('Erro ao buscar dados:', error));
+});

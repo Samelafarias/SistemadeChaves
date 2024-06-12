@@ -34,43 +34,26 @@ db.connect((error) => {
 });
 
   //API PAGINA DE LOGIN
-  // API de Login
-app.post('/pag_login', (req, res) => {
-    const { username, password } = req.body;
+ // Rota de login
+ app.post('/pag_login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
 
     if (!username || !password) {
-        return res.status(400).json({ message: 'Por favor, forneça um nome de usuário e uma senha.' });
+        return res.status(400).json({ message: 'Usuário e senha são obrigatórios' });
     }
 
-    const query = 'SELECT * FROM login WHERE username = ?';
+    const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    db.query(query, [username, password], (err, results) => {
+        if (err) throw err;
 
-    db.query(query, [username], async (error, results) => {
-        if (error) {
-            console.error('Erro ao buscar usuário:', error);
-            return res.status(500).json({ message: 'Erro ao realizar login' });
-        }
-
-        if (results.length === 0) {
-            return res.status(401).json({ message: 'Usuário ou senha inválidos' });
-        }
-
-        const user = results[0];
-
-        try {
-            const passwordMatch = await bcrypt.compare(password, user.password);
-
-            if (passwordMatch) {
-                return res.json({ message: 'Login realizado com sucesso!' });
-            } else {
-                return res.status(401).json({ message: 'Usuário ou senha inválidos' });
-            }
-        } catch (compareError) {
-            console.error('Erro ao comparar as senhas:', compareError);
-            return res.status(500).json({ message: 'Erro no servidor ao verificar senha' });
+        if (results.length > 0) {
+            res.status(200).json({ message: 'Login bem-sucedido' });
+        } else {
+            res.status(401).json({ message: 'Usuário ou senha inválidos' });
         }
     });
 });
-
 
 //pesquisar sobre: se esssa é a api correta para a pagina principal
 //API PARA PAGINA PRINCIPAL
@@ -90,17 +73,19 @@ app.post('/pag_login', (req, res) => {
     
     //API PAGINA DE REGISTROS
 // Endpoint para obter todos os registros
+// Rota para buscar os dados
 app.get('/pag_registros', (req, res) => {
-  const query = 'SELECT * FROM registros';
-
-  db.query(query, (err, results) => {
-      if (err) {
-          return res.status(500).json({ error: err.message });
-      }
-      res.status(200).json(results);
-  });
+    let sql = 'SELECT * FROM registros'; 
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        res.json(results);
+    });
 });
 
+// Servindo os arquivos estáticos (HTML, CSS, JS)
+app.use(express.static('public'));
 
 
   // INICIAR O SERVIDOR
