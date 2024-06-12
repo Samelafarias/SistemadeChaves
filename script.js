@@ -134,4 +134,3 @@ function abrir_pag_chave() {
 function abrir_pag_registros() {
     window.open('pag_registros.html', '_blank');
 }
-

@@ -1,8 +1,8 @@
-const mysql = require('mysql');
-const express = require('express');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const cors = require('cors');
+const mysql = require('mysql')
+const express = require('express')
+const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
+const cors = require('cors')
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
@@ -43,7 +43,7 @@ db.connect((error) => {
         return res.status(400).json({ message: 'Usuário e senha são obrigatórios' });
     }
 
-    const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    const query = 'SELECT * FROM login WHERE username = ? AND password = ?';
     db.query(query, [username, password], (err, results) => {
         if (err) throw err;
 
