@@ -1,6 +1,3 @@
-/*Esse não será o script usado, sera refeito e depois, alterado no codigo real!!!!!!!!!!. Ele será soomente para ter uma base de como ficará o programa na prática, já implemetado ao banco de dados*/
-//script pagina de login
-
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
 
@@ -37,12 +34,21 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('http://localhost:5500/pag_registros')
             .then(response => response.json())
             .then(data => {
+                // Ordena os dados por data
+                data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                // Limpa o conteúdo anterior da tabela
+                tbody.innerHTML = '';
+
                 data.forEach(registro => {
                     const tr = document.createElement('tr');
+                    const operacao = registro.operacao.toUpperCase();
+                    const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
+
                     tr.innerHTML = `
-                        <td>${registro.date}</td>
+                        <td>${formatarData(registro.date)}</td>
                         <td>${registro.setor}</td>
-                        <td>${registro.operacao}</td>
+                        <td>${operacaoFormatada}</td>
                         <td>${registro.time}</td>
                         <td>${registro.responsavel}</td>
                     `;
@@ -91,7 +97,7 @@ async function registrar_dados() {
         sector: setor,
         responsible: responsavel,
         time: horario,
-        operation: entrega ? 'entrega' : 'devolucao'
+        operation: entrega ? 'ENTREGA' : 'DEVOLUÇÃO'
     };
 
     try {
@@ -133,4 +139,12 @@ function abrir_pag_chave() {
 
 function abrir_pag_registros() {
     window.open('pag_registros.html', '_blank');
+}
+
+function formatarData(data) {
+    const date = new Date(data);
+    const dia = date.getDate().toString().padStart(2, '0');
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
+    const ano = date.getFullYear();
+    return `${dia}/${mes}/${ano}`;
 }
