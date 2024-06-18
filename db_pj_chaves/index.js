@@ -84,6 +84,8 @@ app.get('/pag_registros', (req, res) => {
     });
 });
 
+//API PARA FILTRAR REGISTROS
+
 // Servindo os arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));
 

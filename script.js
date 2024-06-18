@@ -77,6 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+
 async function registrar_dados() {
     const data = document.getElementById('data').value;
     const setor = document.getElementById('setor_pag_princ').value;
