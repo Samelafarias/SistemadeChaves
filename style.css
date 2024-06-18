@@ -407,6 +407,17 @@ tr, td{
     text-align: center;
 }
 
+#pesquisar{
+    background-color: #002908;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    width: 90px;
+    height: 30px;
+    border-radius: 15px;
+    margin-left: 8px;
+}
+
 /*CSS DO FOOTER*/
 footer{
     width: auto;
