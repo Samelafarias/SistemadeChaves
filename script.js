@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         registrarButton.addEventListener('click', registrar_dados);
 
-        
+        // script para a mudança de cores 
         const operacao = localStorage.getItem('operacao');
         const chaveElements = document.querySelectorAll('.disp_chave, .cor_chave');
         chaveElements.forEach((chaveElement) => {
