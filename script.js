@@ -47,52 +47,74 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     //script pagina de registros
+    document.getElementById('filterbnt').addEventListener('click', function() {
+        const mes = document.getElementById('mes_pag_princ').value;
+        const ano = document.getElementById('ano_registro').value;
+    
+        const tbody = document.getElementById('body_table');
+        // Obtém o corpo da tabela pelo ID
+    
+        if (tbody) {
+            // Verifica se o corpo da tabela foi encontrado
+    
+            fetch('http://localhost:5500/pag_registros')
+            // Envia uma requisição para obter os registros
+                .then(response => response.json())
+                // Converte a resposta para JSON
+                .then(data => {
+                    // Manipula os dados recebidos
+    
+                    const registrosFiltrados = data.filter(registro => {
+                        const dataRegistro = new Date(registro.date);
+                        return dataRegistro.getMonth() + 1 === parseInt(mes) && dataRegistro.getFullYear() === parseInt(ano);
+                    });
+                    // Filtra os dados para incluir apenas aqueles que correspondem ao mês e ano selecionados
+    
+                    registrosFiltrados.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    // Ordena os dados por data
+    
+                    tbody.innerHTML = '';
+                    // Limpa o conteúdo anterior da tabela
+    
+                    registrosFiltrados.forEach(registro => {
+                        // Para cada registro, cria uma nova linha na tabela
+    
+                        const tr = document.createElement('tr');
+                        // Cria um novo elemento 'tr' (linha da tabela)
+                        const operacao = registro.operacao.toUpperCase();
+                        // Obtém a operação do registro e converte para maiúsculas
+                        const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
+                        // Formata a operação
+                        localStorage.setItem('operacao', operacao);
+    
+                        tr.innerHTML = `
+                            <td>${formatarData(registro.date)}</td>
+                            <td>${registro.setor}</td>
+                            <td>${operacaoFormatada}</td>
+                            <td>${registro.time}</td>
+                            <td>${registro.responsavel}</td>
+                        `;
+                        // Preenche a linha com os dados do registro
+    
+                        tbody.appendChild(tr);
+                        // Adiciona a linha à tabela
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar dados:', error));
+        }
+    });
+    
+    function formatarData(data) {
+        const date = new Date(data);
+        const dia = String(date.getDate()).padStart(2, '0');
+        const mes = String(date.getMonth() + 1).padStart(2, '0');
+        const ano = date.getFullYear();
+        return `${dia}/${mes}/${ano}`;
+    }    
 
-    const tbody = document.getElementById('body_table');
-    // Obtém o corpo da tabela pelo ID
 
-    if (tbody) {
-        // Verifica se o corpo da tabela foi encontrado
-
-        fetch('http://localhost:5500/pag_registros')
-        // Envia uma requisição para obter os registros
-            .then(response => response.json())
-            // Converte a resposta para JSON
-            .then(data => {
-                // Manipula os dados recebidos
-
-                data.sort((a, b) => new Date(a.date) - new Date(b.date));
-                // Ordena os dados por data
-
-                tbody.innerHTML = '';
-                // Limpa o conteúdo anterior da tabela
-
-                data.forEach(registro => {
-                    // Para cada registro, cria uma nova linha na tabela
-
-                    const tr = document.createElement('tr');
-                    // Cria um novo elemento 'tr' (linha da tabela)
-                    const operacao = registro.operacao.toUpperCase();
-                    // Obtém a operação do registro e converte para maiúsculas
-                    const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
-                    // Formata a operação
-
-                    tr.innerHTML = `
-                        <td>${formatarData(registro.date)}</td>
-                        <td>${registro.setor}</td>
-                        <td>${operacaoFormatada}</td>
-                        <td>${registro.time}</td>
-                        <td>${registro.responsavel}</td>
-                    `;
-                    // Preenche a linha com os dados do registro
-
-                    tbody.appendChild(tr);
-                    // Adiciona a linha à tabela
-                });
-            })
-            .catch(error => console.error('Erro ao buscar dados:', error));
-    }
-
+//script pagina de chaves
+    //aqui é a interatividade dos botoes da pagina principal
     document.getElementById('entrega').addEventListener('click', function() {
         // Adiciona um ouvinte de evento para o clique no botão de entrega
         clicar(this);
@@ -105,9 +127,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     document.getElementById('bnt_registrar').addEventListener('click', registrar_dados);
     // Adiciona um ouvinte de evento para o clique no botão de registrar, chamando a função 'registrar_dados'
-
-
-    //script pagina de chaves
+    
+    //aqui ocorre a mudança de cores da pagina de chaves 
     const operacao = localStorage.getItem('operacao');
     // Obtém a operação armazenada no localStorage
     const chaveElements = document.querySelectorAll('.disp_chave', '.cor_chave');
@@ -201,11 +222,3 @@ function abrir_pag_registros() {
     window.open('pag_registros.html', '_blank');
 }
 
-function formatarData(data) {
-    // Função para formatar a data no formato 'dd/mm/yyyy'
-    const date = new Date(data);
-    const dia = date.getDate().toString().padStart(2, '0');
-    const mes = (date.getMonth() + 1).toString().padStart(2, '0');
-    const ano = date.getFullYear();
-    return `${dia}/${mes}/${ano}`;
-}

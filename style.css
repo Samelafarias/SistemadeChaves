@@ -417,7 +417,7 @@ tr, td{
 #filterbnt{
     background-color: #002908;
     color: white;
-    font-weight: bold;
+    font-weight:normal ;
     font-size: 14px;
     width: 95px;
     height: 32px;
