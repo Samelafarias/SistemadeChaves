@@ -352,6 +352,13 @@ aside.login{
     margin-right: 5px;
 }
 
+.cor-chave-entrega {
+    background-color: red; /* Cor para chaves entregues */
+}
+
+.cor-chave-devolucao {
+    background-color: green; /* Cor para chaves devolvidas */
+}
 
 
 /*CSS DA PÁGINA DE REGISTROS*/

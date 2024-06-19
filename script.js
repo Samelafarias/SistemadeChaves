@@ -1,3 +1,5 @@
+
+//script pagina de login
 document.addEventListener('DOMContentLoaded', function () {
     // Espera o documento HTML ser completamente carregado
     const loginForm = document.getElementById('loginForm');
@@ -43,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
+    //script pagina de registros
 
     const tbody = document.getElementById('body_table');
     // Obtém o corpo da tabela pelo ID
@@ -102,6 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('bnt_registrar').addEventListener('click', registrar_dados);
     // Adiciona um ouvinte de evento para o clique no botão de registrar, chamando a função 'registrar_dados'
 
+
+    //script pagina de chaves
     const operacao = localStorage.getItem('operacao');
     // Obtém a operação armazenada no localStorage
     const chaveElements = document.querySelectorAll('.disp_chave', '.cor_chave');
@@ -117,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+//script pagina principal
 async function registrar_dados() {
     // Função assíncrona para registrar os dados
     const data = document.getElementById('data').value;
