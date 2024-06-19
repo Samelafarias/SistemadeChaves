@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         registrarButton.addEventListener('click', registrar_dados);
 
+        
         const operacao = localStorage.getItem('operacao');
         const chaveElements = document.querySelectorAll('.disp_chave, .cor_chave');
         chaveElements.forEach((chaveElement) => {
@@ -156,12 +157,15 @@ document.addEventListener('DOMContentLoaded', function () {
             entrega.classList.remove('ativo');
         }
     }
-
-    function abrir_pag_chave() {
-        window.open('pag_chaves.html', '_blank');
-    }
-
-    function abrir_pag_registros() {
-        window.open('pag_registros.html', '_blank');
-    }
 });
+
+  // Funções para abrir as páginas de chaves e registros
+function abrir_pag_chave() {
+    window.open('pag_chaves.html', '_blank');
+}
+
+function abrir_pag_registros() {
+    window.open('pag_registros.html', '_blank');
+}
+
+
