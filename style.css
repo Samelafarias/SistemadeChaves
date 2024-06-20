@@ -291,15 +291,6 @@ aside.login{
     background-color: rgb(27, 181, 27);
 }
 
-/*Estilo da caixa de cor para disponível*/
-.cor_chave {
-    background-color: rgb(27, 181, 27);
-}
-
-.cor-chave2 {
-    background-color: red;
-}
-
 /*Estilo do container principal*/
 #main {
     display: block;
@@ -334,13 +325,14 @@ aside.login{
 /*Estilo das caixas de cor para indicação*/
 .cor{
     width: 25px;
-    height: 25px;
+    height: 25px; 
     display: inline-flex;
     margin-left: 16%;
     margin-top: 6%;  
 }
 
 /*Estilo da primeira caixa de cor*/
+/*aqui são as indicações na parte superior da página*/
 #cor1_indic{
     background-color: rgb(27, 181, 27);
     margin-right: 5px;
@@ -352,15 +344,6 @@ aside.login{
     margin-right: 5px;
 }
 
-/*
-.cor-chave-entrega {
-    background-color: red; 
-}
-
-.cor-chave-devolucao {
-    background-color: green; 
-}
-*/
 
 /*CSS DA PÁGINA DE REGISTROS*/
 /*Estilo para o conteúdo principal*/
