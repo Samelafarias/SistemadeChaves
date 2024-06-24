@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }    
     }
 
-    // Script da página de chaves
+    //script dos botoes da pagina principal
     const entregaButton = document.getElementById('entrega');
     const devolucaoButton = document.getElementById('devolucao');
     const registrarButton = document.getElementById('bnt_registrar');
@@ -90,25 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         registrarButton.addEventListener('click', registrar_dados);
 
-        // script para a mudança de cores 
-        async function mudar_cor() {
-            try {
-                const response = await fetch('http://localhost:5500/pag_chaves');
-                const data = await response.json();
-                const dispChave = document.querySelector('.disp_chave');
-        
-                if (data.operacao === 'entrega') {
-                    dispChave.style.backgroundColor = 'red'; // Mudar para a cor desejada
-                } else {
-                    dispChave.style.backgroundColor = 'green'; // Mudar para outra cor desejada
-                }
-            } catch (error) {
-               // console.error('Erro ao buscar operação:', error);
-            }
-        }     
-        // Chamada da função ao carregar a página
-        window.onload = mudar_cor;
-        
+// Script da página de chaves
+
 
 
     // Funções globais, usadas em várias partes do código

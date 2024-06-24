@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const cors = require('cors')
+const sqlite3 = require('sqlite3')
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
@@ -85,19 +86,6 @@ app.get('/pag_registros', (req, res) => {
 });
 
 //api da pagina de chaves
-app.get('/pag_chaves', (req, res) => {
-    db.get("SELECT * FROM registros WHERE operacao IS NOT NULL", (err, row) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        if (!row) {
-            res.status(404).json({ error: "No record found" });
-            return;
-        }
-        res.json({ operacao: row.operacao });
-    });
-    });
 
 
 // Servindo os arquivos estáticos (HTML, CSS, JS)
