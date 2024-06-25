@@ -91,7 +91,24 @@ document.addEventListener('DOMContentLoaded', function () {
         registrarButton.addEventListener('click', registrar_dados);
 
 // Script da página de chaves
-
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost:5500/pag_chaves/pag_registros')
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(item => {
+          const setor = item.setor;
+          const operacao = item.operacao;
+          const chaveElement = document.querySelector(`.name-sala:contains(${setor})`).previousElementSibling;
+          
+          if (operacao === 'entregue') {
+            chaveElement.style.backgroundColor = 'red';
+          } else if (operacao === 'devolvida') {
+            chaveElement.style.backgroundColor = 'green';
+          }
+        });
+      })
+      .catch(error => console.error('Erro ao buscar dados:', error));
+  });
 
 
     // Funções globais, usadas em várias partes do código

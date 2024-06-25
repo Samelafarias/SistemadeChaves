@@ -1,9 +1,9 @@
 const mysql = require('mysql')
 const express = require('express')
+const pool = require('./index.js');
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const cors = require('cors')
-const sqlite3 = require('sqlite3')
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
@@ -86,7 +86,14 @@ app.get('/pag_registros', (req, res) => {
 });
 
 //api da pagina de chaves
-
+app.get('/pag_chaves/pag_registros', async (req, res) => {
+    try {
+      const [rows] = await pool.query('SELECT setor, operacao FROM registros');
+      res.json(rows);
+    } catch (error) {
+      res.status(500).send('Erro ao obter dados');
+    }
+  });
 
 // Servindo os arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));
