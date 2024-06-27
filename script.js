@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         registrarButton.addEventListener('click', registrar_dados);
 
+        //no código abaixo deve haver mudanças
+/*
 // Script da página de chaves
 document.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:5500/pag_chaves')
@@ -109,8 +111,75 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(error => console.error('Erro ao buscar dados:', error));
   });
+*/
+
+// Função para criar e adicionar a estrutura dinâmica
+function createDispChaveElement(setorId, operacao) {
+    // Cria o elemento div para a disponibilidade da chave
+    const dispChaveDiv = document.createElement('div');
+    dispChaveDiv.className = 'disp_chave';
+    dispChaveDiv.id = `setor ${setorId}`;
+
+    // Adiciona a classe de cor baseada na operação
+    if (operacao === 'ENTREGA') {
+        dispChaveDiv.classList.add('red');
+    } else if (operacao === 'DEVOLUCAO') {
+        dispChaveDiv.classList.add('green');
+    }
+
+    // Cria o elemento div para o nome da sala
+    const nameSalaDiv = document.createElement('div');
+    nameSalaDiv.className = 'name-sala';
+    nameSalaDiv.dataset.setor = setorId;
+    nameSalaDiv.textContent = `Sala ${setorId}`;
+
+    // Cria o elemento img para a imagem da chave
+    const imgChave = document.createElement('img');
+    imgChave.src = 'img/chave.png';
+    imgChave.alt = 'imagem de uma chave';
+    imgChave.className = 'img_chave';
+
+    // Cria o elemento div principal com a classe 'chave'
+    const chaveDiv = document.createElement('div');
+    chaveDiv.className = 'chave';
+    chaveDiv.appendChild(dispChaveDiv);
+    chaveDiv.appendChild(nameSalaDiv);
+    chaveDiv.appendChild(imgChave);
+
+    // Adiciona o elemento 'chave' ao contêiner
+    const chavesContainer = document.getElementById('chaves-container');
+    chavesContainer.appendChild(chaveDiv);
+}
+
+// Função para buscar os dados do banco de dados
+async function fetchData() {
+    try {
+        const response = await fetch('http://localhost:5500/pag_chaves');
+        const data = await response.json();
+
+        data.forEach(registro => {
+            const setorId = registro.setor;
+            const operacao = registro.operacao.toUpperCase();
+            createDispChaveElement(setorId, operacao);
+        });
+    } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+    }
+}
+
+// Função para criar várias divs de disponibilidade de chave automaticamente
+function createMultipleDispChaveElements(totalElements) {
+    for (let i = 1; i <= totalElements; i++) {
+        const setorId = String(i).padStart(2, '0'); // Garante que o ID tenha dois dígitos
+        createDispChaveElement(setorId, ''); // Inicialmente sem operação
+    }
+}
+
+// Chama a função para buscar os dados e criar os elementos
+fetchData();
 
 
+//script página principal
     // Funções globais, usadas em várias partes do código
     async function registrar_dados() {
         const data = document.getElementById('data').value;

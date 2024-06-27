@@ -85,6 +85,8 @@ app.get('/pag_registros', (req, res) => {
     });
 });
 
+//api a baixo ira sofrer alterações
+/*
 //api da pagina de chaves
 app.get('/pag_chaves', async (req, res) => {
     try {
@@ -93,7 +95,7 @@ app.get('/pag_chaves', async (req, res) => {
     } catch (error) {
       res.status(500).send('Erro ao obter dados');
     }
-  });
+  });*/
 
 // Servindo os arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));

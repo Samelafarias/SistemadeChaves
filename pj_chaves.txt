@@ -1,5 +1,0 @@
-seguindo a mesma logica do projeto inicial, pesquisar como faz para colher os dados 
-por meio do escaneamento de tags, além disso na hora que fazer isso coletar automati-
-camente a data, hora, e nome do responsavél, pra inserir domente o setor. e continuar
-seguindo o mesmo padrao de funcionamento, registrar e salvar os dados nos bancos de da_
-dos
