@@ -86,7 +86,7 @@ app.get('/pag_registros', (req, res) => {
 });
 
 //api da pagina de chaves
-app.get('/pag_chaves/pag_registros', async (req, res) => {
+app.get('/pag_chaves', async (req, res) => {
     try {
       const [rows] = await pool.query('SELECT setor, operacao FROM registros');
       res.json(rows);

@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Script da página de chaves
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:5500/pag_chaves/pag_registros')
+    fetch('http://localhost:5500/pag_chaves')
       .then(response => response.json())
       .then(data => {
         data.forEach(item => {
