@@ -285,10 +285,22 @@ aside.login{
 
 /*Estilo da caixa de disponibilidade*/
 .disp_chave {
-    width: 30px;
-    height: 30px;
+    width: 175px;
+    height: 20px;
     display: inline-flex;
-    background-color: rgb(27, 181, 27);
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.indisponivel{
+    color: green;
+    background-color: aqua;
+}
+
+.disponivel{
+    color: red;
+    background-color: aqua;
 }
 
 /*Estilo do container principal*/

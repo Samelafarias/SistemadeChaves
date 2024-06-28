@@ -1,6 +1,5 @@
 const mysql = require('mysql')
 const express = require('express')
-const pool = require('./index.js');
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt')
 const cors = require('cors')
@@ -85,17 +84,21 @@ app.get('/pag_registros', (req, res) => {
     });
 });
 
-//api a baixo ira sofrer alterações
-/*
-//api da pagina de chaves
-app.get('/pag_chaves', async (req, res) => {
-    try {
-      const [rows] = await pool.query('SELECT setor, operacao FROM registros');
-      res.json(rows);
-    } catch (error) {
-      res.status(500).send('Erro ao obter dados');
-    }
-  });*/
+// api página de chaves
+app.get('/pag_chaves/pag_registros', (req, res) => {
+    console.log('Requisição recebida em /pag_chaves');
+    const query = 'SELECT setor, operacao FROM registros';
+    connection.query(query, (error, results) => {
+      if (error) {
+        console.error('Erro ao consultar o banco de dados:', error);
+        res.status(500).send('Erro ao consultar o banco de dados');
+        return;
+      }
+      console.log('Consulta bem-sucedida:', results);
+      res.json(results);
+    });
+  });
+
 
 // Servindo os arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));
