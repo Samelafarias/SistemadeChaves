@@ -18,9 +18,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use (bodyParser.urlencoded({extended: true}));
 
-// CONFIGURAR O BODY-PARSER PARA LIDAR COM AS REQUISIÇÕES URL-ENCODED
-app.use(bodyParser.urlencoded({ extended: true }));
-
 // CRIAR CONEXÃO COM O BANCO DE DADOS
 const db = mysql.createConnection(dbConfig);
 
@@ -84,21 +81,18 @@ app.get('/pag_registros', (req, res) => {
     });
 });
 
-// api página de chaves
-app.get('/pag_chaves/pag_registros', (req, res) => {
-    console.log('Requisição recebida em /pag_chaves');
-    const query = 'SELECT setor, operacao FROM registros';
-    connection.query(query, (error, results) => {
-      if (error) {
-        console.error('Erro ao consultar o banco de dados:', error);
-        res.status(500).send('Erro ao consultar o banco de dados');
-        return;
-      }
-      console.log('Consulta bem-sucedida:', results);
-      res.json(results);
+// API PARA PÁGINA DE CHAVES
+app.get('/pag_chaves', (req, res) => {
+    const query = 'SELECT setor, operacao FROM registros'; // Ajuste conforme a estrutura da sua tabela
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar dados:', err);
+            res.status(500).send('Erro ao buscar dados');
+            return;
+        }
+        res.json(results);
     });
-  });
-
+});
 
 // Servindo os arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));

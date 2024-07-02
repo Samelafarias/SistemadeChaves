@@ -77,34 +77,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const chaves = document.querySelectorAll('.disp_chave');
-
-        async function atualizarDisponibilidadeChaves() {
-            try {
-                const response = await fetch('http://localhost:5500/pag_chaves/pag_registros');
-                if (!response.ok) {
-                    throw new Error('Erro na requisição: ' + response.statusText);
-                }
-                const registros = await response.json();
-
-                chaves.forEach(chave => {
-                    const setor = chave.dataset.setor;
-                    const registro = registros.find(r => r.setor === setor);
-                    if (registro) {
-                        chave.textContent = registro.operacao === 'ENTREGA' ? 'INDISPONÍVEL' : 'DISPONÍVEL';
-                    } else {
-                        chave.textContent = 'DISPONÍVEL';
-                    }
-                });
-            } catch (error) {
-                console.error('Erro ao buscar registros:', error);
+    // Script da página de chaves
+    const chaves = document.querySelectorAll('.disp_chave');
+    if (chaves.length > 0) {
+        fetch('http://localhost:5500/pag_chaves')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
             }
-        }
-
-        atualizarDisponibilidadeChaves();
-        
-  });  
+            return response.json();
+        })
+        .then(registros => {
+            chaves.forEach(chave => {
+                const setor = chave.dataset.setor;
+                // Filtrar os registros apenas para a chave atual
+                const registrosChave = registros.filter(r => r.setor === setor);
+    
+                // Verificar qual foi a última operação registrada para a chave
+                if (registrosChave.length > 0) {
+                    const ultimoRegistro = registrosChave[registrosChave.length - 1];
+                    if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
+                        chave.style.backgroundColor = 'red';
+                    } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
+                        chave.style.backgroundColor = 'green';
+                    } else {
+                        chave.style.backgroundColor = 'green'; // Caso não seja especificado, padrão para verde
+                    }
+                } else {
+                    chave.style.backgroundColor = 'green'; // Se não houver registros, padrão para verde
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao buscar registros:', error);
+        });
+    }
+    
 
     // Script dos botões da página principal
     const entregaButton = document.getElementById('entrega');
@@ -126,12 +134,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const horario = document.getElementById('horario').value;
             const entrega = document.getElementById('entrega').classList.contains('ativo');
             const devolucao = document.getElementById('devolucao').classList.contains('ativo');
-        
+
             if (!data || !setor || !responsavel || !horario || (!entrega && !devolucao)) {
                 alert("Por favor, preencha todos os campos e selecione uma operação.");
                 return;
             }
-        
+
             const dataFormatada = new Date(data).toISOString().split('T')[0];
             const dados = {
                 date: dataFormatada,
@@ -140,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 time: horario,
                 operation: entrega ? 'ENTREGA' : 'DEVOLUÇÃO'
             };
-        
+
             try {
                 const response = await fetch('http://localhost:5500/pag_principal', {
                     method: 'POST',
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     },
                     body: JSON.stringify(dados)
                 });
-        
+
                 if (response.ok) {
                     alert("Dados registrados com sucesso!");
                 } else {
@@ -160,11 +168,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Erro ao registrar dados. Verifique se todos os campos foram preenchidos corretamente.');
             }
         }
-        
+
         function clicar(btnClicado) {
             const entrega = document.getElementById('entrega');
             const devolucao = document.getElementById('devolucao');
-        
+
             if (btnClicado === entrega) {
                 entrega.classList.add('ativo');
                 devolucao.classList.remove('ativo');
@@ -175,11 +183,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
-    // Funções para abrir as páginas de chaves e registros
-    function abrir_pag_chave() {
-        window.open('pag_chaves.html', '_blank');
-    }
 
-    function abrir_pag_registros() {
-        window.open('pag_registros.html', '_blank');
-    }
+// Funções para abrir as páginas de chaves e registros
+function abrir_pag_chave() {
+    window.open('pag_chaves.html', '_blank');
+}
+
+function abrir_pag_registros() {
+    window.open('pag_registros.html', '_blank');
+}

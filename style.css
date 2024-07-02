@@ -293,16 +293,6 @@ aside.login{
     font-weight: bold;
 }
 
-.indisponivel{
-    color: green;
-    background-color: aqua;
-}
-
-.disponivel{
-    color: red;
-    background-color: aqua;
-}
-
 /*Estilo do container principal*/
 #main {
     display: block;
