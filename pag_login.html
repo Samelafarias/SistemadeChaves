@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" type="javascript"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
-    <title>Login</title>
+    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Configura a viewport para dispositivos móveis -->
+    <script src="script.js" type="javascript"></script> <!-- Importa o arquivo de script JavaScript -->
+    <link rel="stylesheet" href="style.css"> <!-- Importa o arquivo de estilo CSS -->
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon"> <!-- Define o ícone da página -->
+    <title>Login</title> <!-- Título da página -->
 </head>
-<body class="pag_login">
+<body class="pag_login"> <!-- Corpo da página com a classe pag_login -->
     <main>
         <div id="login">
             <aside class="login">
-                <h1 id="h1_login">Controle do Registro de Chaves</h1>
-                <img src="img/Boa Viagem-02-pq.png" alt="logo ifce" id="logo_login">
+                <h1 id="h1_login">Controle do Registro de Chaves</h1> <!-- Título principal da página -->
+                <img src="img/Boa Viagem-02-pq.png" alt="logo ifce" id="logo_login"> <!-- Imagem do logo -->
                 <form id="loginForm"> <!-- Formulário de login -->
                     <h4 class="h4_login">
-                        <label for="username">Usuário</label>
+                        <label for="username">Usuário</label> <!-- Label para o campo de usuário -->
                     </h4>
-                    <input type="text" class="dados_login" id="username" name="user" required>
+                    <input type="text" class="dados_login" id="username" name="user" required> <!-- Campo de entrada para o nome de usuário -->
                     <br>
                     <h4 class="h4_login">
-                        <label for="password">Senha</label>
+                        <label for="password">Senha</label> <!-- Label para o campo de senha -->
                     </h4>
-                    <input type="password" class="dados_login" id="password" name="password" required>
+                    <input type="password" class="dados_login" id="password" name="password" required> <!-- Campo de entrada para a senha -->
                     <br>
-                    <input type="submit" id="enter" value="Entrar" required>
+                    <input type="submit" id="enter" value="Entrar" required> <!-- Botão de envio do formulário -->
                 </form>
             </aside>
         </div>
         <div>
-            <img src="img/Foto_Nova_IF.jpg" alt="foto do campus boa viagem" id="img_login">
+            <img src="img/Foto_Nova_IF.jpg" alt="foto do campus boa viagem" id="img_login"> <!-- Imagem do campus -->
         </div>
     </main>
-    
-    
 </body>
-<script src="script.js" defer></script>
+<script src="script.js" defer></script> <!-- Importa o arquivo de script JavaScript de forma assíncrona -->
 </html>

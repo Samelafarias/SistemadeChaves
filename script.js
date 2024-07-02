@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Login bem-sucedido') {
-                    window.location.href = '/pag_principal.html';
+                    window.location.href = '/pag_principal.html'; // Redireciona em caso de login bem-sucedido
                 } else {
-                    alert('Usuário ou senha inválidos');
+                    alert('Usuário ou senha inválidos'); // Exibe alerta em caso de erro no login
                 }
             })
             .catch((error) => {
-                console.error('Erro:', error);
+                console.error('Erro:', error); // Log de erro caso ocorra um problema na requisição
             });
         });
     }
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         const tr = document.createElement('tr');
                         const operacao = registro.operacao.toUpperCase();
                         const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
-                        localStorage.setItem('operacao', operacao);
+                        localStorage.setItem('operacao', operacao); // Armazena a operação no localStorage
 
                         tr.innerHTML = `
                             <td>${formatarData(registro.date)}</td>
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         tbody.appendChild(tr);
                     });
                 })
-                .catch(error => console.error('Erro ao buscar dados:', error));
+                .catch(error => console.error('Erro ao buscar dados:', error)); // Log de erro caso ocorra um problema na requisição
             }
         });
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const dia = String(date.getDate()).padStart(2, '0');
             const mes = String(date.getMonth() + 1).padStart(2, '0');
             const ano = date.getFullYear();
-            return `${dia}/${mes}/${ano}`;
+            return `${dia}/${mes}/${ano}`; // Formata a data no formato dd/mm/aaaa
         }
     }
 
@@ -97,9 +97,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (registrosChave.length > 0) {
                     const ultimoRegistro = registrosChave[registrosChave.length - 1];
                     if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
-                        chave.style.backgroundColor = 'red';
+                        chave.style.backgroundColor = 'red'; // Define cor vermelha para entrega
                     } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
-                        chave.style.backgroundColor = 'green';
+                        chave.style.backgroundColor = 'green'; // Define cor verde para devolução
                     } else {
                         chave.style.backgroundColor = 'green'; // Caso não seja especificado, padrão para verde
                     }
@@ -109,11 +109,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         })
         .catch(error => {
-            console.error('Erro ao buscar registros:', error);
+            console.error('Erro ao buscar registros:', error); // Log de erro caso ocorra um problema na requisição
         });
     }
     
-
     // Script dos botões da página principal
     const entregaButton = document.getElementById('entrega');
     const devolucaoButton = document.getElementById('devolucao');
@@ -186,9 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Funções para abrir as páginas de chaves e registros
 function abrir_pag_chave() {
-    window.open('pag_chaves.html', '_blank');
+    window.open('pag_chaves.html', '_blank'); // Abre uma nova janela para a página de chaves
 }
 
 function abrir_pag_registros() {
-    window.open('pag_registros.html', '_blank');
+    window.open('pag_registros.html', '_blank'); // Abre uma nova janela para a página de registros
 }

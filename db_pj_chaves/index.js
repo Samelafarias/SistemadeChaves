@@ -1,22 +1,23 @@
-const mysql = require('mysql')
-const express = require('express')
-const bodyParser = require('body-parser')
-const bcrypt = require('bcrypt')
-const cors = require('cors')
+const mysql = require('mysql')//Importa o módulo Mysql para conectar ao banco de dados
+const express = require('express')// Importa o módulo Express para criar o servidor web
+const bodyParser = require('body-parser')// Middleware para interpretar o corpo das requisições
+
+const bcrypt = require('bcrypt')// Biblioteca para hashing de senhas
+const cors = require('cors')// Middleware para permitir requisições CORS
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
-    host: 'localhost', // Corrigido o nome do host
-    user: 'root',
-    password: '1234567',
-    database: 'db_pj_chaves',
-    port: '3306'
+    host: 'localhost',  // Endereço do servidor do banco de dados
+    user: 'root', // Usuário do banco de dados
+    password: '1234567', //Senha do banco de dados
+    database: 'db_pj_chaves', //Nome do banco de dados
+    port: '3306' //Porta do servidor Mysql
 };
 
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
-app.use (bodyParser.urlencoded({extended: true}));
+const app = express(); // Cria uma instância do servidor Express
+app.use(bodyParser.json()); // Middleware para interpretar JSON no corpo das requisições
+app.use(cors()); // Aplica o middleware CORS para permitir requisições de diferentes origens
+app.use(bodyParser.urlencoded({ extended: true })); // Middleware para interpretar dados codificados na URL
 
 // CRIAR CONEXÃO COM O BANCO DE DADOS
 const db = mysql.createConnection(dbConfig);
@@ -30,11 +31,11 @@ db.connect((error) => {
     console.log('Conectado ao banco de dados com sucesso!!!');
 });
 
-  //API PAGINA DE LOGIN
- // Rota de login
- app.post('/pag_login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+// API PÁGINA DE LOGIN
+// Rota para login de usuários
+app.post('/pag_login', (req, res) => {
+    const username = req.body.username; // Obtém o nome de usuário do corpo da requisição
+    const password = req.body.password; // Obtém a senha do corpo da requisição
 
     if (!username || !password) {
         return res.status(400).json({ message: 'Usuário e senha são obrigatórios' });
@@ -52,27 +53,25 @@ db.connect((error) => {
     });
 });
 
-//pesquisar sobre: se esssa é a api correta para a pagina principal
-//API PARA PAGINA PRINCIPAL
-    app.post('/pag_principal', (req, res) => {
-        const newRecord = req.body;
-        const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-        const values = [newRecord.date, newRecord.sector, newRecord.operation, newRecord.responsible, newRecord.time];
-      
-        db.query(query, values, (err, result) => {
-            if (err) {
-                return res.status(500).json({ error: err.message });
-            }
-            res.status(201).json({ message: 'Registro criado com sucesso', id: result.insertId });
-        });
-      });
-   
-    
-    //API PAGINA DE REGISTROS
-// Endpoint para obter todos os registros
-// Rota para buscar os dados
+// API PARA PÁGINA PRINCIPAL
+// Rota para criar novos registros
+app.post('/pag_principal', (req, res) => {
+    const newRecord = req.body; // Obtém os dados do novo registro do corpo da requisição
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    const values = [newRecord.date, newRecord.sector, newRecord.operation, newRecord.responsible, newRecord.time];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(201).json({ message: 'Registro criado com sucesso', id: result.insertId });
+    });
+});
+
+// API PARA PÁGINA DE REGISTROS
+// Rota para obter todos os registros
 app.get('/pag_registros', (req, res) => {
-    let sql = 'SELECT * FROM registros'; 
+    let sql = 'SELECT * FROM registros';
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).send(err);
@@ -82,8 +81,9 @@ app.get('/pag_registros', (req, res) => {
 });
 
 // API PARA PÁGINA DE CHAVES
+// Rota para obter setor e operação dos registros (ajuste conforme sua estrutura de tabela)
 app.get('/pag_chaves', (req, res) => {
-    const query = 'SELECT setor, operacao FROM registros'; // Ajuste conforme a estrutura da sua tabela
+    const query = 'SELECT setor, operacao FROM registros';
     db.query(query, (err, results) => {
         if (err) {
             console.error('Erro ao buscar dados:', err);
@@ -94,14 +94,13 @@ app.get('/pag_chaves', (req, res) => {
     });
 });
 
-// Servindo os arquivos estáticos (HTML, CSS, JS)
+// Servindo arquivos estáticos (HTML, CSS, JS) na pasta 'public'
 app.use(express.static('public'));
 
-
-  // INICIAR O SERVIDOR
-const port = 5500;
-  app.listen(port, () => {
+// INICIAR O SERVIDOR
+const port = 5500; // Porta em que o servidor vai escutar
+app.listen(port, () => {
     console.log(`Servidor iniciado na porta http://localhost:${port}/`);
-  });
+});
 
   
