@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Login bem-sucedido') {
-                    window.location.href = '/pag_principal.html'; // Redireciona em caso de login bem-sucedido
+                    window.location.href = '/pag_menu.html'; // Redireciona em caso de login bem-sucedido
                 } else {
                     alert('Usuário ou senha inválidos'); // Exibe alerta em caso de erro no login
                 }
@@ -28,6 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    //Script sa página de menu
+    //Script da página de cadastro de chaves
+    //Script da página de cadastro de adm
+    //Script da pagina de cadastro de responsaveis
+    
     // Script da página de registros
     const filterButton = document.getElementById('filterbnt');
     if (filterButton) {

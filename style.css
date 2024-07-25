@@ -639,10 +639,8 @@ aside.cadast-resp{
 }
 
 
-
 /*CSS DA PÁGINA DE REGISTROS*/
 /*Estilo para o conteúdo principal*/
-
 #main_pag_registros{
     margin-top: 4%;
     margin-left: 10%;
@@ -703,6 +701,11 @@ tr, td{
     border-radius: 15px;
     margin-left: 8px;
 }
+
+#dados_line_sup_pag_registros{
+    margin-left: 12%;
+}
+
 
 /*CSS DO FOOTER*/
 footer{
