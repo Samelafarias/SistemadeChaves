@@ -12,7 +12,6 @@ body{
 }
 
 /*CSS DA PÁGINA DE LOGIN*/
-/*CSS DA PÁGINA DE LOGIN*/
 /*Estilo específico para página de login*/
 body.pag_login{
     background-color: #00350A; 
@@ -103,6 +102,298 @@ aside.login{
     color: white;
     text-decoration: none;
 }
+
+/*CSS DA PÁGINA DE MENUS*/
+body.pag_menu{
+    background-color: #00350A; 
+}
+
+/*Estilo da seção de login*/
+aside.menu{
+    width: 661px;
+    position: absolute;
+    display: block;
+    margin-top: 6%;
+    left: 10%;
+}
+
+/*Estilo da imagem do campus*/
+#img_menu{
+   background-position: right;
+   background: fixed;
+   float: right;
+   display: flex;
+   width: 545px;
+   height: auto;
+   margin-top: -5.4%;
+}
+
+/*Estilo do título do login*/
+#h1_menu{
+    text-align: top;
+    font-weight: 750;
+    color: white;
+    margin-left: 20%;
+    margin-top: 2%;
+}
+
+.a-h2-menu{
+    text-decoration: none;
+    color: white;
+    display: grid;
+}
+
+.h2-menu{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.line{
+    background-color: white;
+    width: 661px;
+    height: 1px;
+    margin-top: 2%;
+    margin-bottom: 7%;
+}
+
+/*CSS DA PÁGINA DE CADASTRO DE CHAVES*/
+body.pag_cadast_chave{
+    background-color: #00350A; 
+}
+
+/*Estilo da seção de cadastro das chaves*/
+aside.cadast-chave{
+    background-color: white;
+    border-radius: 25px;
+    width: 391px;
+    height: 621px;
+    position: absolute;
+    display: block;
+    top: 6%;
+    left: 20%;
+}
+
+/*Estilo da imagem do campus*/
+#img_cadast-chave{
+   background-position: right;
+   background: fixed;
+   float: right;
+   display: block;
+   width: 545px;
+   height: auto;
+}
+
+/*Estilo do título do pagina de cadastro de chaves*/
+#h1_cadast-chave{
+    text-align: center;
+    padding: 18% 0 0 0;
+    font-size: 1.4rem;
+    font-weight: 750;
+}
+
+/*Estilo da logo do IFCE*/
+#logo_cadast-chave{
+    margin: auto;
+    width: 250px;
+    height: auto;
+    align-items: center;
+    display: block;
+}
+
+/*Estilos dos títulos de input*/
+.h4_cadast-chave{
+    text-align: left;
+    font-size: 1rem;
+    padding-left: 20%;
+}
+
+/*Estilos do campus de entrada de dados*/
+.dados_cadast-chave{
+    align-items: center;
+    display: block;
+    margin: auto;
+    margin-top: 4%;
+    position: relative;
+    width: 240px;
+    height: 35px;
+    font-size: 16px;
+    border-radius: 7px;
+    background-color: lightgray;
+    color: black;
+    text-align: justify;
+}
+
+/*Estilo do botão de caadstrar*/
+.cadastrar{
+    width: 170px;
+    height: 36px;
+    border-radius: 7px;
+    align-items: center;
+    display: block;
+    margin: auto;
+    margin-top: 8%;
+    position: relative;
+    background-color: #00350A;
+    border-color: #00350A;
+    box-shadow: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/*Estilo de link de cadastrar*/
+#link_cadastrar{
+    color: white;
+    text-decoration: none;
+}
+
+/*CSS DA PÁGINA DE CADASTRO DE ADM*/
+body.pag_cadast-adm{
+    background-color: #00350A; 
+}
+
+aside.cadast-adm{
+    background-color: white;
+    border-radius: 25px;
+    width: 391px;
+    height: 621px;
+    position: absolute;
+    display: block;
+    top: 6%;
+    left: 20%;
+}
+
+/*Estilo da imagem do campus*/
+#img_cadast-adm{
+   background-position: right;
+   background: fixed;
+   float: right;
+   display: block;
+   width: 545px;
+   height: auto;
+}
+
+/*Estilo do título do login*/
+#h1_cadast-adm{
+    text-align: center;
+    padding: 10% 0 0 0;
+    font-size: 1.4rem;
+    font-weight: 750;
+}
+
+/*Estilo da logo do IFCE*/
+#logo_cadast-adm{
+    margin: auto;
+    width: 250px;
+    height: auto;
+    align-items: center;
+    display: flex;
+}
+
+/*Estilos dos títulos de input*/
+.h4_cadast-adm{
+    text-align: left;
+    font-size: 1rem;
+    padding-left: 20%;
+}
+
+/*Estilos do campus de entrada de dados*/
+.dados_cadast-adm{
+    align-items: center;
+    display: block;
+    margin: auto;
+    margin-top: 3%;
+    position: relative;
+    width: 240px;
+    height: 35px;
+    font-size: 16px;
+    border-radius: 7px;
+    background-color: lightgray;
+    color: black;
+    text-align: justify;
+}
+
+
+/*Estilo de link de login*/
+#link_cadast-adm{
+    color: white;
+    text-decoration: none;
+}
+
+
+/*CSS DA PÁGINA DE CADASTRO DE RESPONSAVEIS*/
+body.pag_cadast-resp{
+    background-color: #00350A; 
+}
+
+/*Estilo da seção de login*/
+aside.cadast-resp{
+    background-color: white;
+    border-radius: 25px;
+    width: 391px;
+    height: 621px;
+    position: absolute;
+    display: block;
+    top: 6%;
+    left: 20%;
+}
+
+/*Estilo da imagem do campus*/
+#img_cadast-resp{
+   background-position: right;
+   background: fixed;
+   float: right;
+   display: block;
+   width: 545px;
+   height: auto;
+}
+
+/*Estilo do título do login*/
+#h1_cadast-resp{
+    text-align: center;
+    padding: 10% 0 0 0;
+    font-size: 1.4rem;
+    font-weight: 750;
+}
+
+/*Estilo da logo do IFCE*/
+#logo_cadast-resp{
+    margin: auto;
+    width: 250px;
+    height: auto;
+    align-items: center;
+    display: block;
+}
+
+/*Estilos dos títulos de input*/
+.h4_cadast-resp{
+    text-align: left;
+    font-size: 1rem;
+    padding-left: 20%;
+}
+
+/*Estilos do campus de entrada de dados*/
+.dados_cadast-resp{
+    align-items: center;
+    display: block;
+    margin: auto;
+    margin-top: 4%;
+    position: relative;
+    width: 240px;
+    height: 35px;
+    font-size: 16px;
+    border-radius: 7px;
+    background-color: lightgray;
+    color: black;
+    text-align: justify;
+}
+
+/*Estilo de link de login*/
+#link_cadast-resp{
+    color: white;
+    text-decoration: none;
+}
+
 
 /*CSS DA PÁGINA PRINCIPAL*/
 /*Estilo de cabeçalho*/
@@ -346,6 +637,7 @@ aside.login{
     background-color: red;
     margin-right: 5px;
 }
+
 
 
 /*CSS DA PÁGINA DE REGISTROS*/
