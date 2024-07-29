@@ -161,7 +161,7 @@ body.pag_cadast_chave{
     background-color: #00350A; 
 }
 
-/*Estilo da seção de cadastro das chaves*/
+/*Estilo da seção de login*/
 aside.cadast-chave{
     background-color: white;
     border-radius: 25px;
@@ -183,7 +183,7 @@ aside.cadast-chave{
    height: auto;
 }
 
-/*Estilo do título do pagina de cadastro de chaves*/
+/*Estilo do título do login*/
 #h1_cadast-chave{
     text-align: center;
     padding: 18% 0 0 0;
@@ -201,7 +201,7 @@ aside.cadast-chave{
 }
 
 /*Estilos dos títulos de input*/
-.h4_cadast-chave{
+.h4_cadast_chave{
     text-align: left;
     font-size: 1rem;
     padding-left: 20%;
@@ -223,7 +223,7 @@ aside.cadast-chave{
     text-align: justify;
 }
 
-/*Estilo do botão de caadstrar*/
+/*Estilo do botão de login*/
 .cadastrar{
     width: 170px;
     height: 36px;
@@ -241,8 +241,8 @@ aside.cadast-chave{
     font-weight: bold;
 }
 
-/*Estilo de link de cadastrar*/
-#link_cadastrar{
+/*Estilo de link de login*/
+#link_pag_cadast-chave{
     color: white;
     text-decoration: none;
 }
@@ -313,6 +313,23 @@ aside.cadast-adm{
     text-align: justify;
 }
 
+/*Estilo do botão de login*/
+.cadastrar{
+    width: 170px;
+    height: 36px;
+    border-radius: 7px;
+    align-items: center;
+    display: block;
+    margin: auto;
+    margin-top: 8%;
+    position: relative;
+    background-color: #00350A;
+    border-color: #00350A;
+    box-shadow: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
 
 /*Estilo de link de login*/
 #link_cadast-adm{

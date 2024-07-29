@@ -53,6 +53,29 @@ app.post('/pag_login', (req, res) => {
     });
 });
 
+    //API da página de cadastro de chaves
+    // Rota para lidar com o cadastro de chaves
+app.post('/pag_cadastro_chaves', (req, res) => {
+    const { name, numero } = req.body;
+  
+    if (!name || !numero) {
+      return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
+    }
+  
+    const query = 'INSERT INTO chaves (nome, numero) VALUES (?, ?)';
+    db.query(query, [name, numero], (err, result) => {
+      if (err) {
+        console.error('Erro ao inserir dados no banco de dados:', err);
+        return res.status(500).json({ error: 'Erro ao inserir dados no banco de dados.' });
+      }
+      res.status(200).json({ message: 'Chave cadastrada com sucesso.' });
+    });
+  });
+  
+
+    //API da página de cadastro de adm
+    //API da pagina de cadastro de responsaveis
+
 // API PARA PÁGINA PRINCIPAL
 // Rota para criar novos registros
 app.post('/pag_principal', (req, res) => {
