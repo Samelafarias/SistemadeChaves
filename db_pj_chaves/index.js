@@ -73,8 +73,8 @@ app.post('/pag_cadastro_chaves', (req, res) => {
   });
   
 
-    //API da página de cadastro de adm
-    //API da pagina de cadastro de responsaveis
+    //API DA PÁGINA DE REGISTRO DE ADMS
+    //API DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
 
 // API PARA PÁGINA PRINCIPAL
 // Rota para criar novos registros
@@ -116,6 +116,9 @@ app.get('/pag_chaves', (req, res) => {
         res.json(results);
     });
 });
+
+//API da página de registro de adms
+//API da página de registro de responsáveis
 
 // Servindo arquivos estáticos (HTML, CSS, JS) na pasta 'public'
 app.use(express.static('public'));

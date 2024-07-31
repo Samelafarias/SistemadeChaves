@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    //SCRIPT DA PÁGINA DE LOGIN
     // Função para manipulação do formulário de login
     function setupLoginForm() {
         const loginForm = document.getElementById('loginForm');
@@ -30,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    //SCRIPT DA PÁGINA DE REGISTRO DE NOVAS CHAVES
     // Função para manipulação do formulário de cadastro de chaves
     function setupCadastroChaveForm() {
         const cadastroChaveForm = document.getElementById('cadast-chave Form');
@@ -62,6 +65,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
+    //SCRIPT DA PÁGINA DE REGISTRO DE ADMS
+    //SCRIPT DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
+
+    //SCRIPT DA PÁGINA DE REGISTROS
     // Função para manipulação dos filtros de registros
     function setupFilterButton() {
         const filterButton = document.getElementById('filterbnt');
@@ -113,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    //SCRIPT DA PÁGINA DE CHAVES
     // Função para manipulação da página de chaves
     function setupChaves() {
         const chaves = document.querySelectorAll('.disp_chave');
@@ -151,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
+    //SCRIPT DA PÁGINA PRINCIPAL
     // Função para manipulação dos botões da página principal
     function setupPaginaPrincipal() {
         const entregaButton = document.getElementById('entrega');
