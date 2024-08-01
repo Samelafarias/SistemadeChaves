@@ -67,7 +67,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //SCRIPT DA PÁGINA DE REGISTRO DE ADMS
+    
+});
+
+
     //SCRIPT DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
+    function setupCadastroRespForm() {
+    const cadastroRespForm = document.getElementById('cadast-respForm');
+    if (cadastroRespForm) {
+        cadastroRespForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+          
+            const nome = document.getElementById('username').value;
+            const profissao = document.getElementById('select').value;
+            const email = document.getElementById('email').value;
+          
+            fetch('http://localhost:5500/pag_cadastro_resp', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ nome, profissao, email })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.error) {
+                alert(`Erro: ${data.error}`);
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch(error => {
+              console.error('Erro ao enviar dados:', error);
+            });
+        });
+    }
+}
+
 
     //SCRIPT DA PÁGINA DE REGISTROS
     // Função para manipulação dos filtros de registros
@@ -235,9 +271,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar todos os scripts
     setupLoginForm();
     setupCadastroChaveForm();
+    setupCadastroRespForm();
     setupFilterButton();
     setupChaves();
     setupPaginaPrincipal();
+
 });
 
 // Funções para abrir as páginas de chaves e registros

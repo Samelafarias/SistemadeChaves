@@ -74,7 +74,26 @@ app.post('/pag_cadastro_chaves', (req, res) => {
   
 
     //API DA PÁGINA DE REGISTRO DE ADMS
+   
+
     //API DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
+    // Rota para lidar com o cadastro de chaves
+app.post('/pag_cadastro_resp', (req, res) => {
+    const { nome, profissao, email } = req.body;
+  
+    if (!nome || !profissao || !email) {
+      return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
+    }
+  
+    const query = 'INSERT INTO responsaveis (nome, profissao, email) VALUES (?, ?, ?)';
+    db.query(query, [nome, profissao, email], (err, result) => {
+      if (err) {
+        console.error('Erro ao inserir dados no banco de dados:', err);
+        return res.status(500).json({ error: 'Erro ao inserir dados no banco de dados.' });
+      }
+      res.status(200).json({ message: 'Chave cadastrada com sucesso.' });
+    });
+  });
 
 // API PARA PÁGINA PRINCIPAL
 // Rota para criar novos registros
