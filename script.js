@@ -67,8 +67,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //SCRIPT DA PÁGINA DE REGISTRO DE ADMS
-    
-});
+    // Função para manipulação do formulário de cadastro de administradores
+    function setupCadastroAdmForm() {
+        const cadastroAdmForm = document.getElementById('cadast-admForm');
+        if (cadastroAdmForm) {
+            cadastroAdmForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                if (password !== confirmPassword) {
+                    alert('As senhas não coincidem.');
+                    return;
+                }
+
+                fetch('http://localhost:5500/pag_cadastro_adm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(`Erro: ${data.error}`);
+                    } else {
+                        alert(data.message);
+                        cadastroAdmForm.reset(); // Limpa o formulário após sucesso
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar dados:', error);
+                });
+            });
+        }
+    }
+
+
 
 
     //SCRIPT DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
@@ -272,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setupLoginForm();
     setupCadastroChaveForm();
     setupCadastroRespForm();
+    setupCadastroAdmForm();
     setupFilterButton();
     setupChaves();
     setupPaginaPrincipal();

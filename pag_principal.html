@@ -54,7 +54,13 @@
     
         <p>
             <label for="responsavel" class="label_pag_princ">Responsável:</label><!--Preeencher quem é o responsável-->
-            <input type="text" id="resp_pag_princ" name="responsavel">
+            <select name="responsavel" id="resp_pag_princ">
+                <option value="selecione">selecione</option>
+                <option value="resp1">Ana</option>
+                <option value="resp2">Maria</option>
+                <option value="resp3">João </option>
+                <option value="resp4">José</option>
+            </select>
             <label for="horario" class="label_pag_princ">Horário: </label><!--Preencher o horário em que a chave foi pega/devolvida-->
             <input type="time" class="dados_pag_princ" name="horario" id="horario">
         </p>
