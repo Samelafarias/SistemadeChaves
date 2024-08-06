@@ -13,68 +13,42 @@
     </header>
 
     <main id="main_pag_princ">
-        <p id="dados_line_sup">
-            <label for="data" class="label_pag_princ">Data:</label><!--Inserir dia-->
-            <input type="date" name="data" id="data" class="dados_pag_princ">
-    
-            <label for="setor" class="label_pag_princ">Setor:</label><!--Inserir sala / setor-->
-            <select name="setor" id="setor_pag_princ">
-                <option value="setor" selected>Setor</option>
-                <!-- opções de sala -->
-                <option value="01">Sala 01</option>
-                <option value="02">Sala 02</option>
-                <option value="03">Sala 03</option>
-                <option value="04">Sala 04</option>
-                <option value="05">Sala 05</option>
-                <option value="06">Sala 06</option>
-                <option value="07">Sala 07</option>
-                <option value="08">Sala 08</option>
-                <option value="09">Sala 09</option>
-                <option value="10">Sala 010</option>
-                <option value="11">Sala 011</option>
-                <option value="12">Sala 012</option>
-                <option value="13">Sala 013</option>
-                <option value="14">Sala 014</option>
-                <option value="15">Sala 015</option>
-                <option value="16">Sala 016</option>
-                <option value="17">Sala 017</option>
-                <option value="18">Sala 018</option>
-                <option value="19">Sala 019</option>
-                <option value="20">Sala 020</option>
-            </select>
-        </p>
-    
-        <p>
-            <!--selecionar a entrega ou devolução-->
-            <label for="operacao" class="label_pag_princ">Selecione a operação requerida:</label>
-            <!--fazer configuração de quando clicar mudar de cor para saber que foi selecionado-->
-            <button class="oper_pag_princ" id="entrega">Entrega</button>
-            <button class="oper_pag_princ" id="devolucao">Devolução</button>
-        </p>
-    
-        <p>
-            <label for="responsavel" class="label_pag_princ">Responsável:</label><!--Preeencher quem é o responsável-->
-            <select name="responsavel" id="resp_pag_princ">
-                <option value="selecione">selecione</option>
-                <option value="resp1">Ana</option>
-                <option value="resp2">Maria</option>
-                <option value="resp3">João </option>
-                <option value="resp4">José</option>
-            </select>
-            <label for="horario" class="label_pag_princ">Horário: </label><!--Preencher o horário em que a chave foi pega/devolvida-->
-            <input type="time" class="dados_pag_princ" name="horario" id="horario">
-        </p>
-    
+    <p id="dados_line_sup">
+        <label for="data" class="label_pag_princ">Data:</label>
+        <input type="date" name="data" id="data" class="dados_pag_princ">
+
+        <label for="setor" class="label_pag_princ">Setor:</label>
+        <select name="setor" id="setor_pag_princ">
+            <option value="" selected>Setor</option>
+        </select>
+    </p>
+
+    <p>
+        <label for="operacao" class="label_pag_princ">Selecione a operação requerida:</label>
+        <button class="oper_pag_princ" id="entrega">Entrega</button>
+        <button class="oper_pag_princ" id="devolucao">Devolução</button>
+    </p>
+
+    <p>
+        <label for="responsavel" class="label_pag_princ">Responsável:</label>
+        <select name="responsavel" id="resp_pag_princ">
+            <option value="">Selecione</option>
+        </select>
+        <label for="horario" class="label_pag_princ">Horário: </label>
+        <input type="time" class="dados_pag_princ" name="horario" id="horario">
+    </p>
+
+    <br>
+    <p>
+        <button id="bnt_registrar" value="registrar_dados" id="registrar_dados">Registrar</button>
         <br>
-        <p>
-    <button id="bnt_registrar" value="registrar_dados" id="registrar_dados">Registrar</button><!--Para registrar a entrega ou devolução da chave-->
-            <br>
-    <button class="bnt_link_pag_principal" id="ver_chaves" onclick="abrir_pag_chave()">Ver chaves</button><!--Para ir para a página chaves-->
-            <br>
-    <button class="bnt_link_pag_principal" id="ver_registros" onclick="abrir_pag_registros()">Registros de Chaves</button><!--Para ir para a página de registros-->
-        </p>
-    </main>
-    
+        <button class="bnt_link_pag_principal" id="ver_chaves" onclick="abrir_pag_chave()">Ver chaves</button>
+        <br>
+        <button class="bnt_link_pag_principal" id="ver_registros" onclick="abrir_pag_registros()">Registros de Chaves</button>
+    </p>
+</main>
+
+
     <br>
 
     <footer></footer>

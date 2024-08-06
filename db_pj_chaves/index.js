@@ -118,10 +118,10 @@ app.post('/pag_cadastro_resp', (req, res) => {
     });
   });
 
-// API PARA PÁGINA PRINCIPAL
+  //API PPÁGINA PRINCIPAL
 // Rota para criar novos registros
 app.post('/pag_principal', (req, res) => {
-    const newRecord = req.body; // Obtém os dados do novo registro do corpo da requisição
+    const newRecord = req.body;
     const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
     const values = [newRecord.date, newRecord.sector, newRecord.operation, newRecord.responsible, newRecord.time];
 
@@ -130,6 +130,30 @@ app.post('/pag_principal', (req, res) => {
             return res.status(500).json({ error: err.message });
         }
         res.status(201).json({ message: 'Registro criado com sucesso', id: result.insertId });
+    });
+});
+
+// Rota para obter setores
+app.get('/getSetores', (req, res) => {
+    const query = 'SELECT nome FROM chaves';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(200).json(results);
+    });
+});
+
+// Rota para obter responsáveis
+app.get('/getResponsaveis', (req, res) => {
+    const query = 'SELECT profissao, nome FROM responsaveis';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(200).json(results);
     });
 });
 
@@ -158,9 +182,6 @@ app.get('/pag_chaves', (req, res) => {
         res.json(results);
     });
 });
-
-//API da página de registro de adms
-//API da página de registro de responsáveis
 
 // Servindo arquivos estáticos (HTML, CSS, JS) na pasta 'public'
 app.use(express.static('public'));

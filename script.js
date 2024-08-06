@@ -106,9 +106,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-
-
     //SCRIPT DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
     function setupCadastroRespForm() {
     const cadastroRespForm = document.getElementById('cadast-respForm');
@@ -234,77 +231,108 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
-    //SCRIPT DA PÁGINA PRINCIPAL
+
+    //SCRIPt página principal
     // Função para manipulação dos botões da página principal
-    function setupPaginaPrincipal() {
-        const entregaButton = document.getElementById('entrega');
-        const devolucaoButton = document.getElementById('devolucao');
-        const registrarButton = document.getElementById('bnt_registrar');
-        if (entregaButton && devolucaoButton && registrarButton) {
-            entregaButton.addEventListener('click', function() {
-                clicar(this);
-            });
-            devolucaoButton.addEventListener('click', function() {
-                clicar(this);
-            });
-            registrarButton.addEventListener('click', registrar_dados);
+function setupPaginaPrincipal() {
+    const entregaButton = document.getElementById('entrega');
+    const devolucaoButton = document.getElementById('devolucao');
+    const registrarButton = document.getElementById('bnt_registrar');
+    if (entregaButton && devolucaoButton && registrarButton) {
+        entregaButton.addEventListener('click', function() {
+            clicar(this);
+        });
+        devolucaoButton.addEventListener('click', function() {
+            clicar(this);
+        });
+        registrarButton.addEventListener('click', registrar_dados);
 
-            async function registrar_dados() {
-                const data = document.getElementById('data').value;
-                const setor = document.getElementById('setor_pag_princ').value;
-                const responsavel = document.getElementById('resp_pag_princ').value;
-                const horario = document.getElementById('horario').value;
-                const entrega = document.getElementById('entrega').classList.contains('ativo');
-                const devolucao = document.getElementById('devolucao').classList.contains('ativo');
+        async function registrar_dados() {
+            const data = document.getElementById('data').value;
+            const setor = document.getElementById('setor_pag_princ').value;
+            const responsavel = document.getElementById('resp_pag_princ').value;
+            const horario = document.getElementById('horario').value;
+            const entrega = document.getElementById('entrega').classList.contains('ativo');
+            const devolucao = document.getElementById('devolucao').classList.contains('ativo');
 
-                if (!data || !setor || !responsavel || !horario || (!entrega && !devolucao)) {
-                    alert("Por favor, preencha todos os campos e selecione uma operação.");
-                    return;
-                }
-
-                const dataFormatada = new Date(data).toISOString().split('T')[0];
-                const dados = {
-                    date: dataFormatada,
-                    sector: setor,
-                    responsible: responsavel,
-                    time: horario,
-                    operation: entrega ? 'ENTREGA' : 'DEVOLUÇÃO'
-                };
-
-                try {
-                    const response = await fetch('http://localhost:5500/pag_principal', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dados)
-                    });
-
-                    if (response.ok) {
-                        alert("Dados registrados com sucesso!");
-                    } else {
-                        alert("Erro ao registrar dados.");
-                    }
-                } catch (error) {
-                    console.error('Erro ao registrar dados:', error);
-                    alert('Erro ao registrar dados. Verifique se todos os campos foram preenchidos corretamente.');
-                }
+            if (!data || !setor || !responsavel || !horario || (!entrega && !devolucao)) {
+                alert("Por favor, preencha todos os campos e selecione uma operação.");
+                return;
             }
 
-            function clicar(btnClicado) {
-                const entrega = document.getElementById('entrega');
-                const devolucao = document.getElementById('devolucao');
+            const dataFormatada = new Date(data).toISOString().split('T')[0];
+            const dados = {
+                date: dataFormatada,
+                sector: setor,
+                responsible: responsavel,
+                time: horario,
+                operation: entrega ? 'ENTREGA' : 'DEVOLUÇÃO'
+            };
 
-                if (btnClicado === entrega) {
-                    entrega.classList.add('ativo');
-                    devolucao.classList.remove('ativo');
-                } else if (btnClicado === devolucao) {
-                    devolucao.classList.add('ativo');
-                    entrega.classList.remove('ativo');
+            try {
+                const response = await fetch('http://localhost:5500/pag_principal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (response.ok) {
+                    alert("Dados registrados com sucesso!");
+                } else {
+                    alert("Erro ao registrar dados.");
                 }
+            } catch (error) {
+                console.error('Erro ao registrar dados:', error);
+                alert('Erro ao registrar dados. Verifique se todos os campos foram preenchidos corretamente.');
+            }
+        }
+
+        function clicar(btnClicado) {
+            const entrega = document.getElementById('entrega');
+            const devolucao = document.getElementById('devolucao');
+
+            if (btnClicado === entrega) {
+                entrega.classList.add('ativo');
+                devolucao.classList.remove('ativo');
+            } else if (btnClicado === devolucao) {
+                devolucao.classList.add('ativo');
+                entrega.classList.remove('ativo');
             }
         }
     }
+}
+
+// Função para carregar opções de setor e responsável ao carregar a página
+async function carregarOpcoes() {
+    try {
+        const responseSetores = await fetch('http://localhost:5500/getSetores');
+        const setores = await responseSetores.json();
+
+        const responseResponsaveis = await fetch('http://localhost:5500/getResponsaveis');
+        const responsaveis = await responseResponsaveis.json();
+
+        const setorSelect = document.getElementById('setor_pag_princ');
+        const responsavelSelect = document.getElementById('resp_pag_princ');
+
+        setores.forEach(setor => {
+            const option = document.createElement('option');
+            option.value = setor.nome;
+            option.textContent = setor.nome;
+            setorSelect.appendChild(option);
+        });
+
+        responsaveis.forEach(responsavel => {
+            const option = document.createElement('option');
+            option.value = responsavel.nome;
+            option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
+            responsavelSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Erro ao carregar opções:', error);
+    }
+}
 
     // Inicializar todos os scripts
     setupLoginForm();
@@ -314,6 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setupFilterButton();
     setupChaves();
     setupPaginaPrincipal();
+    carregarOpcoes();
 
 });
 
