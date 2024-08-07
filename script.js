@@ -192,62 +192,81 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    
     //SCRIPT DA PÁGINA DE CHAVES
-     // Função para manipulação da página de chaves
-     function setupChaves() {
-        const chaves = document.querySelectorAll('.disp_chave');
-        if (chaves.length > 0) {
-            fetch('http://localhost:5500/pag_chaves')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na requisição: ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(registros => {
-                chaves.forEach(chave => {
-                    const setor = chave.dataset.setor;
-                    // Filtrar os registros apenas para a chave atual
-                    const registrosChave = registros.filter(r => r.setor === setor);
-
-                    // Verificar qual foi a última operação registrada para a chave
-                    if (registrosChave.length > 0) {
-                        const ultimoRegistro = registrosChave[registrosChave.length - 1];
-                        if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
-                            chave.style.backgroundColor = 'red'; // Define cor vermelha para entrega
-                        } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
-                            chave.style.backgroundColor = 'green'; // Define cor verde para devolução
-                        } else {
-                            chave.style.backgroundColor = 'green'; // Caso não seja especificado, padrão para verde
-                        }
-                    } else {
-                        chave.style.backgroundColor = 'green'; // Se não houver registros, padrão para verde
-                    }
-                });
-
-                // Adiciona o evento de tooltip
-                document.querySelectorAll('.chave').forEach(chave => {
-                    const tooltip = chave.querySelector('.tooltip');
-                    const dispChave = chave.querySelector('.disp_chave');
-                    
-                    dispChave.addEventListener('mouseover', function() {
-                        tooltip.textContent = dispChave.dataset.responsavel ? `Chave com: ${dispChave.dataset.responsavel}` : 'Sala livre';
-                        tooltip.style.display = 'block';
-                        const rect = dispChave.getBoundingClientRect();
-                        tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
-                        tooltip.style.left = `${rect.left + window.scrollX}px`;
-                    });
-
-                    dispChave.addEventListener('mouseout', function() {
-                        tooltip.style.display = 'none';
-                    });
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao buscar registros:', error); // Log de erro caso ocorra um problema na requisição
-            });
-        }
+     // Função para criar o HTML das chaves dinamicamente
+     function createChaveHTML(setor, numero) {
+        return `
+            <div class="chave">
+                <div class="disp_chave" id="setor_${setor}" data-setor="${setor}" data-numero="${numero}"></div>
+                <div class="name-sala">Sala ${numero}</div>
+                <img src="img/chave.png" alt="imagem de uma chave" class="img_chave">
+                <div class="tooltip" style="display: none;"></div>
+            </div>
+        `;
     }
+
+    // Função para manipulação da página de chaves
+    function setupChaves() {
+        fetch('http://localhost:5500/pag_chaves')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const sectionChave = document.querySelector('.section_chave');
+            const { chaves, registros } = data;
+
+            chaves.forEach(chave => {
+                sectionChave.innerHTML += createChaveHTML(chave.setor, chave.numero);
+            });
+
+            const dispChaves = document.querySelectorAll('.disp_chave');
+
+            dispChaves.forEach(dispChave => {
+                const setor = dispChave.dataset.setor;
+                const registrosChave = registros.filter(r => r.setor === setor);
+
+                if (registrosChave.length > 0) {
+                    const ultimoRegistro = registrosChave[registrosChave.length - 1];
+                    if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
+                        dispChave.style.backgroundColor = 'red';
+                        dispChave.dataset.responsavel = ultimoRegistro.responsavel;
+                    } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
+                        dispChave.style.backgroundColor = 'green';
+                    } else {
+                        dispChave.style.backgroundColor = 'green';
+                    }
+                } else {
+                    dispChave.style.backgroundColor = 'green';
+                }
+            });
+
+            // Adiciona o evento de tooltip
+            document.querySelectorAll('.chave').forEach(chave => {
+                const tooltip = chave.querySelector('.tooltip');
+                const dispChave = chave.querySelector('.disp_chave');
+
+                dispChave.addEventListener('mouseover', function() {
+                    tooltip.textContent = dispChave.dataset.responsavel ? `Chave com: ${dispChave.dataset.responsavel}` : 'Sala livre';
+                    tooltip.style.display = 'block';
+                    const rect = dispChave.getBoundingClientRect();
+                    tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
+                    tooltip.style.left = `${rect.left + window.scrollX}px`;
+                });
+
+                dispChave.addEventListener('mouseout', function() {
+                    tooltip.style.display = 'none';
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao buscar registros:', error);
+        });
+    }
+
 
     //SCRIPt página principal
     // Função para manipulação dos botões da página principal
@@ -347,9 +366,10 @@ async function carregarOpcoes() {
             responsavelSelect.appendChild(option);
         });
     } catch (error) {
-        console.error('Erro ao carregar opções:', error);
+     //   console.error('Erro ao carregar opções:', error);
     }
 }
+
 
     // Inicializar todos os scripts
     setupLoginForm();

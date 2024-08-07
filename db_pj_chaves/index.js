@@ -170,19 +170,26 @@ app.get('/pag_registros', (req, res) => {
 });
 
 // API PARA PÁGINA DE CHAVES
-// Rota para obter setor e operação dos registros (ajuste conforme sua estrutura de tabela)
+// Rota para obter dados das chaves
 app.get('/pag_chaves', (req, res) => {
-    const query = 'SELECT setor, operacao FROM registros';
-    db.query(query, (err, results) => {
+    const queryChaves = 'SELECT numero FROM chaves';
+    db.query(queryChaves, (err, resultsChaves) => {
         if (err) {
-            console.error('Erro ao buscar dados:', err);
-            res.status(500).send('Erro ao buscar dados');
+            console.error('Erro ao buscar dados das chaves:', err);
+            res.status(500).send('Erro ao buscar dados das chaves');
             return;
         }
-        res.json(results);
+        const queryRegistros = 'SELECT operacao, setor, responsavel FROM registros';
+        db.query(queryRegistros, (err, resultsRegistros) => {
+            if (err) {
+                console.error('Erro ao buscar dados dos registros:', err);
+                res.status(500).send('Erro ao buscar dados dos registros');
+                return;
+            }
+            res.json({ chaves: resultsChaves, registros: resultsRegistros });
+        });
     });
 });
-
 // Servindo arquivos estáticos (HTML, CSS, JS) na pasta 'public'
 app.use(express.static('public'));
 
