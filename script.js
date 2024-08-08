@@ -198,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
      function createChaveHTML(setor, numero) {
         return `
             <div class="chave">
-                <div class="disp_chave" id="setor_${setor}" data-setor="${setor}" data-numero="${numero}"></div>
-                <div class="name-sala">Sala ${numero}</div>
+                <div class="disp_chave" id="${setor}" data-setor="${setor}" data-numero="${numero}"></div>
+                <div class="name-sala">${setor}</div>
                 <img src="img/chave.png" alt="imagem de uma chave" class="img_chave">
                 <div class="tooltip" style="display: none;"></div>
             </div>
@@ -228,21 +228,25 @@ document.addEventListener('DOMContentLoaded', function () {
             dispChaves.forEach(dispChave => {
                 const setor = dispChave.dataset.setor;
                 const registrosChave = registros.filter(r => r.setor === setor);
-
+              
+                console.log(`Registros for setor ${setor}:`, registrosChave);
+              
                 if (registrosChave.length > 0) {
-                    const ultimoRegistro = registrosChave[registrosChave.length - 1];
-                    if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
-                        dispChave.style.backgroundColor = 'red';
-                        dispChave.dataset.responsavel = ultimoRegistro.responsavel;
-                    } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
-                        dispChave.style.backgroundColor = 'green';
-                    } else {
-                        dispChave.style.backgroundColor = 'green';
-                    }
-                } else {
+                  const ultimoRegistro = registrosChave[registrosChave.length - 1];
+                  console.log(`Last registro for setor ${setor}:`, ultimoRegistro);
+              
+                  if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
+                    dispChave.style.backgroundColor = 'red';
+                    dispChave.dataset.responsavel = ultimoRegistro.responsavel;
+                  } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
                     dispChave.style.backgroundColor = 'green';
+                  } else {
+                    dispChave.style.backgroundColor = 'green';
+                  }
+                } else {
+                  dispChave.style.backgroundColor = 'green';
                 }
-            });
+              });
 
             // Adiciona o evento de tooltip
             document.querySelectorAll('.chave').forEach(chave => {

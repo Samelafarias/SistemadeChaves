@@ -172,7 +172,7 @@ app.get('/pag_registros', (req, res) => {
 // API PARA PÁGINA DE CHAVES
 // Rota para obter dados das chaves
 app.get('/pag_chaves', (req, res) => {
-    const queryChaves = 'SELECT numero FROM chaves';
+    const queryChaves = 'SELECT setor FROM chaves';
     db.query(queryChaves, (err, resultsChaves) => {
         if (err) {
             console.error('Erro ao buscar dados das chaves:', err);
