@@ -135,7 +135,7 @@ app.post('/pag_principal', (req, res) => {
 
 // Rota para obter setores
 app.get('/getSetores', (req, res) => {
-    const query = 'SELECT nome FROM chaves';
+    const query = 'SELECT setor FROM chaves';
 
     db.query(query, (err, results) => {
         if (err) {

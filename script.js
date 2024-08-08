@@ -354,8 +354,8 @@ async function carregarOpcoes() {
 
         setores.forEach(setor => {
             const option = document.createElement('option');
-            option.value = setor.nome;
-            option.textContent = setor.nome;
+            option.value = setor.setor;
+            option.textContent = setor.setor;
             setorSelect.appendChild(option);
         });
 
