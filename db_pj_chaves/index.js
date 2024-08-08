@@ -74,30 +74,22 @@ app.post('/pag_cadastro_chaves', (req, res) => {
   
 
     //API DA PÁGINA DE REGISTRO DE ADMS
-   // Rota para cadastrar administrador
-   app.post('/pag_cadastro_adm', (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.status(400).json({ error: 'Usuário e senha são obrigatórios.' });
-    }
-
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-        if (err) {
-            console.error('Erro ao criptografar a senha:', err);
-            return res.status(500).json({ error: 'Erro interno do servidor.' });
+    app.post('/pag_cadastro_adm', (req, res) => {
+        const { username, password } = req.body;
+    
+        if (!username || !password) {
+            return res.status(400).json({ error: 'Usuário e senha são obrigatórios.' });
         }
-
-        db.query('INSERT INTO login (username, password) VALUES (?, ?)', [username, hashedPassword], (err, results) => {
+    
+        db.query('INSERT INTO login (username, password) VALUES (?, ?)', [username, password], (err, results) => {
             if (err) {
                 console.error('Erro ao inserir o usuário:', err);
                 return res.status(500).json({ error: 'Erro interno do servidor.' });
             }
-
+    
             res.status(200).json({ message: 'Usuário cadastrado com sucesso!' });
         });
     });
-});
 
     //API DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
     // Rota para lidar com o cadastro de chaves
