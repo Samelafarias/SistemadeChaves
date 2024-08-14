@@ -62,7 +62,7 @@ app.post('/pag_cadastro_chaves', (req, res) => {
       return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
     }
   
-    const query = 'INSERT INTO chaves (nome, numero) VALUES (?, ?)';
+    const query = 'INSERT INTO chaves (setor, numero) VALUES (?, ?)';
     db.query(query, [name, numero], (err, result) => {
       if (err) {
         console.error('Erro ao inserir dados no banco de dados:', err);
@@ -94,14 +94,14 @@ app.post('/pag_cadastro_chaves', (req, res) => {
     //API DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
     // Rota para lidar com o cadastro de chaves
 app.post('/pag_cadastro_resp', (req, res) => {
-    const { nome, profissao, email } = req.body;
+    const { nome, profissao } = req.body;
   
-    if (!nome || !profissao || !email) {
+    if (!nome || !profissao) {
       return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
     }
   
-    const query = 'INSERT INTO responsaveis (nome, profissao, email) VALUES (?, ?, ?)';
-    db.query(query, [nome, profissao, email], (err, result) => {
+    const query = 'INSERT INTO responsaveis (nome, profissao) VALUES (?, ?)';
+    db.query(query, [nome, profissao], (err, result) => {
       if (err) {
         console.error('Erro ao inserir dados no banco de dados:', err);
         return res.status(500).json({ error: 'Erro ao inserir dados no banco de dados.' });

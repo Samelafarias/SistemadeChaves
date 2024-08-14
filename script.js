@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    //SCRIPT DA PÁGINA DE REGISTRO DE ADMS
+    //SCRIPT DA PÁGINA DE CADASTRO DE ADMS
     // Função para manipulação do formulário de cadastro de administradores
     function setupCadastroAdmForm() {
         const cadastroAdmForm = document.getElementById('cadast-admForm');
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    //SCRIPT DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
+    //SCRIPT DA PÁGINA DE CADSATRO DE RESPONSÁVEIS
     function setupCadastroRespForm() {
     const cadastroRespForm = document.getElementById('cadast-respForm');
     if (cadastroRespForm) {
@@ -115,14 +115,13 @@ document.addEventListener('DOMContentLoaded', function () {
           
             const nome = document.getElementById('username').value;
             const profissao = document.getElementById('select').value;
-            const email = document.getElementById('email').value;
           
             fetch('http://localhost:5500/pag_cadastro_resp', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ nome, profissao, email })
+              body: JSON.stringify({ nome, profissao })
             })
             .then(response => response.json())
             .then(data => {
