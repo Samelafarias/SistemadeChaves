@@ -458,29 +458,33 @@ aside.cadast-resp{
     text-align: right;
 }
 
+
 /*Estilo dos campos de entrada dos dados*/
 .dados_pag_princ{
     width: 175px;
-    height: 29px;
+    height: 32px;
     border-radius: 5px;
     text-align: right;
+    font-size: 14px;
 }
 
 /*Estilo do campo de seleção de setor*/
 #setor_pag_princ{
-    width: 180px;
-    height: 30px;
+    width: 220px;
+    height: 35px;
     border-radius: 5px;
     margin-left: 0px;
     text-align: right;
+    font-size: 14px;
 }
 
 /*Estilo do campo da entrada do responsável*/
 #resp_pag_princ{
     width: 225px;
-    height: 29px;
+    height: 35px;
     border-radius: 5px;
     text-align: right;
+    font-size: 14px;
 }
 
 /*Estilo dos botões de operação*/
