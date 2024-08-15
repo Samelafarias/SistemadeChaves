@@ -17,6 +17,11 @@ body.pag_login{
     background-color: #00350A; 
 }
 
+.seta{
+    width: 36px;
+    height: 36px;
+    margin: 1%;
+}
 /*Estilo da seção de login*/
 aside.login{
     background-color: white;
@@ -181,6 +186,7 @@ aside.cadast-chave{
    display: block;
    width: 545px;
    height: auto;
+   margin-top: -4.5%;
 }
 
 /*Estilo do título do login*/
@@ -271,6 +277,7 @@ aside.cadast-adm{
    display: block;
    width: 545px;
    height: auto;
+   margin-top: -4.5%;
 }
 
 /*Estilo do título do login*/
@@ -363,6 +370,7 @@ aside.cadast-resp{
    display: block;
    width: 545px;
    height: auto;
+   margin-top: -4.5%;
 }
 
 /*Estilo do título do login*/
@@ -422,7 +430,6 @@ aside.cadast-resp{
 
 /*Estilo da seção principal*/
 #main_pag_princ{
-    margin-top: 5%;
     padding-left: 20%;
     align-items: center;
     display: grid;
@@ -635,6 +642,7 @@ aside.cadast-resp{
     text-align: left;
     font-weight: bold;
     font-size: 1rem;
+    margin-top: -5.5%;
 }
 
 /*Estilo das caixas de cor para indicação*/
@@ -663,7 +671,6 @@ aside.cadast-resp{
 /*CSS DA PÁGINA DE REGISTROS*/
 /*Estilo para o conteúdo principal*/
 #main_pag_registros{
-    margin-top: 4%;
     margin-left: 10%;
     margin-right: 10%;
 }
