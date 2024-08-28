@@ -9,7 +9,7 @@ const cors = require('cors')// Middleware para permitir requisições CORS
 const dbConfig = {
     host: 'localhost',  // Endereço do servidor do banco de dados
     user: 'root', // Usuário do banco de dados
-    password: '1234567', //Senha do banco de dados
+    password: '', //Senha do banco de dados
     database: 'db_pj_chaves', //Nome do banco de dados
     port: '3306' //Porta do servidor Mysql
 };
@@ -57,7 +57,6 @@ app.post('/pag_login', (req, res) => {
     // Rota para lidar com o cadastro de chaves
 app.post('/pag_cadastro_chaves', (req, res) => {
     const { name, numero } = req.body;
-  
     if (!name || !numero) {
       return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
     }
