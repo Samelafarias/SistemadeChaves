@@ -36,12 +36,12 @@ aside.login{
 
 /*Estilo da imagem do campus*/
 #img_login{
-   background-position: right;
-   background: fixed;
-   float: right;
-   display: block;
-   width: 545px;
-   height: auto;
+    position: absolute; 
+    right: 0; 
+    margin-top: -6.1%;
+    margin-bottom: none;
+    width: 545px;
+    height: 800px; 
 }
 
 /*Estilo do título do login*/
@@ -109,12 +109,13 @@ aside.login{
 }
 
 /*CSS DA PÁGINA DE MENUS*/
-body.pag_menu{
-    background-color: #00350A; 
+/* Estilos básicos para a página */
+body.pag_menu {
+    background-color: #00350A; /* Cor de fundo ajustada para verde escuro */
 }
 
-/*Estilo da seção de login*/
-aside.menu{
+/* Estilo do menu lateral */
+aside.menu {
     width: 661px;
     position: absolute;
     display: block;
@@ -122,44 +123,50 @@ aside.menu{
     left: 10%;
 }
 
-/*Estilo da imagem do campus*/
-#img_menu{
-   background-position: right;
-   background: fixed;
-   float: right;
-   display: flex;
-   width: 545px;
-   height: auto;
-   margin-top: -5.4%;
+/* Estilo da imagem do campus */
+#img_menu {
+    position: absolute; 
+    right: 0; 
+    margin-top: -6.1%;
+    margin-bottom: none;
+    width: 545px;
+    height: 800px; 
+    
 }
 
-/*Estilo do título do login*/
-#h1_menu{
-    text-align: top;
+/* Estilo do título principal */
+#h1_menu {
+    text-align: left; 
     font-weight: 750;
-    color: white;
-    margin-left: 20%;
-    margin-top: 2%;
+    color: white; 
+    margin-left: 10%; 
+    margin-top: 2%; 
 }
 
-.a-h2-menu{
-    text-decoration: none;
-    color: white;
-    display: grid;
+/* Estilo dos links no menu */
+.a-h2-menu {
+    text-decoration: none; 
+    color: white; 
+    display: block; 
 }
 
-.h2-menu{
-    font-size: 20px;
-    font-weight: 300;
+/* Estilo dos subtítulos no menu */
+.h2-menu {
+    font-size: 20px; 
+    font-weight: 300; 
+    margin-top: 0.5em; 
+    margin-bottom: 0.5em; 
 }
 
-.line{
+/* Estilo das linhas divisórias */
+.line {
     background-color: white;
-    width: 661px;
-    height: 1px;
-    margin-top: 2%;
+    width: 90%;
+    height: 1px; 
+    margin-top: 2%; 
     margin-bottom: 7%;
 }
+
 
 /*CSS DA PÁGINA DE CADASTRO DE CHAVES*/
 body.pag_cadast_chave{
@@ -180,13 +187,12 @@ aside.cadast-chave{
 
 /*Estilo da imagem do campus*/
 #img_cadast-chave{
-   background-position: right;
-   background: fixed;
-   float: right;
-   display: block;
-   width: 545px;
-   height: auto;
-   margin-top: -4.5%;
+    position: absolute; 
+    right: 0; 
+    margin-top: -6.1%;
+    margin-bottom: none;
+    width: 545px;
+    height: 800px; 
 }
 
 /*Estilo do título do login*/
@@ -271,13 +277,12 @@ aside.cadast-adm{
 
 /*Estilo da imagem do campus*/
 #img_cadast-adm{
-   background-position: right;
-   background: fixed;
-   float: right;
-   display: block;
-   width: 545px;
-   height: auto;
-   margin-top: -4.5%;
+    position: absolute; 
+    right: 0; 
+    margin-top: -6.1%;
+    margin-bottom: none;
+    width: 545px;
+    height: 800px; 
 }
 
 /*Estilo do título do login*/
@@ -364,13 +369,12 @@ aside.cadast-resp{
 
 /*Estilo da imagem do campus*/
 #img_cadast-resp{
-   background-position: right;
-   background: fixed;
-   float: right;
-   display: block;
-   width: 545px;
-   height: auto;
-   margin-top: -4.5%;
+    position: absolute; 
+    right: 0; 
+    margin-top: -6.1%;
+    margin-bottom: none;
+    width: 545px;
+    height: 800px; 
 }
 
 /*Estilo do título do login*/
