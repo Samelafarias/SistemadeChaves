@@ -1,16 +1,15 @@
-const mysql = require('mysql')//Importa o módulo Mysql para conectar ao banco de dados
+const mysql = require('mysql2')//Importa o módulo Mysql para conectar ao banco de dados
 const express = require('express')// Importa o módulo Express para criar o servidor web
 const bodyParser = require('body-parser')// Middleware para interpretar o corpo das requisições
-
 const bcrypt = require('bcrypt')// Biblioteca para hashing de senhas
 const cors = require('cors')// Middleware para permitir requisições CORS
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
-    host: 'localhost',  // Endereço do servidor do banco de dados
-    user: 'root', // Usuário do banco de dados
-    password: '', //Senha do banco de dados
-    database: 'db_pj_chaves', //Nome do banco de dados
+    host: '50.116.86.40',  // Endereço do servidor do banco de dados
+    user: 'lablis08_Lablisa', // Usuário do banco de dados
+    password: '@Lablisa', //Senha do banco de dados
+    database: 'lablis08_sistema_chaves', //Nome do banco de dados
     port: '3306' //Porta do servidor Mysql
 };
 
@@ -25,10 +24,10 @@ const db = mysql.createConnection(dbConfig);
 // CONECTAR AO BANCO DE DADOS
 db.connect((error) => {
     if (error) {
-        console.error('Erro ao conectar com o banco de dados');
+        console.error('Erro ao conectar com o banco de dados remoto');
         return;
     }
-    console.log('Conectado ao banco de dados com sucesso!!!');
+    console.log('Conectado ao banco de dados remoto com sucesso!!!');
 });
 
 // API PÁGINA DE LOGIN
