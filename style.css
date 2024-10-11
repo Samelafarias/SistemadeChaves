@@ -751,3 +751,123 @@ footer{
     display: flex;
     background-position: bottom;
 }
+
+
+/* MEDIA QUERIES PARA DISPOSITIVOS MÓVEIS E TABLETS */
+
+/* Para tablets (768px a 1024px) */
+@media (max-width: 1024px) {
+    aside.login,
+    aside.menu,
+    aside.cadast-chave,
+    aside.cadast-adm,
+    aside.cadast-resp {
+        width: 80%; /* Aumenta a largura do formulário para se ajustar melhor */
+        height: 85%;
+        left: 10%; /* Centraliza na tela */
+    }
+
+    #img_login,
+    #img_menu,
+    #img_cadast-chave,
+    #img_cadast-adm,
+    #img_cadast-resp {
+     display: none;
+    }
+
+    #h1_login,
+    #h1_menu,
+    #h1_cadast-chave,
+    #h1_cadast-adm,
+    #h1_cadast-resp {
+        font-size: 1.2rem; /* Diminui o tamanho da fonte do título */
+    }
+
+    .dados_login,
+    .dados_cadast-chave,
+    .dados_cadast-adm,
+    .dados_cadast-resp {
+        width: 70%; /* Aumenta a largura dos campos de entrada */
+    }
+
+    #enter,
+    .cadastrar {
+        width: 60%; /* Aumenta a largura dos botões */
+    }
+
+    .header{
+        background-color: #00350A;
+        color: white;
+        text-align: center;
+    }
+
+    .h4_login,
+    .h4_cadast_chave,
+    .h4_cadast-adm,
+    .h4_cadast-resp {
+        font-size: 0.9rem; /* Diminui o tamanho da fonte dos rótulos */
+    }
+}
+
+/* Para dispositivos móveis (até 768px) */
+@media (max-width: 768px) {
+    aside.login,
+    aside.menu,
+    aside.cadast-chave,
+    aside.cadast-adm,
+    aside.cadast-resp {
+        width: 95%; /* Maximizando a largura para pequenos dispositivos */
+        left: 2.5%; /* Pequena margem lateral */
+    }
+
+    #img_login,
+    #img_menu,
+    #img_cadast-chave,
+    #img_cadast-adm,
+    #img_cadast-resp {
+        display: none;
+    }
+
+    #h1_login,
+    #h1_menu,
+    #h1_cadast-chave,
+    #h1_cadast-adm,
+    #h1_cadast-resp {
+        font-size: 1.1rem; /* Reduz ainda mais o tamanho da fonte dos títulos */
+    }
+
+    .dados_login,
+    .dados_cadast-chave,
+    .dados_cadast-adm,
+    .dados_cadast-resp {
+        width: 75%; /* Maximizando a largura dos campos de entrada */
+    }
+
+    #enter,
+    .cadastrar {
+        width: 60%; /* Maximizando a largura dos botões */
+    }
+
+    .header > #h1_pag_princ{
+        background-color: #00350A;
+        color: white;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .h4_login,
+    .h4_cadast_chave,
+    .h4_cadast-adm,
+    .h4_cadast-resp {
+        font-size: 1rem; /* Reduz o tamanho da fonte dos rótulos para melhor legibilidade */
+    }
+
+    .main_pag_princ{
+        display: block;
+        align-items: center;
+        justify-items: center;
+        margin: auto;
+        padding: auto;
+    }
+    
+}

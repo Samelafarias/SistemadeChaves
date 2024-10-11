@@ -10,27 +10,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
-                fetch('http://localhost:5500/pag_login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username: username, password: password })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === 'Login bem-sucedido') {
-                        window.location.href = '/pag_menu.html'; // Redireciona em caso de login bem-sucedido
-                    } else {
-                        alert('Usuário ou senha inválidos'); // Exibe alerta em caso de erro no login
-                    }
-                })
-                .catch((error) => {
-                    console.error('Erro:', error); // Log de erro caso ocorra um problema na requisição
-                });
-            });
+                fetch('https://www.lablisa.online/SistemadeChaves')
+    .then(response => {
+        console.log('Código de Status:', response.status);
+        return response.text(); // Converte a resposta para texto
+    })
+    .then(text => {
+        console.log('Resposta do Servidor:', text); // Exibe o texto recebido
+        // Tente analisar o JSON aqui se a resposta estiver correta
+        const data = JSON.parse(text); // Use JSON.parse apenas se o texto for um JSON válido
+        if (data.message === 'Login bem-sucedido') {
+            window.location.href = '/pag_menu.html';
+        } else {
+            alert('Usuário ou senha inválidos');
         }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
+
+        });
     }
+}
 
     //SCRIPT DA PÁGINA DE REGISTRO DE NOVAS CHAVES
     // Função para manipulação do formulário de cadastro de chaves
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const name = document.getElementById('name').value;
                 const numero = document.getElementById('numero').value;
               
-                fetch('http://localhost:5500/pag_cadastro_chaves', {
+                fetch('https://www.lablisa.online/SistemadeChaves/pag_cadastro_chaves', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                fetch('http://localhost:5500/pag_cadastro_adm', {
+                fetch('https://www.lablisa.online/SistemadeChaves/pag_cadastro_adm', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -116,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const nome = document.getElementById('username').value;
             const profissao = document.getElementById('select').value;
           
-            fetch('http://localhost:5500/pag_cadastro_resp', {
+            fetch('https://www.lablisa.online/SistemadeChaves/pag_cadastro_resp', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -150,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tbody = document.getElementById('body_table');
 
                 if (tbody) {
-                    fetch('http://localhost:5500/pag_registros')
+                    fetch('https://www.lablisa.online/SistemadeChaves/pag_registros')
                     .then(response => response.json())
                     .then(data => {
                         const registrosFiltrados = data.filter(registro => {
@@ -207,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para manipulação da página de chaves
     function setupChaves() {
-        fetch('http://localhost:5500/pag_chaves')
+        fetch('https://www.lablisa.online/SistemadeChaves/pag_chaves')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro na requisição: ' + response.statusText);
@@ -265,9 +266,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         })
-        .catch(error => {
+        /*.catch(error => {
             console.error('Erro ao buscar registros:', error);
-        });
+        });*/
     }
 
 
@@ -309,7 +310,7 @@ function setupPaginaPrincipal() {
             };
 
             try {
-                const response = await fetch('http://localhost:5500/pag_principal', {
+                const response = await fetch('https://www.lablisa.online/SistemadeChaves/pag_principal', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -346,10 +347,10 @@ function setupPaginaPrincipal() {
 // Função para carregar opções de setor e responsável ao carregar a página
 async function carregarOpcoes() {
     try {
-        const responseSetores = await fetch('http://localhost:5500/getSetores');
+        const responseSetores = await fetch('https://www.lablisa.online/SistemadeChaves/getSetores');
         const setores = await responseSetores.json();
 
-        const responseResponsaveis = await fetch('http://localhost:5500/getResponsaveis');
+        const responseResponsaveis = await fetch('https://www.lablisa.online/SistemadeChaves/getResponsaveis');
         const responsaveis = await responseResponsaveis.json();
 
         const setorSelect = document.getElementById('setor_pag_princ');
