@@ -33,7 +33,7 @@ db.connect((error) => {
 
 // API PÁGINA DE LOGIN
 // Rota para login de usuários
-app.post('/SistemadeChaves', (req, res) => {
+app.post('/pag_login', (req, res) => {
     const username = req.body.username; // Obtém o nome de usuário do corpo da requisição
     const password = req.body.password; // Obtém a senha do corpo da requisição
 
@@ -55,7 +55,7 @@ app.post('/SistemadeChaves', (req, res) => {
 
     //API da página de cadastro de chaves
     // Rota para lidar com o cadastro de chaves
-app.post('/SistemaDeChaves/pag_cadastro_chaves', (req, res) => {
+app.post('/pag_cadastro_chaves', (req, res) => {
     const { name, numero } = req.body;
     if (!name || !numero) {
       return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
@@ -73,7 +73,7 @@ app.post('/SistemaDeChaves/pag_cadastro_chaves', (req, res) => {
   
 
     //API DA PÁGINA DE REGISTRO DE ADMS
-    app.post('/SistemaDeChaves/pag_cadastro_adm', (req, res) => {
+    app.post('/pag_cadastro_adm', (req, res) => {
         const { username, password } = req.body;
     
         if (!username || !password) {
@@ -92,7 +92,7 @@ app.post('/SistemaDeChaves/pag_cadastro_chaves', (req, res) => {
 
     //API DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
     // Rota para lidar com o cadastro de chaves
-app.post('/SistemaDeChaves/pag_cadastro_resp', (req, res) => {
+app.post('/pag_cadastro_resp', (req, res) => {
     const { nome, profissao } = req.body;
   
     if (!nome || !profissao) {
@@ -111,7 +111,7 @@ app.post('/SistemaDeChaves/pag_cadastro_resp', (req, res) => {
 
   //API PPÁGINA PRINCIPAL
 // Rota para criar novos registros
-app.post('/SistemaDeChaves/pag_principal', (req, res) => {
+app.post('/pag_principal', (req, res) => {
     const newRecord = req.body;
     const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
     const values = [newRecord.date, newRecord.sector, newRecord.operation, newRecord.responsible, newRecord.time];
@@ -150,7 +150,7 @@ app.get('/getResponsaveis', (req, res) => {
 
 // API PARA PÁGINA DE REGISTROS
 // Rota para obter todos os registros
-app.get('/SistemaDeChaves/pag_registros', (req, res) => {
+app.get('/pag_registros', (req, res) => {
     let sql = 'SELECT * FROM registros';
     db.query(sql, (err, results) => {
         if (err) {
@@ -162,7 +162,7 @@ app.get('/SistemaDeChaves/pag_registros', (req, res) => {
 
 // API PARA PÁGINA DE CHAVES
 // Rota para obter dados das chaves
-app.get('/SistemaDeChaves/pag_chaves', (req, res) => {
+app.get('/pag_chaves', (req, res) => {
     const queryChaves = 'SELECT setor FROM chaves';
     db.query(queryChaves, (err, resultsChaves) => {
         if (err) {
