@@ -4,16 +4,21 @@ const bodyParser = require('body-parser')// Middleware para interpretar o corpo 
 const bcrypt = require('bcrypt')// Biblioteca para hashing de senhas
 const cors = require('cors')// Middleware para permitir requisições CORS
 
+
+// Carrega as variáveis do arquivo .env
+require('dotenv').config();
+
+
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    port: '3306'
+    port: process.env.PORT
 };
 
-const BACKEND_URL =  'https://db_pj_chaves.onrender.com'
+const BACKEND_URL =  'https://sistema-de-chaves.onrender.com'
 const app = express(); // Cria uma instância do servidor Express
 app.use(bodyParser.json()); // Middleware para interpretar JSON no corpo das requisições
 app.use(cors()); // Aplica o middleware CORS para permitir requisições de diferentes origens
@@ -187,7 +192,7 @@ app.use(express.static('public'));
 // INICIAR O SERVIDOR
 const port = 5500; // Porta em que o servidor vai escutar
 app.listen(port, () => {
-    console.log(`Servidor iniciado na porta https://www.lablisa.online:${port}/`);
+    console.log(`Servidor iniciado na porta https://sistema-de-chaves.onrender.com:${port}/`);
 });
 
   
