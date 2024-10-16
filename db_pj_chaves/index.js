@@ -6,20 +6,17 @@ const cors = require('cors')// Middleware para permitir requisições CORS
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
-    host: 'br754.hostgator.com.br',  // Endereço do servidor do banco de dados
-    user: 'lablis08_Lablisa', // Usuário do banco de dados
-    password: '@Lablisa', //Senha do banco de dados
-    database: 'lablis08_sistema_chaves', //Nome do banco de dados
-    port: '3306' //Porta do servidor Mysql
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: '3306'
 };
 
+const BACKEND_URL =  'https://db_pj_chaves.onrender.com'
 const app = express(); // Cria uma instância do servidor Express
 app.use(bodyParser.json()); // Middleware para interpretar JSON no corpo das requisições
-app.use(cors({
-    origin: 'https://lablisa.online',
-    methods: ['GET', 'POST'], // Métodos permitidos
-    allowedHeaders: ['Content-Type'] // Cabeçalhos permitidos
-})); // Aplica o middleware CORS para permitir requisições de diferentes origens
+app.use(cors()); // Aplica o middleware CORS para permitir requisições de diferentes origens
 app.use(bodyParser.urlencoded({ extended: true })); // Middleware para interpretar dados codificados na URL
 
 // CRIAR CONEXÃO COM O BANCO DE DADOS

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
-                fetch('https://www.lablisa.online/SistemadeChaves')
+                fetch('https://db_pj_chaves.onrender.com/pag_login')
     .then(response => {
         console.log('Código de Status:', response.status);
         return response.text(); // Converte a resposta para texto
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const name = document.getElementById('name').value;
                 const numero = document.getElementById('numero').value;
               
-                fetch('https://www.lablisa.online/SistemadeChaves/pag_cadastro_chaves', {
+                fetch('https://db_pj_chaves.onrender.com/pag_cadastro_chaves', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                fetch('https://www.lablisa.online/SistemadeChaves/pag_cadastro_adm', {
+                fetch('https://db_pj_chaves.onrender.com/pag_cadastro_adm', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const nome = document.getElementById('username').value;
             const profissao = document.getElementById('select').value;
           
-            fetch('https://www.lablisa.online/SistemadeChaves/pag_cadastro_resp', {
+            fetch('https://db_pj_chaves.onrender.com/pag_cadastro_resp', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tbody = document.getElementById('body_table');
 
                 if (tbody) {
-                    fetch('https://www.lablisa.online/SistemadeChaves/pag_registros')
+                    fetch('https://db_pj_chaves.onrender.com/pag_registros')
                     .then(response => response.json())
                     .then(data => {
                         const registrosFiltrados = data.filter(registro => {
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para manipulação da página de chaves
     function setupChaves() {
-        fetch('https://www.lablisa.online/SistemadeChaves/pag_chaves')
+        fetch('https://db_pj_chaves.onrender.com/pag_chaves')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Erro na requisição: ' + response.statusText);
@@ -310,7 +310,7 @@ function setupPaginaPrincipal() {
             };
 
             try {
-                const response = await fetch('https://www.lablisa.online/SistemadeChaves/pag_principal', {
+                const response = await fetch('https://db_pj_chaves.onrender.com/pag_principal', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -347,10 +347,10 @@ function setupPaginaPrincipal() {
 // Função para carregar opções de setor e responsável ao carregar a página
 async function carregarOpcoes() {
     try {
-        const responseSetores = await fetch('https://www.lablisa.online/SistemadeChaves/getSetores');
+        const responseSetores = await fetch('https://db_pj_chaves.onrender.com/getSetores');
         const setores = await responseSetores.json();
 
-        const responseResponsaveis = await fetch('https://www.lablisa.online/SistemadeChaves/getResponsaveis');
+        const responseResponsaveis = await fetch('https://db_pj_chaves.onrender.com/getResponsaveis');
         const responsaveis = await responseResponsaveis.json();
 
         const setorSelect = document.getElementById('setor_pag_princ');
