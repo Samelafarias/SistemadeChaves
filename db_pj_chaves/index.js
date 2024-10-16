@@ -6,10 +6,10 @@ const cors = require('cors')// Middleware para permitir requisições CORS
 
 // CONFIGURAÇÃO DO BANCO DE DADOS
 const dbConfig = {
-    host: 'localhost',  // Endereço do servidor do banco de dados
-    user: 'root', // Usuário do banco de dados
-    password: '', //Senha do banco de dados
-    database: 'db_pj_chaves', //Nome do banco de dados
+    host: 'br754.hostgator.com.br',  // Endereço do servidor do banco de dados
+    user: 'lablis08_Lablisa', // Usuário do banco de dados
+    password: '@Lablisa', //Senha do banco de dados
+    database: 'lablis08_sistema_chaves', //Nome do banco de dados
     port: '3306' //Porta do servidor Mysql
 };
 
