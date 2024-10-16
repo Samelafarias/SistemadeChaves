@@ -18,10 +18,21 @@ const dbConfig = {
     port: process.env.PORT
 };
 
+
+// Habilita CORS para domínios específicos
+const allowedOrigins = [
+    'https://sistemadechaves-1mp8.onrender.com', // Frontend
+    'https://lablisa.online',                     // Domínio permitido existente
+  ];
+
 const BACKEND_URL =  'https://sistema-de-chaves.onrender.com'
 const app = express(); // Cria uma instância do servidor Express
 app.use(bodyParser.json()); // Middleware para interpretar JSON no corpo das requisições
-app.use(cors()); // Aplica o middleware CORS para permitir requisições de diferentes origens
+
+app.use(cors({
+    origin: allowedOrigins, // Permitir apenas os domínios listados
+    credentials: true,      // Opcional, se você precisar enviar cookies ou cabeçalhos de autenticação
+  })); // Aplica o middleware CORS para permitir requisições de diferentes origens
 app.use(bodyParser.urlencoded({ extended: true })); // Middleware para interpretar dados codificados na URL
 
 // CRIAR CONEXÃO COM O BANCO DE DADOS
