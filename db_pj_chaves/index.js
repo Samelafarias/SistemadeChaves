@@ -19,6 +19,8 @@ const dbConfig = {
 };
 
 
+// CRIAR CONEXÃO COM O BANCO DE DADOS
+const db = mysql.createConnection(dbConfig);
 // Habilita CORS para domínios específicos
 const allowedOrigins = [
     'https://sistemadechaves-1mp8.onrender.com', // Frontend
@@ -34,9 +36,6 @@ app.use(cors({
     credentials: true,      // Opcional, se você precisar enviar cookies ou cabeçalhos de autenticação
   })); // Aplica o middleware CORS para permitir requisições de diferentes origens
 app.use(bodyParser.urlencoded({ extended: true })); // Middleware para interpretar dados codificados na URL
-
-// CRIAR CONEXÃO COM O BANCO DE DADOS
-const db = mysql.createConnection(dbConfig);
 
 // CONECTAR AO BANCO DE DADOS
 db.connect((error) => {
