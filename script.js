@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tbody = document.getElementById('body_table');
 
                 if (tbody) {
-                    fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
+                     fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
                         method: 'GET',
                         headers
                     })
