@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Configuração de cabeçalhos para lidar com CORS
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    };
+
+
     //SCRIPT DA PÁGINA DE LOGIN
     // Função para manipulação do formulário de login
     function setupLoginForm() {
@@ -10,7 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
-                fetch('https://sistema-de-chaves.onrender.com/pag_login')
+                fetch('https://sistema-de-chaves.onrender.com/pag_login', {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ username, password })
+                })
     .then(response => {
         console.log('Código de Status:', response.status);
         return response.text(); // Converte a resposta para texto
@@ -45,11 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const numero = document.getElementById('numero').value;
               
                 fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_chaves', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ name, numero })
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ name, numero })
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -86,9 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_adm', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers,
                     body: JSON.stringify({ username, password })
                 })
                 .then(response => response.json())
@@ -118,11 +125,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const profissao = document.getElementById('select').value;
           
             fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_resp', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ nome, profissao })
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ nome, profissao })
             })
             .then(response => response.json())
             .then(data => {
@@ -151,7 +156,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tbody = document.getElementById('body_table');
 
                 if (tbody) {
-                    fetch('https://sistema-de-chaves.onrender.com/pag_registros')
+                    fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
+                        method: 'GET',
+                        headers
+                    })
                     .then(response => response.json())
                     .then(data => {
                         const registrosFiltrados = data.filter(registro => {
