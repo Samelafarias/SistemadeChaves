@@ -1,64 +1,80 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Função de Login
+
+    //SCRIPT DA PÁGINA DE LOGIN
+    // Função para manipulação do formulário de login
     function setupLoginForm() {
         const loginForm = document.getElementById('loginForm');
         if (loginForm) {
-            loginForm.addEventListener('submit', async function (event) {
+            loginForm.addEventListener('submit', function (event) {
                 event.preventDefault();
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
-                try {
-                    const response = await fetch('https://sistema-de-chaves.onrender.com/pag_login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    });
-
-                    const data = await response.json();
-                    if (response.ok && data.message === 'Login bem-sucedido') {
-                        window.location.href = '/pag_menu.html';
-                    } else {
-                        alert('Usuário ou senha inválidos');
-                    }
-                } catch (error) {
-                    console.error('Erro:', error);
-                }
-            });
+                fetch('https://sistema-de-chaves.onrender.com/pag_login')
+    .then(response => {
+        console.log('Código de Status:', response.status);
+        return response.text(); // Converte a resposta para texto
+    })
+    .then(text => {
+        console.log('Resposta do Servidor:', text); // Exibe o texto recebido
+        // Tente analisar o JSON aqui se a resposta estiver correta
+        const data = JSON.parse(text); // Use JSON.parse apenas se o texto for um JSON válido
+        if (data.message === 'Login bem-sucedido') {
+            window.location.href = '/pag_menu.html';
+        } else {
+            alert('Usuário ou senha inválidos');
         }
-    }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
 
-    // Função de Cadastro de Chaves
+        });
+    }
+}
+
+    //SCRIPT DA PÁGINA DE REGISTRO DE NOVAS CHAVES
+    // Função para manipulação do formulário de cadastro de chaves
     function setupCadastroChaveForm() {
-        const cadastroChaveForm = document.getElementById('cadast-chaveForm');
+        const cadastroChaveForm = document.getElementById('cadast-chave Form');
         if (cadastroChaveForm) {
-            cadastroChaveForm.addEventListener('submit', async function (event) {
+            cadastroChaveForm.addEventListener('submit', function(event) {
                 event.preventDefault();
+              
                 const name = document.getElementById('name').value;
                 const numero = document.getElementById('numero').value;
-
-                try {
-                    const response = await fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_chaves', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, numero })
-                    });
-
-                    const data = await response.json();
-                    alert(data.message || `Erro: ${data.error}`);
-                } catch (error) {
-                    console.error('Erro ao enviar dados:', error);
-                }
+              
+                fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_chaves', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ name, numero })
+                })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.error) {
+                    alert(`Erro: ${data.error}`);
+                  } else {
+                    alert(data.message);
+                  }
+                })
+                .catch(error => {
+                  console.error('Erro ao enviar dados:', error);
+                });
             });
         }
     }
 
-    // Função de Cadastro de Administradores
+
+    //SCRIPT DA PÁGINA DE CADASTRO DE ADMS
+    // Função para manipulação do formulário de cadastro de administradores
     function setupCadastroAdmForm() {
         const cadastroAdmForm = document.getElementById('cadast-admForm');
         if (cadastroAdmForm) {
-            cadastroAdmForm.addEventListener('submit', async function (event) {
+            cadastroAdmForm.addEventListener('submit', function(event) {
                 event.preventDefault();
+
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('confirm-password').value;
@@ -68,108 +84,314 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                try {
-                    const response = await fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_adm', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    });
-
-                    const data = await response.json();
-                    alert(data.message || `Erro: ${data.error}`);
-                    if (!data.error) cadastroAdmForm.reset();
-                } catch (error) {
+                fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_adm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(`Erro: ${data.error}`);
+                    } else {
+                        alert(data.message);
+                        cadastroAdmForm.reset(); // Limpa o formulário após sucesso
+                    }
+                })
+                .catch(error => {
                     console.error('Erro ao enviar dados:', error);
-                }
+                });
             });
         }
     }
 
-    // Função de Cadastro de Responsáveis
+    //SCRIPT DA PÁGINA DE CADSATRO DE RESPONSÁVEIS
     function setupCadastroRespForm() {
-        const cadastroRespForm = document.getElementById('cadast-respForm');
-        if (cadastroRespForm) {
-            cadastroRespForm.addEventListener('submit', async function (event) {
-                event.preventDefault();
-                const nome = document.getElementById('username').value;
-                const profissao = document.getElementById('select').value;
-
-                try {
-                    const response = await fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_resp', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ nome, profissao })
-                    });
-
-                    const data = await response.json();
-                    alert(data.message || `Erro: ${data.error}`);
-                } catch (error) {
-                    console.error('Erro ao enviar dados:', error);
-                }
+    const cadastroRespForm = document.getElementById('cadast-respForm');
+    if (cadastroRespForm) {
+        cadastroRespForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+          
+            const nome = document.getElementById('username').value;
+            const profissao = document.getElementById('select').value;
+          
+            fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_resp', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ nome, profissao })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.error) {
+                alert(`Erro: ${data.error}`);
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch(error => {
+              console.error('Erro ao enviar dados:', error);
             });
-        }
+        });
     }
+}
 
-    // Função de Filtro de Registros
+
+    //SCRIPT DA PÁGINA DE REGISTROS
+    // Função para manipulação dos filtros de registros
     function setupFilterButton() {
         const filterButton = document.getElementById('filterbnt');
         if (filterButton) {
-            filterButton.addEventListener('click', async function () {
-                const mes = parseInt(document.getElementById('mes_pag_princ').value);
-                const ano = parseInt(document.getElementById('ano_registro').value);
+            filterButton.addEventListener('click', function() {
+                const mes = document.getElementById('mes_pag_princ').value;
+                const ano = document.getElementById('ano_registro').value;
                 const tbody = document.getElementById('body_table');
 
-                try {
-                    const response = await fetch('https://sistema-de-chaves.onrender.com/pag_registros');
-                    const data = await response.json();
+                if (tbody) {
+                    fetch('https://sistema-de-chaves.onrender.com/pag_registros')
+                    .then(response => response.json())
+                    .then(data => {
+                        const registrosFiltrados = data.filter(registro => {
+                            const dataRegistro = new Date(registro.date);
+                            return dataRegistro.getMonth() + 1 === parseInt(mes) && dataRegistro.getFullYear() === parseInt(ano);
+                        });
 
-                    const registrosFiltrados = data.filter(registro => {
-                        const dataRegistro = new Date(registro.date);
-                        return dataRegistro.getMonth() + 1 === mes && dataRegistro.getFullYear() === ano;
-                    });
+                        registrosFiltrados.sort((a, b) => new Date(a.date) - new Date(b.date));
+                        tbody.innerHTML = '';
 
-                    tbody.innerHTML = registrosFiltrados.map(registro => `
-                        <tr>
-                            <td>${formatarData(registro.date)}</td>
-                            <td>${registro.setor}</td>
-                            <td>${registro.operacao.toUpperCase()}</td>
-                            <td>${registro.time}</td>
-                            <td>${registro.responsavel}</td>
-                        </tr>`).join('');
-                } catch (error) {
-                    console.error('Erro ao buscar dados:', error);
+                        registrosFiltrados.forEach(registro => {
+                            const tr = document.createElement('tr');
+                            const operacao = registro.operacao.toUpperCase();
+                            const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
+                            localStorage.setItem('operacao', operacao); // Armazena a operação no localStorage
+
+                            tr.innerHTML = `
+                                <td>${formatarData(registro.date)}</td>
+                                <td>${registro.setor}</td>
+                                <td>${operacaoFormatada}</td>
+                                <td>${registro.time}</td>
+                                <td>${registro.responsavel}</td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
+                    })
+                    .catch(error => console.error('Erro ao buscar dados:', error)); // Log de erro caso ocorra um problema na requisição
                 }
             });
 
             function formatarData(data) {
                 const date = new Date(data);
-                return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+                const dia = String(date.getDate()).padStart(2, '0');
+                const mes = String(date.getMonth() + 1).padStart(2, '0');
+                const ano = date.getFullYear();
+                return `${dia}/${mes}/${ano}`; // Formata a data no formato dd/mm/aaaa
             }
         }
     }
 
-    // Função de Carregamento de Chaves
-    function setupChaves() {
-        fetch('https://sistema-de-chaves.onrender.com/pag_chaves')
-            .then(response => response.json())
-            .then(({ chaves, registros }) => {
-                const sectionChave = document.querySelector('.section_chave');
-                sectionChave.innerHTML = chaves.map(chave => `
-                    <div class="chave">
-                        <div class="disp_chave" id="${chave.setor}" data-setor="${chave.setor}" data-numero="${chave.numero}"></div>
-                        <div class="name-sala">${chave.setor}</div>
-                        <img src="img/chave.png" alt="imagem de uma chave" class="img_chave">
-                        <div class="tooltip" style="display: none;"></div>
-                    </div>`).join('');
-            })
-            .catch(error => console.error('Erro ao buscar chaves:', error));
+    
+    //SCRIPT DA PÁGINA DE CHAVES
+     // Função para criar o HTML das chaves dinamicamente
+     function createChaveHTML(setor, numero) {
+        return `
+            <div class="chave">
+                <div class="disp_chave" id="${setor}" data-setor="${setor}" data-numero="${numero}"></div>
+                <div class="name-sala">${setor}</div>
+                <img src="img/chave.png" alt="imagem de uma chave" class="img_chave">
+                <div class="tooltip" style="display: none;"></div>
+            </div>
+        `;
     }
 
-    // Inicialização dos Scripts
+    // Função para manipulação da página de chaves
+    function setupChaves() {
+        fetch('https://sistema-de-chaves.onrender.com/pag_chaves')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const sectionChave = document.querySelector('.section_chave');
+            const { chaves, registros } = data;
+
+            chaves.forEach(chave => {
+                sectionChave.innerHTML += createChaveHTML(chave.setor, chave.numero);
+            });
+
+            const dispChaves = document.querySelectorAll('.disp_chave');
+
+            dispChaves.forEach(dispChave => {
+                const setor = dispChave.dataset.setor;
+                const registrosChave = registros.filter(r => r.setor === setor);
+              
+                console.log(`Registros for setor ${setor}:`, registrosChave);
+              
+                if (registrosChave.length > 0) {
+                  const ultimoRegistro = registrosChave[registrosChave.length - 1];
+                  console.log(`Last registro for setor ${setor}:`, ultimoRegistro);
+              
+                  if (ultimoRegistro.operacao.toUpperCase() === 'ENTREGA') {
+                    dispChave.style.backgroundColor = 'red';
+                    dispChave.dataset.responsavel = ultimoRegistro.responsavel;
+                  } else if (ultimoRegistro.operacao.toUpperCase() === 'DEVOLUÇÃO') {
+                    dispChave.style.backgroundColor = 'green';
+                  } else {
+                    dispChave.style.backgroundColor = 'green';
+                  }
+                } else {
+                  dispChave.style.backgroundColor = 'green';
+                }
+              });
+
+            // Adiciona o evento de tooltip
+            document.querySelectorAll('.chave').forEach(chave => {
+                const tooltip = chave.querySelector('.tooltip');
+                const dispChave = chave.querySelector('.disp_chave');
+
+                dispChave.addEventListener('mouseover', function() {
+                    tooltip.textContent = dispChave.dataset.responsavel ? `Chave com: ${dispChave.dataset.responsavel}` : 'Sala livre';
+                    tooltip.style.display = 'block';
+                    const rect = dispChave.getBoundingClientRect();
+                    tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight}px`;
+                    tooltip.style.left = `${rect.left + window.scrollX}px`;
+                });
+
+                dispChave.addEventListener('mouseout', function() {
+                    tooltip.style.display = 'none';
+                });
+            });
+        })
+        /*.catch(error => {
+            console.error('Erro ao buscar registros:', error);
+        });*/
+    }
+
+
+    //SCRIPt página principal
+    // Função para manipulação dos botões da página principal
+function setupPaginaPrincipal() {
+    const entregaButton = document.getElementById('entrega');
+    const devolucaoButton = document.getElementById('devolucao');
+    const registrarButton = document.getElementById('bnt_registrar');
+    if (entregaButton && devolucaoButton && registrarButton) {
+        entregaButton.addEventListener('click', function() {
+            clicar(this);
+        });
+        devolucaoButton.addEventListener('click', function() {
+            clicar(this);
+        });
+        registrarButton.addEventListener('click', registrar_dados);
+
+        async function registrar_dados() {
+            const data = document.getElementById('data').value;
+            const setor = document.getElementById('setor_pag_princ').value;
+            const responsavel = document.getElementById('resp_pag_princ').value;
+            const horario = document.getElementById('horario').value;
+            const entrega = document.getElementById('entrega').classList.contains('ativo');
+            const devolucao = document.getElementById('devolucao').classList.contains('ativo');
+
+            if (!data || !setor || !responsavel || !horario || (!entrega && !devolucao)) {
+                alert("Por favor, preencha todos os campos e selecione uma operação.");
+                return;
+            }
+
+            const dataFormatada = new Date(data).toISOString().split('T')[0];
+            const dados = {
+                date: dataFormatada,
+                sector: setor,
+                responsible: responsavel,
+                time: horario,
+                operation: entrega ? 'ENTREGA' : 'DEVOLUÇÃO'
+            };
+
+            try {
+                const response = await fetch('https://sistema-de-chaves.onrender.com/pag_principal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (response.ok) {
+                    alert("Dados registrados com sucesso!");
+                } else {
+                    alert("Erro ao registrar dados.");
+                }
+            } catch (error) {
+                console.error('Erro ao registrar dados:', error);
+                alert('Erro ao registrar dados. Verifique se todos os campos foram preenchidos corretamente.');
+            }
+        }
+
+        function clicar(btnClicado) {
+            const entrega = document.getElementById('entrega');
+            const devolucao = document.getElementById('devolucao');
+
+            if (btnClicado === entrega) {
+                entrega.classList.add('ativo');
+                devolucao.classList.remove('ativo');
+            } else if (btnClicado === devolucao) {
+                devolucao.classList.add('ativo');
+                entrega.classList.remove('ativo');
+            }
+        }
+    }
+}
+
+// Função para carregar opções de setor e responsável ao carregar a página
+async function carregarOpcoes() {
+    try {
+        const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
+        const setores = await responseSetores.json();
+
+        const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
+        const responsaveis = await responseResponsaveis.json();
+
+        const setorSelect = document.getElementById('setor_pag_princ');
+        const responsavelSelect = document.getElementById('resp_pag_princ');
+
+        setores.forEach(setor => {
+            const option = document.createElement('option');
+            option.value = setor.setor;
+            option.textContent = setor.setor;
+            setorSelect.appendChild(option);
+        });
+
+        responsaveis.forEach(responsavel => {
+            const option = document.createElement('option');
+            option.value = responsavel.nome;
+            option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
+            responsavelSelect.appendChild(option);
+        });
+    } catch (error) {
+     //   console.error('Erro ao carregar opções:', error);
+    }
+}
+
+
+    // Inicializar todos os scripts
     setupLoginForm();
     setupCadastroChaveForm();
     setupCadastroRespForm();
     setupCadastroAdmForm();
     setupFilterButton();
     setupChaves();
+    setupPaginaPrincipal();
+    carregarOpcoes();
+
 });
+
+// Funções para abrir as páginas de chaves e registros
+function abrir_pag_chave() {
+    window.open('pag_chaves.html', '_blank'); // Abre uma nova janela para a página de chaves
+}
+
+function abrir_pag_registros() {
+    window.open('pag_registros.html', '_blank'); // Abre uma nova janela para a página de registros
+}
