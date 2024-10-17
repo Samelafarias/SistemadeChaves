@@ -22,6 +22,9 @@ const allowedOrigins = [
     'https://lablisa.online',                    // Domínio permitido adicional
 ];
 
+const BACKEND_URL = 'https://sistema-de-chaves.onrender.com';
+
+
 // CONFIGURAÇÃO GLOBAL DE CORS
 app.use((req, res, next) => {
     const origin = req.headers.origin;
