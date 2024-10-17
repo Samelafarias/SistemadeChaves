@@ -1,15 +1,11 @@
-const mysql = require('mysql2')//Importa o módulo Mysql para conectar ao banco de dados
-const express = require('express')// Importa o módulo Express para criar o servidor web
-const bodyParser = require('body-parser')// Middleware para interpretar o corpo das requisições
-const bcrypt = require('bcrypt')// Biblioteca para hashing de senhas
-const cors = require('cors')// Middleware para permitir requisições CORS
+const mysql = require('mysql2'); // Importa o MySQL
+const express = require('express'); // Importa Express
+const bodyParser = require('body-parser'); // Middleware para interpretar corpo das requisições
+const bcrypt = require('bcrypt'); // Biblioteca para hashing de senhas
+const cors = require('cors'); // Middleware para CORS
+require('dotenv').config(); // Carrega variáveis de ambiente
 
-
-// Carrega as variáveis do arquivo .env
-require('dotenv').config();
-
-
-// CONFIGURAÇÃO DO BANCO DE DADOS
+// Configuração do Banco de Dados
 const dbConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -18,111 +14,120 @@ const dbConfig = {
     port: '3306'
 };
 
+// Pool de conexões para melhor performance
+const db = mysql.createPool(dbConfig);
 
-// CRIAR CONEXÃO COM O BANCO DE DADOS
-const db = mysql.createConnection(dbConfig);
-// Habilita CORS para domínios específicos
 const allowedOrigins = [
-    'https://sistemadechaves-1mp8.onrender.com', // Frontend
-    'https://lablisa.online',                     // Domínio permitido existente
-  ];
+    'https://sistemadechaves-1mp8.onrender.com',
+    'https://lablisa.online'
+];
 
-const BACKEND_URL =  'https://sistema-de-chaves.onrender.com'
-const app = express(); // Cria uma instância do servidor Express
-app.use(bodyParser.json()); // Middleware para interpretar JSON no corpo das requisições
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// Configuração do CORS
 app.use(cors({
-    origin: allowedOrigins, // Permitir apenas os domínios listados
-    credentials: true,      // Opcional, se você precisar enviar cookies ou cabeçalhos de autenticação
-  })); // Aplica o middleware CORS para permitir requisições de diferentes origens
-app.use(bodyParser.urlencoded({ extended: true })); // Middleware para interpretar dados codificados na URL
+    origin: allowedOrigins,
+    credentials: true,
+}));
 
-// CONECTAR AO BANCO DE DADOS
-db.connect((error) => {
-    if (error) {
-        console.error('Erro ao conectar com o banco de dados remoto');
-        return;
-    }
-    console.log('Conectado ao banco de dados remoto com sucesso!!!');
-});
+// Função para obter uma conexão do pool
+const getConnection = (callback) => {
+    db.getConnection((err, connection) => {
+        if (err) {
+            console.error('Erro ao obter conexão com o banco:', err);
+            return callback(err);
+        }
+        callback(null, connection);
+    });
+};
 
-// API PÁGINA DE LOGIN
-// Rota para login de usuários
+// API de Login
 app.post('/pag_login', (req, res) => {
-    const username = req.body.username; // Obtém o nome de usuário do corpo da requisição
-    const password = req.body.password; // Obtém a senha do corpo da requisição
+    const { username, password } = req.body;
 
     if (!username || !password) {
         return res.status(400).json({ message: 'Usuário e senha são obrigatórios' });
     }
 
-    const query = 'SELECT * FROM login WHERE username = ? AND password = ?';
-    db.query(query, [username, password], (err, results) => {
-        if (err) throw err;
+    const query = 'SELECT * FROM login WHERE username = ?';
+    getConnection((err, connection) => {
+        if (err) return res.status(500).json({ error: 'Erro na conexão com o banco' });
 
-        if (results.length > 0) {
+        connection.query(query, [username], async (err, results) => {
+            connection.release(); // Libera a conexão
+
+            if (err) return res.status(500).json({ error: 'Erro no banco de dados' });
+
+            if (results.length === 0) {
+                return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+            }
+
+            const user = results[0];
+            const validPassword = await bcrypt.compare(password, user.password);
+
+            if (!validPassword) {
+                return res.status(401).json({ message: 'Usuário ou senha inválidos' });
+            }
+
             res.status(200).json({ message: 'Login bem-sucedido' });
-        } else {
-            res.status(401).json({ message: 'Usuário ou senha inválidos' });
-        }
+        });
     });
 });
 
-    //API da página de cadastro de chaves
-    // Rota para lidar com o cadastro de chaves
+// API de Cadastro de Chaves
 app.post('/pag_cadastro_chaves', (req, res) => {
     const { name, numero } = req.body;
-    if (!name || !numero) {
-      return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
-    }
-  
-    const query = 'INSERT INTO chaves (setor, numero) VALUES (?, ?)';
-    db.query(query, [name, numero], (err, result) => {
-      if (err) {
-        console.error('Erro ao inserir dados no banco de dados:', err);
-        return res.status(500).json({ error: 'Erro ao inserir dados no banco de dados.' });
-      }
-      res.status(200).json({ message: 'Chave cadastrada com sucesso.' });
-    });
-  });
-  
 
-    //API DA PÁGINA DE REGISTRO DE ADMS
-    app.post('/pag_cadastro_adm', (req, res) => {
-        const { username, password } = req.body;
-    
-        if (!username || !password) {
-            return res.status(400).json({ error: 'Usuário e senha são obrigatórios.' });
-        }
-    
-        db.query('INSERT INTO login (username, password) VALUES (?, ?)', [username, password], (err, results) => {
+    if (!name || !numero) {
+        return res.status(400).json({ error: 'Nome da sala e número são obrigatórios' });
+    }
+
+    const query = 'INSERT INTO chaves (setor, numero) VALUES (?, ?)';
+    getConnection((err, connection) => {
+        if (err) return res.status(500).json({ error: 'Erro na conexão com o banco' });
+
+        connection.query(query, [name, numero], (err) => {
+            connection.release();
+
             if (err) {
-                console.error('Erro ao inserir o usuário:', err);
-                return res.status(500).json({ error: 'Erro interno do servidor.' });
+                console.error('Erro ao inserir dados no banco:', err);
+                return res.status(500).json({ error: 'Erro ao inserir dados' });
             }
-    
+
+            res.status(200).json({ message: 'Chave cadastrada com sucesso.' });
+        });
+    });
+});
+
+// API de Cadastro de Usuários (Admin)
+app.post('/pag_cadastro_adm', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Usuário e senha são obrigatórios.' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const query = 'INSERT INTO login (username, password) VALUES (?, ?)';
+    getConnection((err, connection) => {
+        if (err) return res.status(500).json({ error: 'Erro na conexão com o banco' });
+
+        connection.query(query, [username, hashedPassword], (err) => {
+            connection.release();
+
+            if (err) {
+                console.error('Erro ao cadastrar usuário:', err);
+                return res.status(500).json({ error: 'Erro ao cadastrar usuário.' });
+            }
+
             res.status(200).json({ message: 'Usuário cadastrado com sucesso!' });
         });
     });
+});
 
-    //API DA PÁGINA DE REGISTRO DE RESPONSÁVEIS
-    // Rota para lidar com o cadastro de chaves
-app.post('/pag_cadastro_resp', (req, res) => {
-    const { nome, profissao } = req.body;
-  
-    if (!nome || !profissao) {
-      return res.status(400).json({ error: 'Nome da sala e número da sala são obrigatórios.' });
-    }
-  
-    const query = 'INSERT INTO responsaveis (nome, profissao) VALUES (?, ?)';
-    db.query(query, [nome, profissao], (err, result) => {
-      if (err) {
-        console.error('Erro ao inserir dados no banco de dados:', err);
-        return res.status(500).json({ error: 'Erro ao inserir dados no banco de dados.' });
-      }
-      res.status(200).json({ message: 'Chave cadastrada com sucesso.' });
-    });
-  });
 
   //API PPÁGINA PRINCIPAL
 // Rota para criar novos registros
@@ -196,13 +201,12 @@ app.get('/pag_chaves', (req, res) => {
         });
     });
 });
-// Servindo arquivos estáticos (HTML, CSS, JS) na pasta 'public'
+
+// Servindo arquivos estáticos
 app.use(express.static('public'));
 
-// INICIAR O SERVIDOR
-const port = 5500; // Porta em que o servidor vai escutar
+// Iniciando o Servidor
+const port = 5500;
 app.listen(port, () => {
-    console.log(`Servidor iniciado na porta https://sistema-de-chaves.onrender.com:${port}/`);
+    console.log(`Servidor rodando em https://sistema-de-chaves.onrender.com:${port}/`);
 });
-
-  
