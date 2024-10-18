@@ -25,20 +25,7 @@ const allowedOrigins = [
 const BACKEND_URL = 'https://sistema-de-chaves.onrender.com';
 
 
-// CONFIGURAÇÃO GLOBAL DE CORS
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200); // Resposta rápida para preflight requests
-    }
-    next();
-});
+app.use(cors()); // Habilita CORS para todas as rotas
 
 // MIDDLEWARES PARA JSON E URL-ENCODED
 app.use(bodyParser.json());
