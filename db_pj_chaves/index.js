@@ -51,7 +51,10 @@ app.post('/pag_login', (req, res) => {
 
     const query = 'SELECT * FROM login WHERE username = ? AND password = ?';
     db.query(query, [username, password], (err, results) => {
-        if (err) return res.status(500).json({ error: 'Erro ao realizar login' });
+        if (err) {
+            console.error('Erro ao realizar login:', err); // Log do erro
+            return res.status(500).json({ error: 'Erro ao realizar login' });
+        }
 
         if (results.length > 0) {
             res.status(200).json({ message: 'Login bem-sucedido' });
@@ -60,6 +63,7 @@ app.post('/pag_login', (req, res) => {
         }
     });
 });
+
 
 // ROTA DE CADASTRO DE CHAVES
 app.post('/pag_cadastro_chaves', (req, res) => {
@@ -125,21 +129,29 @@ app.post('/pag_principal', (req, res) => {
 app.get('/getSetores', (req, res) => {
     const query = 'SELECT setor FROM chaves';
     db.query(query, (err, results) => {
-        if (err) return res.status(500).json({ error: 'Erro ao obter setores.' });
+        if (err) {
+            console.error('Erro ao obter setores:', err); // Log do erro
+            return res.status(500).json({ error: 'Erro ao obter setores.' });
+        }
 
         res.status(200).json(results);
     });
 });
+
 
 // ROTA PARA OBTER RESPONSÁVEIS
 app.get('/getResponsaveis', (req, res) => {
     const query = 'SELECT nome, profissao FROM responsaveis';
     db.query(query, (err, results) => {
-        if (err) return res.status(500).json({ error: 'Erro ao obter responsáveis.' });
+        if (err) {
+            console.error('Erro ao obter responsáveis:', err.message); // Log detalhado do erro
+            return res.status(500).json({ error: 'Erro ao obter responsáveis.' });
+        }
 
         res.status(200).json(results);
     });
 });
+
 
 // ROTA PARA OBTER REGISTROS
 app.get('/pag_registros', (req, res) => {
