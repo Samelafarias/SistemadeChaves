@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'Access-Control-Allow-Origin': '*'
     };
 
-
     //SCRIPT DA PÁGINA DE LOGIN
     // Função para manipulação do formulário de login
     function setupLoginForm() {
@@ -355,15 +354,25 @@ function setupPaginaPrincipal() {
 // Função para carregar opções de setor e responsável ao carregar a página
 async function carregarOpcoes() {
     try {
+        // Requisição para setores
         const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
+        if (!responseSetores.ok) {
+            throw new Error(`Erro ao buscar setores: ${responseSetores.status} - ${responseSetores.statusText}`);
+        }
         const setores = await responseSetores.json();
 
+        // Requisição para responsáveis
         const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
+        if (!responseResponsaveis.ok) {
+            throw new Error(`Erro ao buscar responsáveis: ${responseResponsaveis.status} - ${responseResponsaveis.statusText}`);
+        }
         const responsaveis = await responseResponsaveis.json();
 
+        // Seletores do DOM
         const setorSelect = document.getElementById('setor_pag_princ');
         const responsavelSelect = document.getElementById('resp_pag_princ');
 
+        // Preencher as opções de setores
         setores.forEach(setor => {
             const option = document.createElement('option');
             option.value = setor.setor;
@@ -371,16 +380,20 @@ async function carregarOpcoes() {
             setorSelect.appendChild(option);
         });
 
+        // Preencher as opções de responsáveis
         responsaveis.forEach(responsavel => {
             const option = document.createElement('option');
             option.value = responsavel.nome;
             option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
             responsavelSelect.appendChild(option);
         });
+
     } catch (error) {
-     //   console.error('Erro ao carregar opções:', error);
+        console.error('Erro ao carregar opções:', error);
+        alert('Houve um erro ao carregar as opções. Tente novamente mais tarde.');
     }
 }
+
 
 
     // Inicializar todos os scripts

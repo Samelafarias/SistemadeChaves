@@ -122,14 +122,16 @@ app.post('/pag_principal', (req, res) => {
 });
 
 // ROTA PARA OBTER SETORES
-app.get('/getSetores', (req, res) => {
-    const query = 'SELECT setor FROM chaves';
-    db.query(query, (err, results) => {
-        if (err) return res.status(500).json({ error: 'Erro ao obter setores.' });
-
-        res.status(200).json(results);
-    });
-});
+app.get('/getSetores', async (req, res) => {
+    try {
+      const setores = await getSetoresFromDB(); 
+      res.json(setores);
+    } catch (error) {
+      console.error('Erro ao obter setores:', error);
+      res.status(500).json({ error: 'Erro interno no servidor' });
+    }
+  });
+  
 
 // ROTA PARA OBTER RESPONSÁVEIS
 app.get('/getResponsaveis', (req, res) => {
