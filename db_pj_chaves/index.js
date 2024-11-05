@@ -144,37 +144,23 @@ app.post('/pag_principal', (req, res) => {
 app.get('/getSetores', (req, res) => {
     const query = 'SELECT setor FROM chaves';
     db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erro ao obter setores:', err); // Log do erro
-            return res.status(500).json({ error: 'Erro ao obter setores.' });
-        }
-
-        res.status(200).json(results);
+        logQueryResults(err, results, res, 'Setores obtidos com sucesso');
     });
 });
 
-
-// ROTA PARA OBTER RESPONSÁVEIS
+// ROTA PARA OBTER RESPONSAVEIS
 app.get('/getResponsaveis', (req, res) => {
     const query = 'SELECT nome, profissao FROM responsaveis';
     db.query(query, (err, results) => {
-        if (err) {
-            console.error('Erro ao obter responsáveis:', err.message); // Log detalhado do erro
-            return res.status(500).json({ error: 'Erro ao obter responsáveis.' });
-        }
-
-        res.status(200).json(results);
+        logQueryResults(err, results, res, 'Responsáveis obtidos com sucesso');
     });
 });
 
-
-// ROTA PARA OBTER REGISTROS
+// Rota para obter registros
 app.get('/pag_registros', (req, res) => {
     const query = 'SELECT * FROM registros';
     db.query(query, (err, results) => {
-        if (err) return res.status(500).json({ error: 'Erro ao obter registros.' });
-
-        res.status(200).json(results);
+        logQueryResults(err, results, res, 'Registros obtidos com sucesso');
     });
 });
 
@@ -192,6 +178,7 @@ app.get('/pag_chaves', (req, res) => {
         });
     });
 });
+
 
 // SERVE ARQUIVOS ESTÁTICOS
 app.use(express.static('public'));
