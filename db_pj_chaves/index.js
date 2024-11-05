@@ -155,7 +155,6 @@ app.get('/getResponsaveis', (req, res) => {
 // ROTA PARA OBTER REGISTROS
 app.get('/pag_registros', (req, res) => {
     const query = 'SELECT * FROM registros';
-    const query = 'SELECT * FROM registros';
     db.query(query, (err, results) => {
         logQueryResults(err, results, res, 'Registros obtidos com sucesso');
     });
