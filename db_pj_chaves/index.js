@@ -148,7 +148,8 @@ app.get('/getSetores', (req, res) => {
     });
 });
 
-// ROTA PARA OBTER RESPONSAVEIS
+
+// ROTA PARA OBTER RESPONSÁVEIS
 app.get('/getResponsaveis', (req, res) => {
     const query = 'SELECT nome, profissao FROM responsaveis';
     db.query(query, (err, results) => {
@@ -156,7 +157,8 @@ app.get('/getResponsaveis', (req, res) => {
     });
 });
 
-// Rota para obter registros
+
+// ROTA PARA OBTER REGISTROS
 app.get('/pag_registros', (req, res) => {
     const query = 'SELECT * FROM registros';
     db.query(query, (err, results) => {
@@ -178,7 +180,6 @@ app.get('/pag_chaves', (req, res) => {
         });
     });
 });
-
 
 // SERVE ARQUIVOS ESTÁTICOS
 app.use(express.static('public'));
