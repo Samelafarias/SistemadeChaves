@@ -25,15 +25,7 @@ const allowedOrigins = [
 const BACKEND_URL = 'https://sistema-de-chaves.onrender.com';
 
 
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-})); // Habilita CORS para todas as rotas
+app.use(cors()); // Habilita CORS para todas as rotas
 
 // MIDDLEWARES PARA JSON E URL-ENCODED
 app.use(bodyParser.json());
