@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(text => {
         console.log('Resposta do Servidor:', text); // Exibe o texto recebido
-        // Tente analisar o JSON aqui se a resposta estiver correta
+        // Tenta analisar o JSON aqui se a resposta estiver correta
         const data = JSON.parse(text); // Use JSON.parse apenas se o texto for um JSON válido
         if (data.message === 'Login bem-sucedido') {
             window.location.href = '/pag_menu.html';
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //SCRIPT DA PÁGINA DE REGISTRO DE NOVAS CHAVES
     // Função para manipulação do formulário de cadastro de chaves
     function setupCadastroChaveForm() {
-        const cadastroChaveForm = document.getElementById('cadast-chave Form');
+        const cadastroChaveForm = document.getElementById('cadast-chaveForm');
         if (cadastroChaveForm) {
             cadastroChaveForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
               });
 
+              //Função para dizer se a chave esta ou não com alguém
             // Adiciona o evento de tooltip
             document.querySelectorAll('.chave').forEach(chave => {
                 const tooltip = chave.querySelector('.tooltip');
