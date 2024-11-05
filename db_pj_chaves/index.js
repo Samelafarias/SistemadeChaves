@@ -25,7 +25,15 @@ const allowedOrigins = [
 const BACKEND_URL = 'https://sistema-de-chaves.onrender.com';
 
 
-app.use(cors()); // Habilita CORS para todas as rotas
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+})); // Habilita CORS para todas as rotas
 
 // MIDDLEWARES PARA JSON E URL-ENCODED
 app.use(bodyParser.json());
@@ -97,8 +105,10 @@ app.post('/pag_cadastro_adm', (req, res) => {
     }
 
     const query = 'INSERT INTO login (username, password) VALUES (?, ?)';
-    db.query(query, [username, password], (err, results) => {
-        logQueryResults(err, results, res, 'Usuário cadastrado com sucesso!');
+    db.query(query, [username, password], (err) => {
+        if (err) return res.status(500).json({ error: 'Erro ao cadastrar admin.' });
+
+        res.status(200).json({ message: 'Usuário cadastrado com sucesso!' });
     });
 });
 
@@ -111,8 +121,10 @@ app.post('/pag_cadastro_resp', (req, res) => {
     }
 
     const query = 'INSERT INTO responsaveis (nome, profissao) VALUES (?, ?)';
-    db.query(query, [nome, profissao], (err, results) => {
-        logQueryResults(err, results, res, 'Responsável cadastrado com sucesso.');
+    db.query(query, [nome, profissao], (err) => {
+        if (err) return res.status(500).json({ error: 'Erro ao cadastrar responsável.' });
+
+        res.status(200).json({ message: 'Responsável cadastrado com sucesso.' });
     });
 });
 
@@ -121,8 +133,10 @@ app.post('/pag_principal', (req, res) => {
     const { date, sector, operation, responsible, time } = req.body;
 
     const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [date, sector, operation, responsible, time], (err, results) => {
-        logQueryResults(err, results, res, 'Registro criado com sucesso');
+    db.query(query, [date, sector, operation, responsible, time], (err, result) => {
+        if (err) return res.status(500).json({ error: 'Erro ao criar registro.' });
+
+        res.status(201).json({ message: 'Registro criado com sucesso', id: result.insertId });
     });
 });
 
@@ -130,34 +144,39 @@ app.post('/pag_principal', (req, res) => {
 app.get('/getSetores', (req, res) => {
     const query = 'SELECT setor FROM chaves';
     db.query(query, (err, results) => {
-        logQueryResults(err, results, res, 'Setores obtidos com sucesso');
-    });
-});
-
-
-// ROTA PARA OBTER SETORES E RESPONSÁVEIS
-app.get('/getSetoresEResponsaveis', (req, res) => {
-    const querySetores = 'SELECT setor FROM chaves';
-    const queryResponsaveis = 'SELECT nome, profissao FROM responsaveis';
-
-    db.query(querySetores, (err, resultsSetores) => {
         if (err) {
-            console.error('Erro ao obter setores:', err);
+            console.error('Erro ao obter setores:', err); // Log do erro
             return res.status(500).json({ error: 'Erro ao obter setores.' });
         }
 
-        db.query(queryResponsaveis, (err, resultsResponsaveis) => {
-            if (err) {
-                console.error('Erro ao obter responsáveis:', err);
-                return res.status(500).json({ error: 'Erro ao obter responsáveis.' });
-            }
-
-            // Retorna os setores e responsáveis em um único objeto
-            res.status(200).json({ setores: resultsSetores, responsaveis: resultsResponsaveis });
-        });
+        res.status(200).json(results);
     });
 });
 
+
+// ROTA PARA OBTER RESPONSÁVEIS
+app.get('/getResponsaveis', (req, res) => {
+    const query = 'SELECT nome, profissao FROM responsaveis';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao obter responsáveis:', err.message); // Log detalhado do erro
+            return res.status(500).json({ error: 'Erro ao obter responsáveis.' });
+        }
+
+        res.status(200).json(results);
+    });
+});
+
+
+// ROTA PARA OBTER REGISTROS
+app.get('/pag_registros', (req, res) => {
+    const query = 'SELECT * FROM registros';
+    db.query(query, (err, results) => {
+        if (err) return res.status(500).json({ error: 'Erro ao obter registros.' });
+
+        res.status(200).json(results);
+    });
+});
 
 // ROTA PARA OBTER CHAVES E REGISTROS
 app.get('/pag_chaves', (req, res) => {
