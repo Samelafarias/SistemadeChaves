@@ -354,32 +354,26 @@ function setupPaginaPrincipal() {
 
 // Função para carregar opções de setor e responsável ao carregar a página
 async function carregarOpcoes() {
-    try {
-        const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
-        const setores = await responseSetores.json();
-
-        const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
-        const responsaveis = await responseResponsaveis.json();
-
-        const setorSelect = document.getElementById('setor_pag_princ');
-        const responsavelSelect = document.getElementById('resp_pag_princ');
-
-        setores.forEach(setor => {
-            const option = document.createElement('option');
-            option.value = setor.setor;
-            option.textContent = setor.setor;
-            setorSelect.appendChild(option);
-        });
-
-        responsaveis.forEach(responsavel => {
-            const option = document.createElement('option');
-            option.value = responsavel.nome;
-            option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
-            responsavelSelect.appendChild(option);
-        });
-    } catch (error) {
-     //   console.error('Erro ao carregar opções:', error);
+fetch('https://sistema-de-chaves.onrender.com/getSetoresEResponsaveis')
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Erro ao obter setores e responsáveis');
     }
+    return response.json();
+})
+.then(data => {
+    console.log(data); // Verifique os dados retornados
+    // Aqui você pode atualizar sua interface com os setores e responsáveis
+    const setores = data.setores;
+    const responsaveis = data.responsaveis;
+
+    // Exemplo de como você poderia popular os campos
+    // ... (código para manipular a DOM e exibir os dados)
+})
+.catch(error => {
+    console.error('Erro:', error);
+});
+
 }
 
 

@@ -135,22 +135,29 @@ app.get('/getSetores', (req, res) => {
 });
 
 
-// ROTA PARA OBTER RESPONSÁVEIS
-app.get('/getResponsaveis', (req, res) => {
-    const query = 'SELECT nome, profissao FROM responsaveis';
-    db.query(query, (err, results) => {
-        logQueryResults(err, results, res, 'Responsáveis obtidos com sucesso');
+// ROTA PARA OBTER SETORES E RESPONSÁVEIS
+app.get('/getSetoresEResponsaveis', (req, res) => {
+    const querySetores = 'SELECT setor FROM chaves';
+    const queryResponsaveis = 'SELECT nome, profissao FROM responsaveis';
+
+    db.query(querySetores, (err, resultsSetores) => {
+        if (err) {
+            console.error('Erro ao obter setores:', err);
+            return res.status(500).json({ error: 'Erro ao obter setores.' });
+        }
+
+        db.query(queryResponsaveis, (err, resultsResponsaveis) => {
+            if (err) {
+                console.error('Erro ao obter responsáveis:', err);
+                return res.status(500).json({ error: 'Erro ao obter responsáveis.' });
+            }
+
+            // Retorna os setores e responsáveis em um único objeto
+            res.status(200).json({ setores: resultsSetores, responsaveis: resultsResponsaveis });
+        });
     });
 });
 
-
-// ROTA PARA OBTER REGISTROS
-app.get('/pag_registros', (req, res) => {
-    const query = 'SELECT * FROM registros';
-    db.query(query, (err, results) => {
-        logQueryResults(err, results, res, 'Registros obtidos com sucesso');
-    });
-});
 
 // ROTA PARA OBTER CHAVES E REGISTROS
 app.get('/pag_chaves', (req, res) => {
