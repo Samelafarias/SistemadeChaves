@@ -1,10 +1,11 @@
-const mysql = require('mysql2'); // Importa o MySQL
-const express = require('express'); // Cria instância do Express
-const bodyParser = require('body-parser'); // Middleware para interpretar JSON e URL-encoded
-const cors = require('cors'); // Middleware para habilitar CORS
-require('dotenv').config(); // Carrega variáveis de ambiente
+// Importa as bibliotecas necessárias
+const mysql = require('mysql2');         // Para conexão com o MySQL
+const express = require('express');       // Para criar o servidor
+const bodyParser = require('body-parser');// Para interpretar JSON e URL-encoded
+const cors = require('cors');             // Para habilitar CORS (Cross-Origin Resource Sharing)
+require('dotenv').config();               // Para carregar variáveis de ambiente do arquivo .env
 
-// CONFIGURAÇÃO DO BANCO DE DADOS
+// Configuração do banco de dados
 const dbConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -13,10 +14,10 @@ const dbConfig = {
     port: '3306',
 };
 
-// INICIALIZAÇÃO DO EXPRESS
+// Inicialização do Express
 const app = express();
 
-// LISTA DE DOMÍNIOS PERMITIDOS PARA CORS
+// Lista de domínios permitidos para requisições ao backend
 const allowedOrigins = [
     'https://sistemadechaves-1mp8.onrender.com', // Frontend
     'https://lablisa.online',                    // Domínio permitido adicional
@@ -24,7 +25,7 @@ const allowedOrigins = [
 
 const BACKEND_URL = 'https://sistema-de-chaves.onrender.com';
 
-
+// Configuração do CORS com verificação de origem
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -33,14 +34,15 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     }
-})); // Habilita CORS para todas as rotas
+}));
 
-// MIDDLEWARES PARA JSON E URL-ENCODED
+// Middlewares para interpretar JSON e URL-encoded
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// CONEXÃO COM O BANCO DE DADOS
+// Conexão com o banco de dados
 const db = mysql.createConnection(dbConfig);
+
 db.connect((error) => {
     if (error) {
         console.error('Erro ao conectar com o banco de dados:', error);
@@ -58,7 +60,7 @@ function logQueryResults(error, results, res, successMessage) {
     res.status(200).json({ message: successMessage, data: results });
 }
 
-// ROTA DE LOGIN
+// Rota de login
 app.post('/pag_login', (req, res) => {
     const { username, password } = req.body;
 
@@ -69,7 +71,7 @@ app.post('/pag_login', (req, res) => {
     const query = 'SELECT * FROM login WHERE username = ? AND password = ?';
     db.query(query, [username, password], (err, results) => {
         if (err) {
-            console.error('Erro ao realizar login:', err); // Log do erro
+            console.error('Erro ao realizar login:', err);
             return res.status(500).json({ error: 'Erro ao realizar login' });
         }
 
@@ -81,8 +83,7 @@ app.post('/pag_login', (req, res) => {
     });
 });
 
-
-// ROTA DE CADASTRO DE CHAVES
+// Rota de cadastro de chaves
 app.post('/pag_cadastro_chaves', (req, res) => {
     const { name, numero } = req.body;
 
@@ -96,7 +97,7 @@ app.post('/pag_cadastro_chaves', (req, res) => {
     });
 });
 
-// ROTA DE CADASTRO DE ADMINS
+// Rota de cadastro de admins
 app.post('/pag_cadastro_adm', (req, res) => {
     const { username, password } = req.body;
 
@@ -105,14 +106,12 @@ app.post('/pag_cadastro_adm', (req, res) => {
     }
 
     const query = 'INSERT INTO login (username, password) VALUES (?, ?)';
-    db.query(query, [username, password], (err) => {
-        if (err) return res.status(500).json({ error: 'Erro ao cadastrar admin.' });
-
-        res.status(200).json({ message: 'Usuário cadastrado com sucesso!' });
+    db.query(query, [username, password], (err, results) => {
+        logQueryResults(err, results, res, 'Usuário cadastrado com sucesso!');
     });
 });
 
-// ROTA DE CADASTRO DE RESPONSÁVEIS
+// Rota de cadastro de responsáveis
 app.post('/pag_cadastro_resp', (req, res) => {
     const { nome, profissao } = req.body;
 
@@ -121,26 +120,22 @@ app.post('/pag_cadastro_resp', (req, res) => {
     }
 
     const query = 'INSERT INTO responsaveis (nome, profissao) VALUES (?, ?)';
-    db.query(query, [nome, profissao], (err) => {
-        if (err) return res.status(500).json({ error: 'Erro ao cadastrar responsável.' });
-
-        res.status(200).json({ message: 'Responsável cadastrado com sucesso.' });
+    db.query(query, [nome, profissao], (err, results) => {
+        logQueryResults(err, results, res, 'Responsável cadastrado com sucesso.');
     });
 });
 
-// ROTA PARA CRIAÇÃO DE REGISTRO
+// Rota para criação de registro
 app.post('/pag_principal', (req, res) => {
     const { date, sector, operation, responsible, time } = req.body;
 
     const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [date, sector, operation, responsible, time], (err, result) => {
-        if (err) return res.status(500).json({ error: 'Erro ao criar registro.' });
-
-        res.status(201).json({ message: 'Registro criado com sucesso', id: result.insertId });
+    db.query(query, [date, sector, operation, responsible, time], (err, results) => {
+        logQueryResults(err, results, res, 'Registro criado com sucesso');
     });
 });
 
-// ROTA PARA OBTER SETORES
+// Rota para obter setores
 app.get('/getSetores', (req, res) => {
     const query = 'SELECT setor FROM chaves';
     db.query(query, (err, results) => {
@@ -148,8 +143,7 @@ app.get('/getSetores', (req, res) => {
     });
 });
 
-
-// ROTA PARA OBTER RESPONSÁVEIS
+// Rota para obter responsáveis
 app.get('/getResponsaveis', (req, res) => {
     const query = 'SELECT nome, profissao FROM responsaveis';
     db.query(query, (err, results) => {
@@ -157,8 +151,7 @@ app.get('/getResponsaveis', (req, res) => {
     });
 });
 
-
-// ROTA PARA OBTER REGISTROS
+// Rota para obter registros
 app.get('/pag_registros', (req, res) => {
     const query = 'SELECT * FROM registros';
     db.query(query, (err, results) => {
@@ -166,7 +159,7 @@ app.get('/pag_registros', (req, res) => {
     });
 });
 
-// ROTA PARA OBTER CHAVES E REGISTROS
+// Rota para obter chaves e registros
 app.get('/pag_chaves', (req, res) => {
     const queryChaves = 'SELECT setor FROM chaves';
     db.query(queryChaves, (err, resultsChaves) => {
@@ -181,10 +174,10 @@ app.get('/pag_chaves', (req, res) => {
     });
 });
 
-// SERVE ARQUIVOS ESTÁTICOS
+// Servir arquivos estáticos da pasta 'public'
 app.use(express.static('public'));
 
-// INICIALIZA O SERVIDOR
+// Inicializa o servidor
 const port = 5500;
 app.listen(port, () => {
     console.log(`Servidor iniciado em ${BACKEND_URL}:${port}/`);
