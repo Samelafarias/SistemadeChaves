@@ -263,9 +263,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         })
-        .catch(error => {
+     /*   .catch(error => {
             console.error('Erro ao buscar registros:', error);
-        });
+        });*/
     }
 
 
