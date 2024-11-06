@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    //Script página principal
+    //SCRIPT DA PÁGINA PRINCIPAL
     // Função para manipulação dos botões da página principal
 function setupPaginaPrincipal() {
     const entregaButton = document.getElementById('entrega');
@@ -342,7 +342,7 @@ function setupPaginaPrincipal() {
     }
 }
 
-// Função para carregar opções de setor e responsável ao carregar a página
+// FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
 async function carregarOpcoes() {
     try {
         const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
@@ -382,7 +382,7 @@ async function carregarOpcoes() {
     }
 }
 
-    // Inicializar todos os scripts
+    // INICIALIZA TODOS OS SCRIPTS
     setupLoginForm();
     setupCadastroChaveForm();
     setupCadastroRespForm();
@@ -394,7 +394,7 @@ async function carregarOpcoes() {
 
 });
 
-// Funções para abrir as páginas de chaves e registros
+// FUNÇÕES PARA ABRIR A PÁGINA DE CHAVES E DE REGISTROS
 function abrir_pag_chave() {
     window.open('pag_chaves.html', '_blank'); // Abre uma nova janela para a página de chaves
 }
