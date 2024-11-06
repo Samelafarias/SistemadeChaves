@@ -133,7 +133,7 @@ app.post('/pag_cadastro_resp', (req, res) => {
 
 });
 
-// ROTA PARA CRIAÇÃO DE REGISTRO
+// ROTA PARA PÁGINA PRINCIAL
 app.post('/pag_principal', (req, res) => {
     const { date, sector, operation, responsible, time } = req.body;
 
@@ -161,7 +161,7 @@ app.get('/getResponsaveis', (req, res) => {
 });
 
 
-// ROTA PARA OBTER REGISTROS
+// ROTA PARA PÁGINA DE REGISTROS
 app.get('/pag_registros', (req, res) => {
     const query = 'SELECT * FROM registros';
     db.query(query, (err, results) => {
@@ -169,7 +169,7 @@ app.get('/pag_registros', (req, res) => {
     });
 });
 
-// ROTA PARA OBTER CHAVES E REGISTROS
+// ROTA PARA PÁGIANA DE CHAVES
 app.get('/pag_chaves', (req, res) => {
     const queryChaves = 'SELECT setor FROM chaves';
     db.query(queryChaves, (err, resultsChaves) => {
