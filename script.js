@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-
+    
     // Configuração de cabeçalhos para lidar com CORS
     const headers = {
         'Content-Type': 'application/json',
@@ -43,10 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 }
 
-    //SCRIPT DA PÁGINA DE REGISTRO DE NOVAS CHAVES
+    //SCRIPT DA PÁGINA DE CADASTRO DE NOVAS CHAVES
     // Função para manipulação do formulário de cadastro de chaves
     function setupCadastroChaveForm() {
-        const cadastroChaveForm = document.getElementById('cadast-chave Form');
+        const cadastroChaveForm = document.getElementById('cadast-chaveForm');
         if (cadastroChaveForm) {
             cadastroChaveForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    //SCRIPt página principal
+    //Script página principal
     // Função para manipulação dos botões da página principal
 function setupPaginaPrincipal() {
     const entregaButton = document.getElementById('entrega');
