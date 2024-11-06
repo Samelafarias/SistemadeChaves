@@ -388,10 +388,9 @@ async function carregarOpcoes() {
     setupCadastroRespForm();
     setupCadastroAdmForm();
     setupFilterButton();
+    setupPaginaPrincipal();
     setupChaves();
     carregarOpcoes();
-    setupPaginaPrincipal();
-    
 
 });
 
