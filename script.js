@@ -50,12 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
             cadastroChaveForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const name = document.getElementById('name').value;
-                const numero = document.getElementById('numero').value;
 
                 fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_chaves', {
                     method: 'POST',
                     headers,
-                    body: JSON.stringify({ name, numero })
+                    body: JSON.stringify({name})
                 })
                 .then(response => response.json())
                 .then(data => {
