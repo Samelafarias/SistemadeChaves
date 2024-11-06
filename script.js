@@ -351,26 +351,37 @@ async function carregarOpcoes() {
         const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
         const responsaveis = await responseResponsaveis.json();
 
+        // Seleciona os elementos no DOM
         const setorSelect = document.getElementById('setor_pag_princ');
         const responsavelSelect = document.getElementById('resp_pag_princ');
 
-        setores.forEach(setor => {
-            const option = document.createElement('option');
-            option.value = setor.setor;
-            option.textContent = setor.setor;
-            setorSelect.appendChild(option);
-        });
+        // Verifica se os elementos existem antes de manipular
+        if (setorSelect) {
+            setores.forEach(setor => {
+                const option = document.createElement('option');
+                option.value = setor.setor;
+                option.textContent = setor.setor;
+                setorSelect.appendChild(option);
+            });
+        } else {
+            console.warn('Elemento com ID "setor_pag_princ" não encontrado no DOM.');
+        }
 
-        responsaveis.forEach(responsavel => {
-            const option = document.createElement('option');
-            option.value = responsavel.nome;
-            option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
-            responsavelSelect.appendChild(option);
-        });
+        if (responsavelSelect) {
+            responsaveis.forEach(responsavel => {
+                const option = document.createElement('option');
+                option.value = responsavel.nome;
+                option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
+                responsavelSelect.appendChild(option);
+            });
+        } else {
+            console.warn('Elemento com ID "resp_pag_princ" não encontrado no DOM.');
+        }
     } catch (error) {
-     //   console.error('Erro ao carregar opções:', error);
+        console.error('Erro ao carregar opções:', error);
     }
 }
+
 
 
     // Inicializar todos os scripts
@@ -393,3 +404,4 @@ function abrir_pag_chave() {
 function abrir_pag_registros() {
     window.open('pag_registros.html', '_blank'); // Abre uma nova janela para a página de registros
 }
+
