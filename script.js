@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // Configuração de cabeçalhos para lidar com CORS
     const headers = {
         'Content-Type': 'application/json',
@@ -44,16 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 
     //SCRIPT DA PÁGINA DE CADASTRO DE NOVAS CHAVES
-    // Função para manipulação do formulário de cadastro de chaves
-    function setupCadastroChaveForm() {
+       function setupCadastroChaveForm() {
         const cadastroChaveForm = document.getElementById('cadast-chaveForm');
         if (cadastroChaveForm) {
             cadastroChaveForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-              
                 const name = document.getElementById('name').value;
                 const numero = document.getElementById('numero').value;
-              
+
                 fetch('https://sistema-de-chaves.onrender.com/pag_cadastro_chaves', {
                     method: 'POST',
                     headers,
@@ -61,19 +59,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(response => response.json())
                 .then(data => {
-                  if (data.error) {
-                    alert(`Erro: ${data.error}`);
-                  } else {
-                    alert(data.message);
-                  }
+                    alert(data.error ? `Erro: ${data.error}` : data.message);
                 })
-                .catch(error => {
-                  console.error('Erro ao enviar dados:', error);
-                });
+                .catch(error => console.error('Erro ao enviar dados:', error));
             });
         }
     }
-
 
     //SCRIPT DA PÁGINA DE CADASTRO DE ADMS
     // Função para manipulação do formulário de cadastro de administradores
