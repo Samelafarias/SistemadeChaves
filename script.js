@@ -382,8 +382,6 @@ async function carregarOpcoes() {
     }
 }
 
-
-
     // Inicializar todos os scripts
     setupLoginForm();
     setupCadastroChaveForm();
@@ -391,8 +389,9 @@ async function carregarOpcoes() {
     setupCadastroAdmForm();
     setupFilterButton();
     setupChaves();
-    setupPaginaPrincipal();
     carregarOpcoes();
+    setupPaginaPrincipal();
+    
 
 });
 
