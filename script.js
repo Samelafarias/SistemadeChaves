@@ -287,8 +287,8 @@ function setupPaginaPrincipal() {
 
         async function registrar_dados() {
             const data = document.getElementById('data').value;
-            const setor = document.getElementById('setor_pag_princ').value;
-            const responsavel = document.getElementById('resp_pag_princ').value;
+            const setor = document.getElementById('setorPagPrinc').value;
+            const responsavel = document.getElementById('respPagPrinc').value;
             const horario = document.getElementById('horario').value;
             const entrega = document.getElementById('entrega').classList.contains('ativo');
             const devolucao = document.getElementById('devolucao').classList.contains('ativo');
