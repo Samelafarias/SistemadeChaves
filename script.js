@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const { chaves, registros } = data;
 
             chaves.forEach(chave => {
-                sectionChave.innerHTML += createChaveHTML(chave.setor);
+                sectionChave.innerHTML += createChaveHTML(chave.setor, chave.numero);
             });
 
             const dispChaves = document.querySelectorAll('.disp_chave');
