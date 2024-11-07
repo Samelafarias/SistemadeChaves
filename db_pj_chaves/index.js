@@ -98,7 +98,7 @@ app.post('/pag_cadastro_chaves', (req, res) => {
         return res.status(400).json({ error: 'Nome e número da sala são obrigatórios.' });
     }
 
-    const query = 'INSERT INTO chaves (setor) VALUES (?, ?)';
+    const query = 'INSERT INTO chaves (setor) VALUES (?)';
     db.query(query, [name], (err, results) => {
         logQueryResults(err, results, res, 'Chave cadastrada com sucesso.');
     });
