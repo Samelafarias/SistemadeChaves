@@ -480,7 +480,7 @@ aside.cadast-resp{
 }
 
 /*Estilo do campo de seleção de setor*/
-#setor_pag_princ{
+#setorPagPrinc{
     width: 220px;
     height: 35px;
     border-radius: 5px;
@@ -490,7 +490,7 @@ aside.cadast-resp{
 }
 
 /*Estilo do campo da entrada do responsável*/
-#resp_pag_princ{
+#respPagPrinc{
     width: 225px;
     height: 35px;
     border-radius: 5px;
