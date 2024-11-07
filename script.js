@@ -351,8 +351,8 @@ async function carregarOpcoes() {
         const responsaveis = await responseResponsaveis.json();
 
         // Seleciona os elementos no DOM
-        const setorSelect = document.getElementById('setor_pag_princ');
-        const responsavelSelect = document.getElementById('resp_pag_princ');
+        const setorSelect = document.getElementById('setorPagPrinc');
+        const responsavelSelect = document.getElementById('respPagPrinc');
 
         // Verifica se os elementos existem antes de manipular
         if (setorSelect) {
@@ -363,7 +363,7 @@ async function carregarOpcoes() {
                 setorSelect.appendChild(option);
             });
         } else {
-            console.warn('Elemento com ID "setor_pag_princ" não encontrado no DOM.');
+            console.warn('Elemento com ID "setorPagPrinc" não encontrado no DOM.');
         }
 
         if (responsavelSelect) {
@@ -374,7 +374,7 @@ async function carregarOpcoes() {
                 responsavelSelect.appendChild(option);
             });
         } else {
-            console.warn('Elemento com ID "resp_pag_princ" não encontrado no DOM.');
+            console.warn('Elemento com ID "respPagPrinc" não encontrado no DOM.');
         }
     } catch (error) {
         console.error('Erro ao carregar opções:', error);
