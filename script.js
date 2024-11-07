@@ -138,6 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Função para manipulação dos filtros de registros
     function setupFilterButton() {
         const filterButton = document.getElementById('filterbnt');
+        const mensagemErro = document.getElementById('mensagemErro'); // Elemento para exibir mensagens de erro
+    
         if (filterButton) {
             filterButton.addEventListener('click', function() {
                 const mes = document.getElementById('mes_pag_princ').value;
@@ -145,53 +147,68 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tbody = document.getElementById('body_table');
     
                 if (tbody) {
-                    // Faz a requisição para obter os registros
                     fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
                         method: 'GET',
                         headers
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // Filtra os registros baseados no mês e ano
-                        const registrosFiltrados = data.filter(registro => {
+                        const registrosArray = Array.isArray(data) ? data : []; // Garante que é um array
+                        tbody.innerHTML = ''; // Limpa a tabela
+    
+                        if (registrosArray.length === 0) {
+                            mensagemErro.textContent = "Nenhum registro encontrado."; // Mensagem para o usuário
+                            return;
+                        } else {
+                            mensagemErro.textContent = ""; // Limpa mensagem de erro se houver dados
+                        }
+    
+                        const registrosFiltrados = registrosArray.filter(registro => {
                             const dataRegistro = new Date(registro.date);
-                            return dataRegistro.getMonth() + 1 === parseInt(mes) && dataRegistro.getFullYear() === parseInt(ano);
+                            return (
+                                dataRegistro.getMonth() + 1 === parseInt(mes) && 
+                                dataRegistro.getFullYear() === parseInt(ano)
+                            );
                         });
     
-                        // Ordena os registros por data
+                        // Ordena e exibe os registros
                         registrosFiltrados.sort((a, b) => new Date(a.date) - new Date(b.date));
     
-                        // Limpa a tabela existente antes de adicionar novos registros
-                        tbody.innerHTML = '';
-    
-                        // Preenche a tabela com os registros filtrados
-                        registrosFiltrados.forEach(registro => {
+                        if (registrosFiltrados.length === 0) {
                             const tr = document.createElement('tr');
-                            const operacao = registro.operacao.toUpperCase();
-                            const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
-                            localStorage.setItem('operacao', operacao); // Armazena a operação no localStorage
+                            tr.innerHTML = `<td colspan="5" style="text-align: center;">Nenhum registro encontrado para o mês e ano selecionados.</td>`;
+                            tbody.appendChild(tr);
+                        } else {
+                            registrosFiltrados.forEach(registro => {
+                                const tr = document.createElement('tr');
+                                const operacao = registro.operacao.toUpperCase();
+                                const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
+                                localStorage.setItem('operacao', operacao); // Armazena a operação no localStorage
     
-                            tr.innerHTML = `
-                                <td>${formatarData(registro.date)}</td>
-                                <td>${registro.setor}</td>
-                                <td>${operacaoFormatada}</td>
-                                <td>${registro.time}</td>
-                                <td>${registro.responsavel}</td>
-                            `;
-                            tbody.appendChild(tr); // Adiciona a linha na tabela
-                        });
+                                tr.innerHTML = `
+                                    <td>${formatarData(registro.date)}</td>
+                                    <td>${registro.setor}</td>
+                                    <td>${operacaoFormatada}</td>
+                                    <td>${registro.time}</td>
+                                    <td>${registro.responsavel}</td>
+                                `;
+                                tbody.appendChild(tr);
+                            });
+                        }
                     })
-                    .catch(error => console.error('Erro ao buscar dados:', error)); // Log de erro caso ocorra um problema na requisição
+                    .catch(error => {
+                        console.error('Erro ao buscar dados:', error);
+                        mensagemErro.textContent = "Erro ao buscar registros. Por favor, tente novamente mais tarde.";
+                    });
                 }
             });
     
-            // Função para formatar a data no formato dd/mm/aaaa
             function formatarData(data) {
                 const date = new Date(data);
                 const dia = String(date.getDate()).padStart(2, '0');
                 const mes = String(date.getMonth() + 1).padStart(2, '0');
                 const ano = date.getFullYear();
-                return `${dia}/${mes}/${ano}`; // Formata a data no formato dd/mm/aaaa
+                return `${dia}/${mes}/${ano}`;
             }
         }
     }
