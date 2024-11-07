@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
             filterButton.addEventListener('click', function() {
                 const mes = document.getElementById('mes_pag_princ').value;
                 const ano = document.getElementById('ano_registro').value;
-                const tbody = document.getElementById('body_table');
+                const tbody = document.getElementById('body_table').value;
     
                 if (tbody) {
                     fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
