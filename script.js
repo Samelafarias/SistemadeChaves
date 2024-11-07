@@ -143,28 +143,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 const mes = document.getElementById('mes_pag_princ').value;
                 const ano = document.getElementById('ano_registro').value;
                 const tbody = document.getElementById('body_table');
-
+    
                 if (tbody) {
-                     fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
+                    fetch('https://sistema-de-chaves.onrender.com/pag_registros', {
                         method: 'GET',
                         headers
                     })
                     .then(response => response.json())
                     .then(data => {
-                        const registrosFiltrados = data.filter(registro => {
+                        console.log('Data received:', data); // Verificar a estrutura de data
+                        const registrosArray = Array.isArray(data) ? data : []; // Garante que é um array
+    
+                        const registrosFiltrados = registrosArray.filter(registro => {
                             const dataRegistro = new Date(registro.date);
-                            return dataRegistro.getMonth() + 1 === parseInt(mes) && dataRegistro.getFullYear() === parseInt(ano);
+                            return (
+                                dataRegistro.getMonth() + 1 === parseInt(mes) && 
+                                dataRegistro.getFullYear() === parseInt(ano)
+                            );
                         });
-
+    
                         registrosFiltrados.sort((a, b) => new Date(a.date) - new Date(b.date));
                         tbody.innerHTML = '';
-
+    
                         registrosFiltrados.forEach(registro => {
                             const tr = document.createElement('tr');
                             const operacao = registro.operacao.toUpperCase();
                             const operacaoFormatada = operacao === 'ENTREGA' ? 'ENTREGA' : 'DEVOLUÇÃO';
-                            localStorage.setItem('operacao', operacao); // Armazena a operação no localStorage
-
+                            localStorage.setItem('operacao', operacao);
+    
                             tr.innerHTML = `
                                 <td>${formatarData(registro.date)}</td>
                                 <td>${registro.setor}</td>
@@ -175,20 +181,20 @@ document.addEventListener('DOMContentLoaded', function () {
                             tbody.appendChild(tr);
                         });
                     })
-                    .catch(error => console.error('Erro ao buscar dados:', error)); // Log de erro caso ocorra um problema na requisição
+                    .catch(error => console.error('Erro ao buscar dados:', error));
                 }
             });
-
+    
             function formatarData(data) {
                 const date = new Date(data);
                 const dia = String(date.getDate()).padStart(2, '0');
                 const mes = String(date.getMonth() + 1).padStart(2, '0');
                 const ano = date.getFullYear();
-                return `${dia}/${mes}/${ano}`; // Formata a data no formato dd/mm/aaaa
+                return `${dia}/${mes}/${ano}`;
             }
         }
     }
-
+    
     
     //SCRIPT DA PÁGINA DE CHAVES
      // Função para criar o HTML das chaves dinamicamente
@@ -341,7 +347,6 @@ function setupPaginaPrincipal() {
     }
 }
 
-// FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
 // FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
 async function carregarOpcoes() {
     try {
