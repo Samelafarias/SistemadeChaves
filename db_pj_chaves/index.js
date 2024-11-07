@@ -92,14 +92,14 @@ app.post('/pag_login', (req, res) => {
 
 // ROTA DE CADASTRO DE CHAVES
 app.post('/pag_cadastro_chaves', (req, res) => {
-    const { name, numero } = req.body;
+    const { name } = req.body;
 
-    if (!name || !numero) {
+    if (!name) {
         return res.status(400).json({ error: 'Nome e número da sala são obrigatórios.' });
     }
 
-    const query = 'INSERT INTO chaves (setor, numero) VALUES (?, ?)';
-    db.query(query, [name, numero], (err, results) => {
+    const query = 'INSERT INTO chaves (setor) VALUES (?, ?)';
+    db.query(query, [name], (err, results) => {
         logQueryResults(err, results, res, 'Chave cadastrada com sucesso.');
     });
 });
