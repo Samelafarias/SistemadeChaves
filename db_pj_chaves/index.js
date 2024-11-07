@@ -92,17 +92,24 @@ app.post('/pag_login', (req, res) => {
 
 // ROTA DE CADASTRO DE CHAVES
 app.post('/pag_cadastro_chaves', (req, res) => {
+    // Extrair o nome (setor) e o número (numero) da chave do corpo da requisição
     const { name } = req.body;
 
     if (!name) {
-        return res.status(400).json({ error: 'Nome e número da sala são obrigatórios.' });
+        return res.status(400).json({ error: 'Nome (setor) e número da sala são obrigatórios.' });
     }
 
     const query = 'INSERT INTO chaves (setor) VALUES (?)';
+
     db.query(query, [name], (err, results) => {
-        logQueryResults(err, results, res, 'Chave cadastrada com sucesso.');
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Erro ao cadastrar chave.' });
+        }
+        res.status(200).json({ message: 'Chave cadastrada com sucesso.' });
     });
 });
+
 
 // ROTA DE CADASTRO DE ADMINS
 app.post('/pag_cadastro_adm', (req, res) => {
