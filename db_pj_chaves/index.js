@@ -165,9 +165,14 @@ app.get('/getResponsaveis', (req, res) => {
 app.get('/pag_registros', (req, res) => {
     const query = 'SELECT * FROM registros';
     db.query(query, (err, results) => {
-        logQueryResults(err, results, res, 'Registros obtidos com sucesso');
+        if (err) {
+            res.status(500).json({ error: 'Erro ao acessar os registros' });
+        } else {
+            res.json(results); // Certifique-se de retornar um array aqui
+        }
     });
 });
+
 
 // ROTA PARA PÁGIANA DE CHAVES
 app.get('/pag_chaves', (req, res) => {
