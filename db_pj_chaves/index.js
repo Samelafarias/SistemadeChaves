@@ -56,7 +56,7 @@ function connectToDatabase() {
 
 connectToDatabase(); // Chama a função de conexão para inicializar
 
-//FUNÇÃO AUXILIA PARA REGISTRAR LOG DE CONSULTA AO BANCO DE DADOS
+//FUNÇÃO QUE AUXILIA PARA REGISTRAR LOG DE CONSULTA AO BANCO DE DADOS
 function logQueryResults(error, results, res, successMessage) {
     if (error) {
         console.error('Erro ao executar consulta:', error);

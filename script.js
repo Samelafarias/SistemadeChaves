@@ -342,13 +342,28 @@ function setupPaginaPrincipal() {
 }
 
 // FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
+// FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
 async function carregarOpcoes() {
     try {
         const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
+        
+        // Verifique se a resposta foi bem-sucedida
+        if (!responseSetores.ok) {
+            throw new Error('Erro ao buscar setores: ' + responseSetores.statusText);
+        }
+        
         const setores = await responseSetores.json();
+        console.log('setores:', setores); // Verifique o que está sendo retornado
 
         const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
+        
+        // Verifique se a resposta foi bem-sucedida
+        if (!responseResponsaveis.ok) {
+            throw new Error('Erro ao buscar responsáveis: ' + responseResponsaveis.statusText);
+        }
+        
         const responsaveis = await responseResponsaveis.json();
+        console.log('responsaveis:', responsaveis); // Verifique o que está sendo retornado
 
         // Seleciona os elementos no DOM
         const setorSelect = document.getElementById('setorPagPrinc');
@@ -356,7 +371,10 @@ async function carregarOpcoes() {
 
         // Verifica se os elementos existem antes de manipular
         if (setorSelect) {
-            setores.forEach(setor => {
+            // Verifica se `setores` é um array antes de usar `forEach`
+            const setoresArray = Array.isArray(setores) ? setores : setores.data || [];
+            
+            setoresArray.forEach(setor => {
                 const option = document.createElement('option');
                 option.value = setor.setor;
                 option.textContent = setor.setor;
@@ -367,7 +385,10 @@ async function carregarOpcoes() {
         }
 
         if (responsavelSelect) {
-            responsaveis.forEach(responsavel => {
+            // Garante que `responsaveis` é um array antes de usar `forEach`
+            const responsaveisArray = Array.isArray(responsaveis) ? responsaveis : responsaveis.data || [];
+            
+            responsaveisArray.forEach(responsavel => {
                 const option = document.createElement('option');
                 option.value = responsavel.nome;
                 option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
@@ -380,6 +401,7 @@ async function carregarOpcoes() {
         console.error('Erro ao carregar opções:', error);
     }
 }
+
 
     // INICIALIZA TODOS OS SCRIPTS
     setupLoginForm();
