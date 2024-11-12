@@ -11,6 +11,8 @@ const dbConfig = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: '3306',
+    connectTimeout: 10000,      
+    acquireTimeout: 10000,
 };
 
 // INICIALIZAÇÃO DO EXPRESS
