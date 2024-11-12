@@ -35,7 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // CONEXÃO COM O BANCO DE DADOS
 let db;
-let reconnecting = false;
 
 function connectToDatabase() {
     db = mysql.createConnection(dbConfig);
@@ -43,13 +42,7 @@ function connectToDatabase() {
     db.connect((error) => {
         if (error) {
             console.error('Erro ao conectar com o banco de dados:', error);
-            if (!reconnecting) {
-                reconnecting = true;
-                setTimeout(() => {
-                    reconnecting = false;
-                    connectToDatabase(); // Tenta reconectar após 2 segundos
-                }, 2000);
-            }
+            setTimeout(connectToDatabase, 2000); // Tenta reconectar após 2 segundos
         } else {
             console.log('Conectado ao banco de dados com sucesso!');
         }
@@ -58,7 +51,6 @@ function connectToDatabase() {
     db.on('error', (error) => {
         console.error('Erro na conexão do banco de dados:', error);
         if (error.code === 'PROTOCOL_CONNECTION_LOST') {
-            db.destroy(); // Fecha a conexão antiga antes de reconectar
             connectToDatabase(); // Reconecta em caso de perda de conexão
         }
     });
