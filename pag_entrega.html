@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+     <title>Controle de chaves</title>
+</head>
+<body id="body-pag-entrega">
+  <header class="header">
+      <h1 id="h1_pag_princ">Controle do Registro de Chaves</h1>
+  </header>
+  <h2 id="h3-pag-entrega-dev">Entrega de chaves</h2>
+  <br>
+  <div class="circle">
+      <div class="circle-entrega-dev" onclick="toggleDropdown('dropdown-user')">
+          <img src="img/conta.png" alt="icone de usuario" class="user-entr-dev">
+          
+          <div class="dropdown" id="dropdown-user">
+            <select name="responsavel" id="respPagPrinc">
+              <option value="">Selecione</option>
+          </select>
+          </div>
+      </div>
+      <div class="circle-entrega-dev" onclick="toggleDropdown('dropdown-key')">
+          <img src="img/chave.png" alt="icone de chave" class="key-entr-dev">
+          <div class="dropdown" id="dropdown-key">
+            <select name="responsavel" id="respPagPrinc">
+              <option value="">Selecione</option>
+          </select>
+          </div>
+      </div>
+  </div>
+  <br>
+      <button class="registrar-entr-dev" value="registrar_dados" id="registrar_dados">Registrar</button>
+  
+</body>
+
+<script src="script.js"></script>
+</html> 

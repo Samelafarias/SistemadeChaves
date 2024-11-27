@@ -133,6 +133,36 @@ app.post('/pag_cadastro_resp', (req, res) => {
 
 });
 
+//ROTA PARA CADASTRA A ENTREGA DA CHAVE
+app.post('/pag_entrega', (req, res) => {
+    const { setor, responsavel, horario, operacao } = req.body;
+
+    const query = 'INSERT INTO registros (setor, responsavel, horario, operacao) VALUES (?, ?, ?, ?)';
+    db.query(query, [setor, responsavel, horario, operacao], (err, results) => {
+        if (err) {
+            console.error('Erro ao registrar dados:', err);
+            res.status(500).send('Erro ao registrar dados.');
+        } else {
+            res.status(200).send('Registro criado com sucesso');
+        }
+    });
+});
+
+//ROTA PARA DEVOLUÇÃO DAS CHAVES
+app.post('/pag_devolucao', (req, res) => {
+    const { setor, responsavel, horario, operacao } = req.body;
+
+    const query = 'INSERT INTO registros (setor, responsavel, horario, operacao) VALUES (?, ?, ?, ?)';
+    db.query(query, [setor, responsavel, horario, operacao], (err, results) => {
+        if (err) {
+            console.error('Erro ao registrar dados:', err);
+            res.status(500).send('Erro ao registrar dados.');
+        } else {
+            res.status(200).send('Registro criado com sucesso');
+        }
+    });
+});
+
 // ROTA PARA PÁGINA PRINCIAL
 app.post('/pag_principal', (req, res) => {
     const { date, sector, operation, responsible, time } = req.body;
