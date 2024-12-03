@@ -441,8 +441,7 @@ async function carregarOpcoes() {
     setupPaginaPrincipal();
     setupChaves();
     carregarOpcoes();
-    entregaDeChaves();
-    devolucaoDeChaves();
+
 
 
 // FUNÇÕES PARA ABRIR A PÁGINA DE CHAVES E DE REGISTROS
