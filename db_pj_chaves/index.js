@@ -147,7 +147,7 @@ app.post('pag_entrega', (req, res) => {
   });
 //ROTA PARA A PÁGINA DE DEVOLUÇÃO DAS CHAVES
 
-// ROTA PARA PÁGINA PRINCIAL
+/*// ROTA PARA PÁGINA PRINCIAL
 app.post('/pag_principal', (req, res) => {
     const { date, sector, operation, responsible, time } = req.body;
 
@@ -155,7 +155,7 @@ app.post('/pag_principal', (req, res) => {
     db.query(query, [date, sector, operation, responsible, time], (err, results) => {
         logQueryResults(err, results, res, 'Registro criado com sucesso');
     });
-});
+});*/
 
 // ROTA PARA OBTER SETORES
 app.get('/getSetores', (req, res) => {
