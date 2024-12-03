@@ -133,35 +133,19 @@ app.post('/pag_cadastro_resp', (req, res) => {
 
 });
 
-//ROTA PARA CADASTRA A ENTREGA DA CHAVE
-app.post('/pag_entrega', (req, res) => {
-    const { setor, responsavel, horario, operacao } = req.body;
-
-    const query = 'INSERT INTO registros (setor, responsavel, horario, operacao) VALUES (?, ?, ?, ?)';
-    db.query(query, [setor, responsavel, horario, operacao], (err, results) => {
-        if (err) {
-            console.error('Erro ao registrar dados:', err);
-            res.status(500).send('Erro ao registrar dados.');
-        } else {
-            res.status(200).send('Registro criado com sucesso');
-        }
+//ROTA PARA PÁGINA DE ENTREGA DA CHAVE
+app.post('pag_entrega', (req, res) => {
+    const { responsavel, setor, dataHora } = req.body;
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [responsavel, setor, dataHora], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Erro ao registrar' });
+      }
+      res.json({ message: 'Entrega registrada com sucesso!' });
     });
-});
-
-//ROTA PARA DEVOLUÇÃO DAS CHAVES
-app.post('/pag_devolucao', (req, res) => {
-    const { setor, responsavel, horario, operacao } = req.body;
-
-    const query = 'INSERT INTO registros (setor, responsavel, horario, operacao) VALUES (?, ?, ?, ?)';
-    db.query(query, [setor, responsavel, horario, operacao], (err, results) => {
-        if (err) {
-            console.error('Erro ao registrar dados:', err);
-            res.status(500).send('Erro ao registrar dados.');
-        } else {
-            res.status(200).send('Registro criado com sucesso');
-        }
-    });
-});
+  });
+//ROTA PARA A PÁGINA DE DEVOLUÇÃO DAS CHAVES
 
 // ROTA PARA PÁGINA PRINCIAL
 app.post('/pag_principal', (req, res) => {

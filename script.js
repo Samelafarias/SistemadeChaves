@@ -65,178 +65,35 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    //SCRIPT DA PÁGINA DE ENTREGA DE CHAVES
-   /* function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }*/
-
-    function entregaDeChaves() {
-    document.addEventListener('DOMContentLoaded', () => {
-        carregarOpcoes();
-        
-        // Adiciona o evento apenas à classe específica, evitando conflitos
-        const registrarButton = document.querySelector('.registrar-entr-dev');
-        if (registrarButton) {
-            registrarButton.addEventListener('click', registrarDados);
-        }
-    });
-
-    // Função para registrar os dados
-    async function registrarDados() {
-        const setor = document.getElementById('setorPagPrinc')?.value;
-        const responsavel = document.getElementById('respPagPrinc')?.value;
-        const horario = new Date().toLocaleTimeString();
-
-        if (!setor || !responsavel) {
-            alert("Por favor, preencha todos os campos.");
-            return;
-        }
-
-        const dados = {
-            setor,
-            responsavel,
-            horario,
-            operacao: 'ENTREGA' 
-        };
-
-        try {
-            const response = await fetch('http://sistema-de-chaves.onrender.com/pag_entrega', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dados)
-            });
-
-            if (response.ok) {
-                alert("Dados registrados com sucesso!");
-            } else {
-                alert("Erro ao registrar dados.");
-            }
-        } catch (error) {
-            console.error('Erro ao registrar dados:', error);
-            alert('Erro ao registrar dados.');
-        }
-    }
-
-    // Função para carregar opções de setores e responsáveis
-    async function carregarOpcoes() {
-        try {
-            const [setores, responsaveis] = await Promise.all([
-                fetch('https://sistema-de-chaves.onrender.com/getSetores').then(res => res.json()),
-                fetch('https://sistema-de-chaves.onrender.com/getResponsaveis').then(res => res.json())
-            ]);
-
-            preencherSelect('setorPagPrinc', setores, 'nome');
-            preencherSelect('respPagPrinc', responsaveis, 'nome');
-
-        } catch (error) {
-            console.error('Erro ao carregar opções:', error);
-        }
-    }
-
-    // Função auxiliar para preencher selects genéricos
-    function preencherSelect(elementId, dados, campoTexto) {
-        const selectElement = document.getElementById(elementId);
-        if (selectElement) {
-            selectElement.innerHTML = '';  // Limpa o conteúdo atual
-            dados.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item[campoTexto];
-                option.textContent = item[campoTexto];
-                selectElement.appendChild(option);
-            });
-        }
-    }
-}
+    //SRIPT DA PÁGINA DE ENTREGA DE CHAVES
+    document.getElementById('registrar_dados').addEventListener('click', () => {
+        const responsavel = document.getElementById('respPagEntrega').value;
+        const setor = document.getElementById('setorPagEntrega').value;
+        const dataHora = new Date().toISOString();
     
-    //SCRIPT DA PÁGINA DE DEVOLUÇÃO DAS CHAVES
-    //SCRIPT DA PÁGINA DE ENTREGA DE CHAVES
-   /* function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }*/
-
-        function devolucaoDeChaves() {
-            document.addEventListener('DOMContentLoaded', () => {
-                carregarOpcoes();
-                
-                // Adiciona o evento apenas à classe específica, evitando conflitos
-                const registrarButton = document.querySelector('.registrar-entr-dev');
-                if (registrarButton) {
-                    registrarButton.addEventListener('click', registrarDados);
-                }
-            });
-        
-            // Função para registrar os dados
-            async function registrarDados() {
-                const setor = document.getElementById('setorPagPrinc')?.value;
-                const responsavel = document.getElementById('respPagPrinc')?.value;
-                const horario = new Date().toLocaleTimeString();
-        
-                if (!setor || !responsavel) {
-                    alert("Por favor, preencha todos os campos.");
-                    return;
-                }
-        
-                const dados = {
-                    setor,
-                    responsavel,
-                    horario,
-                    operacao: 'DEVOLUCAO' 
-                };
-        
-                try {
-                    const response = await fetch('http://sistema-de-chaves.onrender.com/pag_devolucao', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dados)
-                    });
-        
-                    if (response.ok) {
-                        alert("Dados registrados com sucesso!");
-                    } else {
-                        alert("Erro ao registrar dados.");
-                    }
-                } catch (error) {
-                    console.error('Erro ao registrar dados:', error);
-                    alert('Erro ao registrar dados.');
-                }
-            }
-        
-            // Função para carregar opções de setores e responsáveis
-            async function carregarOpcoes() {
-                try {
-                    const [setores, responsaveis] = await Promise.all([
-                        fetch('https://sistema-de-chaves.onrender.com/getSetores').then(res => res.json()),
-                        fetch('https://sistema-de-chaves.onrender.com/getResponsaveis').then(res => res.json())
-                    ]);
-        
-                    preencherSelect('setorPagPrinc', setores, 'nome');
-                    preencherSelect('respPagPrinc', responsaveis, 'nome');
-        
-                } catch (error) {
-                    console.error('Erro ao carregar opções:', error);
-                }
-            }
-        
-            // Função auxiliar para preencher selects genéricos
-            function preencherSelect(elementId, dados, campoTexto) {
-                const selectElement = document.getElementById(elementId);
-                if (selectElement) {
-                    selectElement.innerHTML = '';  // Limpa o conteúdo atual
-                    dados.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = item[campoTexto];
-                        option.textContent = item[campoTexto];
-                        selectElement.appendChild(option);
-                    });
-                }
-            }
+        if (responsavel && setor) {
+          fetch('https://sistema-de-chaves.onrender.com/pag_entrega', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ responsavel, setor, dataHora })
+          })
+          .then(response => response.json())
+          .then(result => {
+            alert(result.message);
+            // Atualizar a página de registros
+            location.reload();
+          });
+        } else {
+          alert("Selecione tanto o responsável quanto o setor!");
         }
+      });
+    });
+    
+    // Função para abrir dropdowns
+    function toggleDropdown(dropdownId) {
+      document.getElementById(dropdownId).classList.toggle('show');
+    }
+    //SCRIPT DA PÁGINA DE DEVOLUÇÃO DE CHAVES
 
     //SCRIPT DA PÁGINA DE CADASTRO DE ADMS
     // Função para manipulação do formulário de cadastro de administradores
@@ -443,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //SCRIPT DA PÁGINA PRINCIPAL
-    // Função para manipulação dos botões da página principal
+   /* // Função para manipulação dos botões da página principal
 function setupPaginaPrincipal() {
     const entregaButton = document.getElementById('entrega');
     const devolucaoButton = document.getElementById('devolucao');
@@ -513,7 +370,7 @@ function setupPaginaPrincipal() {
         }
     }
 }
-
+*/
 // FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
 async function carregarOpcoes() {
     try {
@@ -587,7 +444,6 @@ async function carregarOpcoes() {
     entregaDeChaves();
     devolucaoDeChaves();
 
-});
 
 // FUNÇÕES PARA ABRIR A PÁGINA DE CHAVES E DE REGISTROS
 function abrir_pag_chave() {
