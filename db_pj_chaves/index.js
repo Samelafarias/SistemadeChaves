@@ -133,21 +133,8 @@ app.post('/pag_cadastro_resp', (req, res) => {
 
 });
 
-//ROTA PARA PÁGINA DE ENTREGA DA CHAVE
-app.post('pag_entrega', (req, res) => {
-    const { responsavel, setor, dataHora } = req.body;
-    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [responsavel, setor, dataHora], (err, result) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Erro ao registrar' });
-      }
-      res.json({ message: 'Entrega registrada com sucesso!' });
-    });
-  });
-//ROTA PARA A PÁGINA DE DEVOLUÇÃO DAS CHAVES
 
-/*// ROTA PARA PÁGINA PRINCIAL
+// ROTA PARA PÁGINA PRINCIAL
 app.post('/pag_principal', (req, res) => {
     const { date, sector, operation, responsible, time } = req.body;
 
@@ -155,7 +142,7 @@ app.post('/pag_principal', (req, res) => {
     db.query(query, [date, sector, operation, responsible, time], (err, results) => {
         logQueryResults(err, results, res, 'Registro criado com sucesso');
     });
-});*/
+});
 
 // ROTA PARA OBTER SETORES
 app.get('/getSetores', (req, res) => {
@@ -202,6 +189,29 @@ app.get('/pag_chaves', (req, res) => {
         });
     });
 });
+
+//ROTA DA PÁGINA DE ENTREGA
+// Rota para registrar a entrega/devolução
+app.post('/pag_entrega', (req, res) => {
+    const { responsavel, setor, tipo } = req.body;
+    const dataHora = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [date, sector, operation, responsible, time], (err, results) => {
+        logQueryResults(err, results, res, 'Registro criado com sucesso');
+    });
+  });
+
+//ROTA DA PÁGINA DE DEVOLUÇÃO
+app.post('/pag_devolucao', (req, res) => {
+    const { responsavel, setor, tipo } = req.body;
+    const dataHora = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [date, sector, operation, responsible, time], (err, results) => {
+        logQueryResults(err, results, res, 'Registro criado com sucesso');
+    });
+  });
 
 // SERVE ARQUIVOS ESTÁTICOS
 app.use(express.static('public'));

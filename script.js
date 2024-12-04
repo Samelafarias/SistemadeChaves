@@ -65,35 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    //SRIPT DA PÁGINA DE ENTREGA DE CHAVES
-    document.getElementById('registrar_dados').addEventListener('click', () => {
-        const responsavel = document.getElementById('respPagEntrega').value;
-        const setor = document.getElementById('setorPagEntrega').value;
-        const dataHora = new Date().toISOString();
     
-        if (responsavel && setor) {
-          fetch('https://sistema-de-chaves.onrender.com/pag_entrega', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ responsavel, setor, dataHora })
-          })
-          .then(response => response.json())
-          .then(result => {
-            alert(result.message);
-            // Atualizar a página de registros
-            location.reload();
-          });
-        } else {
-          alert("Selecione tanto o responsável quanto o setor!");
-        }
-      });
-    });
-    
-    // Função para abrir dropdowns
-    function toggleDropdown(dropdownId) {
-      document.getElementById(dropdownId).classList.toggle('show');
-    }
-    //SCRIPT DA PÁGINA DE DEVOLUÇÃO DE CHAVES
 
     //SCRIPT DA PÁGINA DE CADASTRO DE ADMS
     // Função para manipulação do formulário de cadastro de administradores
@@ -300,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //SCRIPT DA PÁGINA PRINCIPAL
-   /* // Função para manipulação dos botões da página principal
+   // Função para manipulação dos botões da página principal
 function setupPaginaPrincipal() {
     const entregaButton = document.getElementById('entrega');
     const devolucaoButton = document.getElementById('devolucao');
@@ -370,7 +342,7 @@ function setupPaginaPrincipal() {
         }
     }
 }
-*/
+
 // FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
 async function carregarOpcoes() {
     try {
@@ -444,6 +416,7 @@ async function carregarOpcoes() {
     entregaDeChaves();
     devolucaoDeChaves();
 
+});
 
 // FUNÇÕES PARA ABRIR A PÁGINA DE CHAVES E DE REGISTROS
 function abrir_pag_chave() {
