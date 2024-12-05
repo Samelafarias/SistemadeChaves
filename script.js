@@ -413,8 +413,6 @@ async function carregarOpcoes() {
     setupPaginaPrincipal();
     setupChaves();
     carregarOpcoes();
-    entregaDeChaves();
-    devolucaoDeChaves();
 
 });
 
