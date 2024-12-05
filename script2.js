@@ -5,8 +5,8 @@ window.onload = async function carregarOpcoes() {
     // Carregar setores
     const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
     const setores = await responseSetores.json();
-    preencherSelect(setores, 'setorPagEntrega'); // Para a página de entrega
-    preencherSelect(setores, 'setorPagDevolucao'); // Para a página de devolução
+    preencherSelect(setores, 'setorPagEntrega'); 
+    preencherSelect(setores, 'setorPagDevolucao'); 
 
     // Carregar responsáveis
     const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
@@ -22,13 +22,15 @@ window.onload = async function carregarOpcoes() {
 // Função para preencher os selects
 function preencherSelect(dados, selectId) {
   const selectElement = document.getElementById(selectId);
-  if (selectElement) {
+  if (selectElement && Array.isArray(dados)) {
     dados.forEach(item => {
       const option = document.createElement('option');
       option.value = item.nome || item.setor;
       option.textContent = item.nome ? `${item.nome} - ${item.profissao}` : item.setor;
       selectElement.appendChild(option);
     });
+  } else {
+    console.warn(`Elemento com ID "${selectId}" não encontrado ou dados inválidos.`);
   }
 }
 
