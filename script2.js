@@ -46,7 +46,8 @@ async function registrarDados() {
         tipo: tipoRegistro,
         responsavel,
         setor,
-        dataHora
+        data,
+        time
     };
 
     try {
