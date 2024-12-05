@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', function () {
 // Carrega dados dos selects ao iniciar a página
 window.onload = async function carregarOpcoes() {
   try {
@@ -34,18 +35,22 @@ function preencherSelect(dados, selectId) {
 // Registrar dados ao clicar no botão
 document.querySelectorAll('.registrar-entr-dev').forEach(button => {
   button.addEventListener('click', async () => {
+    // Determina se a operação é entrega ou devolução com base no título da página
     const isEntrega = document.querySelector('h2').textContent.includes('Entrega');
     const responsavelId = isEntrega ? 'respPagEntrega' : 'respPagDevolucao';
     const setorId = isEntrega ? 'setorPagEntrega' : 'setorPagDevolucao';
 
+    // Obtém valores selecionados
     const responsavel = document.getElementById(responsavelId).value;
     const setor = document.getElementById(setorId).value;
 
+    // Validação dos dados
     if (!responsavel || !setor) {
       alert('Por favor, selecione todas as opções.');
       return;
     }
 
+    // Cria o objeto de registro
     const dataAtual = new Date().toISOString();
     const tipoOperacao = isEntrega ? 'Entrega' : 'Devolução';
 
@@ -56,24 +61,14 @@ document.querySelectorAll('.registrar-entr-dev').forEach(button => {
       dataHora: dataAtual
     };
 
-    try {
-      const response = await fetch('https://sistema-de-chaves.onrender.com/pag_entrega', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(registro)
-      });
+    // Define a URL correta com base no tipo de operação
+    const url = isEntrega 
+      ? 'https://sistema-de-chaves.onrender.com/pag_entrega' 
+      : 'https://sistema-de-chaves.onrender.com/pag_devolucao';
 
-      if (!response.ok) {
-        throw new Error('Erro ao registrar: ' + response.statusText);
-      }
-
-      alert(`${tipoOperacao} registrada com sucesso!`);
-    } catch (error) {
-      console.error('Erro:', error);
-      alert('Ocorreu um erro ao salvar o registro.');
-    }
+    // Envia o registro para a rota correta
     try {
-      const response = await fetch('https://sistema-de-chaves.onrender.com/pag_devolucao', {
+      const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(registro)
@@ -89,4 +84,5 @@ document.querySelectorAll('.registrar-entr-dev').forEach(button => {
       alert('Ocorreu um erro ao salvar o registro.');
     }
   });
+});
 });
