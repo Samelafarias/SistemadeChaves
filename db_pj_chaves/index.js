@@ -192,7 +192,7 @@ app.get('/pag_chaves', (req, res) => {
 
 
 //ROTA DA  NOVA PÁGINA DE REGISTROS
-app.post('/PAG_registrar', (req, res) => {
+app.post('/pag_registrar', (req, res) => {
     const { tipo, responsavel, setor, dataHora } = req.body;
 
     const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
