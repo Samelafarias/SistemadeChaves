@@ -1,5 +1,5 @@
-let tipoRegistro = ''; // Variável global para armazenar o tipo de operação
-
+/*
+et tipoRegistro = '';
 function selecionarTipo(tipo) {
     tipoRegistro = tipo;
     document.getElementById('titulo-registro').innerText = tipo === 'entrega' ? 'Entrega de Chaves' : 'Devolução de Chaves';
@@ -66,3 +66,4 @@ async function registrarDados() {
         console.error('Erro ao registrar:', error);
     }
 }
+*/
