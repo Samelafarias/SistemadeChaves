@@ -8,9 +8,9 @@ function selecionarTipo(tipo) {
 
 async function carregarOpcoes() {
     try {
-        const responseSetores = await fetch('/getSetores');
+        const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
         const setores = await responseSetores.json();
-        const responseResponsaveis = await fetch('/getResponsaveis');
+        const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
         const responsaveis = await responseResponsaveis.json();
 
         // Preenche os selects
