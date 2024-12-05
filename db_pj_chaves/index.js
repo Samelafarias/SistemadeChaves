@@ -190,54 +190,20 @@ app.get('/pag_chaves', (req, res) => {
     });
 });
 
-//ROTA DA PÁGINA DE ENTREGA 
-app.post('/pag_entrega', (req, res) => {
-    const { responsavel, setor, operacao, time} = req.body;
-  
-    // Verificar se todos os campos foram fornecidos
-    if (!responsavel || !setor || !operacao || !time) {
-      return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
-    }
-  
-    // Query SQL para inserir no banco de dados
-    const query = `
-      const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    `;
-  
-    // Executa a query
-    db.query(query, [responsavel, setor, operacao, time], (err, result) => {
-      if (err) {
-        console.error('Erro ao registrar no banco de dados:', err);
-        return res.status(500).json({ error: 'Erro ao registrar no banco de dados.' });
-      }
-      res.status(200).json({ message: 'Registro salvo com sucesso!' });
-    });
-  });
 
-  //ROTA DA PÁGINA DE DEVOLUÇÃO
-app.post('/pag_devolucao', (req, res) => {
-    const { responsavel, setor, operacao, time} = req.body;
-  
-    // Verificar se todos os campos foram fornecidos
-    if (!responsavel || !setor || !operacao || !time) {
-      return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
-    }
-  
-    // Query SQL para inserir no banco de dados
-    const query = `
-      const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    `;
-  
-    // Executa a query
-    db.query(query, [responsavel, setor, operacao, time], (err, result) => {
-      if (err) {
-        console.error('Erro ao registrar no banco de dados:', err);
-        return res.status(500).json({ error: 'Erro ao registrar no banco de dados.' });
-      }
-      res.status(200).json({ message: 'Registro salvo com sucesso!' });
-    });
-  });
+//ROTA DA  NOVA PÁGINA DE REGISTROS
+app.post('/PAG_registrar', (req, res) => {
+    const { tipo, responsavel, setor, dataHora } = req.body;
 
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [date, sector, operation, responsible, time], (err, result) => {
+        if (err) {
+            console.error('Erro ao registrar dados:', err);
+            return res.status(500).send('Erro ao registrar dados');
+        }
+        res.status(200).send('Dados registrados com sucesso');
+    });
+});
 
 
 // SERVE ARQUIVOS ESTÁTICOS

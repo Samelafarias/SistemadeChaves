@@ -404,6 +404,7 @@ async function carregarOpcoes() {
 }
 
 
+
     // INICIALIZA TODOS OS SCRIPTS
     setupLoginForm();
     setupCadastroChaveForm() ;
