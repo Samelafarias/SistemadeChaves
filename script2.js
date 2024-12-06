@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Expondo funções globais para teste
     window.selecionarTipo = selecionarTipo;
+    window.carregarOpcoes = carregarOpcoes;
+    window.registrarDados = registrarDados;
 });
