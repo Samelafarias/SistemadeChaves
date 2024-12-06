@@ -43,7 +43,7 @@ async function registrarDados() {
     }
 
     const dadosRegistro = {
-        tipo: operacao,
+        tipo: tipoRegistro,
         responsavel,
         setor,
         dataHora

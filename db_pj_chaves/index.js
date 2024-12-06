@@ -193,10 +193,14 @@ app.get('/pag_chaves', (req, res) => {
 
 //ROTA DA  NOVA PÁGINA DE REGISTROS
 app.post('/pag_registrar', (req, res) => {
-    const { operacao, responsavel, setor, dataHora } = req.body;
+    const { tipo, responsavel, setor, dataHora } = req.body;
 
-    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [setor, operacao, responsavel, dataHora], (err, result) => {
+    if (!tipo || !responsavel || !setor || !dataHora) {
+        return res.status(400).send('Todos os campos são obrigatórios.');
+    }
+
+    const query = 'INSERT INTO registros (dataHora, setor, tipo, responsavel) VALUES (?, ?, ?, ?)';
+    db.query(query, [dataHora, setor, tipo, responsavel], (err, result) => {
         if (err) {
             console.error('Erro ao registrar dados:', err);
             return res.status(500).send('Erro ao registrar dados');
@@ -204,6 +208,7 @@ app.post('/pag_registrar', (req, res) => {
         res.status(200).send('Dados registrados com sucesso');
     });
 });
+
 
 
 // SERVE ARQUIVOS ESTÁTICOS
