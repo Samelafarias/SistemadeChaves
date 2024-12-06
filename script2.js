@@ -1,5 +1,5 @@
-/*
-et tipoRegistro = '';
+
+let tipoRegistro = '';
 function selecionarTipo(tipo) {
     tipoRegistro = tipo;
     document.getElementById('titulo-registro').innerText = tipo === 'entrega' ? 'Entrega de Chaves' : 'Devolução de Chaves';
@@ -43,11 +43,10 @@ async function registrarDados() {
     }
 
     const dadosRegistro = {
-        tipo: tipoRegistro,
+        tipo: operacao,
         responsavel,
         setor,
-        data,
-        time
+        dataHora
     };
 
     try {
@@ -66,4 +65,3 @@ async function registrarDados() {
         console.error('Erro ao registrar:', error);
     }
 }
-*/

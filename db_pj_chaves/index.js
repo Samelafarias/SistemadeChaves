@@ -193,10 +193,10 @@ app.get('/pag_chaves', (req, res) => {
 
 //ROTA DA  NOVA PÁGINA DE REGISTROS
 app.post('/pag_registrar', (req, res) => {
-    const { tipo, responsavel, setor, dataHora } = req.body;
+    const { operacao, responsavel, setor, dataHora } = req.body;
 
     const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [date, sector, operation, responsible, time], (err, result) => {
+    db.query(query, [setor, operacao, responsavel, dataHora], (err, result) => {
         if (err) {
             console.error('Erro ao registrar dados:', err);
             return res.status(500).send('Erro ao registrar dados');
