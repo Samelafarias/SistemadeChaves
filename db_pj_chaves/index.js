@@ -195,19 +195,27 @@ app.get('/pag_chaves', (req, res) => {
 app.post('/pag_registrar', (req, res) => {
     const { tipo, responsavel, setor, dataHora } = req.body;
 
+    // Validação dos campos recebidos
     if (!tipo || !responsavel || !setor || !dataHora) {
+        console.error('Campos ausentes ou inválidos:', req.body);
         return res.status(400).send('Todos os campos são obrigatórios.');
     }
 
-    const query = 'INSERT INTO registros (dataHora, setor, tipo, responsavel) VALUES (?, ?, ?, ?)';
-    db.query(query, [dataHora, setor, tipo, responsavel], (err, result) => {
+    // Separar data e hora
+    const [date, time] = dataHora.split('T');
+    const formattedTime = time.split('.')[0]; // Remove milissegundos
+
+    // Query SQL com os nomes corretos das colunas
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [date, setor, tipo, responsavel, formattedTime], (err, result) => {
         if (err) {
-            console.error('Erro ao registrar dados:', err);
-            return res.status(500).send('Erro ao registrar dados');
+            console.error('Erro ao executar a query:', err);
+            return res.status(500).send('Erro ao registrar dados no banco.');
         }
-        res.status(200).send('Dados registrados com sucesso');
+        res.status(200).send('Dados registrados com sucesso.');
     });
 });
+
 
 
 
