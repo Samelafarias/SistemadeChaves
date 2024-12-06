@@ -211,6 +211,7 @@ app.post('/pag_registrar', (req, res) => {
 
 
 
+
 // SERVE ARQUIVOS ESTÁTICOS
 app.use(express.static('public'));
 
