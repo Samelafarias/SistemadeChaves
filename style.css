@@ -18,8 +18,8 @@ body.pag_login{
 }
 
 .seta{
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     margin: 1%;
 }
 /*Estilo da seção de login*/
@@ -365,9 +365,10 @@ aside.cadast-adm{
 /*Estilo para o seletor de ano*/
 #ano_registro{
     width: 180px;
-    height: 30px;
+    height: 36px;
     border-radius: 5px;
     text-align: right;
+    font-size: 14px;
 }
 
 /*Estilo para a tabela de registros*/
@@ -378,14 +379,14 @@ aside.cadast-adm{
     border-collapse: collapse;
     margin-left: 15%;
     margin-right: 15%;
-    height: 8px;
+    height: 10px;
 }
 
 /*Estilo para o cabeçalho da tabela*/
 #cabecalho_table{
     background-color: #00350A;
     color: white;
-    height: 8px;
+    height: 30px;
 }
 
 /*Estilo para os títulos das colunas da tabela*/
@@ -393,7 +394,7 @@ aside.cadast-adm{
     font-weight: 500;
     font-size: 1rem;
     text-align: center;
-    font-weight: 500;
+    font-weight: 550;
 }
 
 /*Estilo para as linhas e células da tabela*/
@@ -411,16 +412,17 @@ tr, td{
 #filterbnt{
     background-color: #002908;
     color: white;
-    font-weight:normal ;
-    font-size: 14px;
-    width: 95px;
-    height: 32px;
+    font-weight:500 ;
+    font-size: 16px;
+    width: 110px;
+    height: 36px;
     border-radius: 15px;
     margin-left: 8px;
 }
 
 #dados_line_sup_pag_registros{
-    margin-left: 12%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 /*CSS DA PÁGINA DE CADASTRO DE RESPONSAVEIS*/
@@ -537,10 +539,10 @@ aside.cadast-resp{
 /*Estilo do compo de seleção do mês*/
 #mes_pag_princ{
     width: 180px;
-    height: 30px;
+    height: 36px;
     border-radius: 5px;
     text-align: right;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 
@@ -556,7 +558,7 @@ aside.cadast-resp{
 /*Estilo do campo de seleção de setor*/
 #setorPagPrinc{
     width: 220px;
-    height: 35px;
+    height: 36px;
     border-radius: 5px;
     margin-left: 0px;
     text-align: right;
@@ -566,7 +568,7 @@ aside.cadast-resp{
 /*Estilo do campo da entrada do responsável*/
 #respPagPrinc{
     width: 225px;
-    height: 35px;
+    height: 36px;
     border-radius: 5px;
     text-align: right;
     font-size: 14px;
@@ -750,7 +752,6 @@ aside.cadast-resp{
  /* Corpo da página */
  #body-pag-registrar {
     font-family: Arial, sans-serif;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -772,6 +773,7 @@ aside.cadast-resp{
     width: 40px;
     height: 40px;
     margin-bottom: 20px;
+    
 }
 
 /* Título da página */
@@ -779,6 +781,10 @@ aside.cadast-resp{
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Menu de registrar */
@@ -797,13 +803,21 @@ aside.cadast-resp{
     font-size: 18px;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
 }
-
 
 .menu-pag-registrar button:hover {
-    background-color: #00350A;
+    background-color: white;
+    color: #00350A;
 }
+
+.menu-pag-registrar button.selecionado {
+    background-color: white;
+    color: #00350A;
+    font-weight: bold;
+    border: 2px solid #00350A;
+}
+
 
 /* Contêiner do formulário */
 #form-container {

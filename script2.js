@@ -11,8 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Atualizar título e exibir o formulário
         titulo.innerText = tipo === 'entrega' ? 'Entrega de Chaves' : 'Devolução de Chaves';
         formContainer.style.display = 'block';
+
+        // Alterar a aparência dos botões
+        const botoes = document.querySelectorAll('.menu-pag-registrar button');
+        botoes.forEach(botao => botao.classList.remove('selecionado'));
+        const botaoSelecionado = document.querySelector(`button[onclick="selecionarTipo('${tipo}')"]`);
+        if (botaoSelecionado) {
+            botaoSelecionado.classList.add('selecionado');
+        }
+
+        // Carregar opções para os selects
         carregarOpcoes();
     }
 
