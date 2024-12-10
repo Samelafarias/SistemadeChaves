@@ -2,8 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
  
     // Configuração de cabeçalhos para lidar com CORS
     const headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Content-Type': 'application/json'
     };
 
     //SCRIPT DA PÁGINA DE LOGIN
@@ -21,27 +20,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     headers,
                     body: JSON.stringify({ username, password })
                 })
-    .then(response => {
-        console.log('Código de Status:', response.status);
-        return response.text(); // Converte a resposta para texto
-    })
-    .then(text => {
-        console.log('Resposta do Servidor:', text); // Exibe o texto recebido
-        // Tente analisar o JSON aqui se a resposta estiver correta
-        const data = JSON.parse(text); // Use JSON.parse apenas se o texto for um JSON válido
-        if (data.message === 'Login bem-sucedido') {
-            window.location.href = '/pag_menu.html';
-        } else {
-            alert('Usuário ou senha inválidos');
+                    .then(response => response.text())
+                    .then(text => {
+                        try {
+                            const data = JSON.parse(text);
+                            if (data.message === 'Login bem-sucedido') {
+                                window.location.href = '/pag_menu.html';
+                            } else {
+                                alert('Usuário ou senha inválidos');
+                            }
+                        } catch (error) {
+                            console.error('Erro ao interpretar resposta do servidor:', error, 'Resposta:', text);
+                            alert('Erro inesperado. Tente novamente mais tarde.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro na requisição:', error);
+                        alert('Erro na conexão. Tente novamente mais tarde.');
+                    });
+            });
         }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    });
-
-        });
     }
-}
 
     //SCRIPT DA PÁGINA DE CADASTRO DE NOVAS CHAVES
     function setupCadastroChaveForm() {
@@ -344,62 +343,44 @@ function setupPaginaPrincipal() {
 }
 
 // FUNÇÃO PARA CARRREGAR OS RESPONSAVEIS E OS SETORES NA PÁGINA PRINCIPAL
+// Carregar opções de setores e responsáveis
 async function carregarOpcoes() {
     try {
-        const responseSetores = await fetch('https://sistema-de-chaves.onrender.com/getSetores');
-        
-        // Verifique se a resposta foi bem-sucedida
-        if (!responseSetores.ok) {
-            throw new Error('Erro ao buscar setores: ' + responseSetores.statusText);
+        const [responseSetores, responseResponsaveis] = await Promise.all([
+            fetch('https://sistema-de-chaves.onrender.com/getSetores'),
+            fetch('https://sistema-de-chaves.onrender.com/getResponsaveis')
+        ]);
+
+        if (!responseSetores.ok || !responseResponsaveis.ok) {
+            throw new Error('Erro ao buscar dados do servidor.');
         }
-        
+
         const setores = await responseSetores.json();
-        console.log('setores:', setores); // Verifique o que está sendo retornado
-
-        const responseResponsaveis = await fetch('https://sistema-de-chaves.onrender.com/getResponsaveis');
-        
-        // Verifique se a resposta foi bem-sucedida
-        if (!responseResponsaveis.ok) {
-            throw new Error('Erro ao buscar responsáveis: ' + responseResponsaveis.statusText);
-        }
-        
         const responsaveis = await responseResponsaveis.json();
-        console.log('responsaveis:', responsaveis); // Verifique o que está sendo retornado
 
-        // Seleciona os elementos no DOM
         const setorSelect = document.getElementById('setorPagPrinc');
         const responsavelSelect = document.getElementById('respPagPrinc');
 
-        // Verifica se os elementos existem antes de manipular
         if (setorSelect) {
-            // Verifica se `setores` é um array antes de usar `forEach`
-            const setoresArray = Array.isArray(setores) ? setores : setores.data || [];
-            
-            setoresArray.forEach(setor => {
+            setores.forEach(setor => {
                 const option = document.createElement('option');
                 option.value = setor.setor;
                 option.textContent = setor.setor;
                 setorSelect.appendChild(option);
             });
-        } else {
-            console.warn('Elemento com ID "setorPagPrinc" não encontrado no DOM.');
         }
 
         if (responsavelSelect) {
-            // Garante que `responsaveis` é um array antes de usar `forEach`
-            const responsaveisArray = Array.isArray(responsaveis) ? responsaveis : responsaveis.data || [];
-            
-            responsaveisArray.forEach(responsavel => {
+            responsaveis.forEach(responsavel => {
                 const option = document.createElement('option');
                 option.value = responsavel.nome;
                 option.textContent = `${responsavel.nome} - ${responsavel.profissao}`;
                 responsavelSelect.appendChild(option);
             });
-        } else {
-            console.warn('Elemento com ID "respPagPrinc" não encontrado no DOM.');
         }
     } catch (error) {
         console.error('Erro ao carregar opções:', error);
+        alert('Erro ao carregar opções. Verifique sua conexão e tente novamente.');
     }
 }
 
