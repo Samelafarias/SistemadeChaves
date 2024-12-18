@@ -64,28 +64,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function obterDataHoraLocal() {
+        const agora = new Date();
+        
+        // Formatar a data e hora no fuso horário local
+        const dataHoraLocal = agora.toLocaleString('en-CA', { 
+            timeZone: 'America/Sao_Paulo', // Substitua pelo fuso horário correto, se necessário
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false 
+        });
+        
+        // Ajustar formato para "YYYY-MM-DD HH:MM:SS"
+        return dataHoraLocal.replace(',', '').replace('T', ' ');
+    }
+
     function registrarDados() {
         const responsavel = document.getElementById('respSelect').value;
         const setor = document.getElementById('setorSelect').value;
-    
+
         if (!responsavel || !setor) {
             alert('Preencha todos os campos!');
             return;
         }
-    
-        // Obter a data e hora atuais no fuso horário local
-        const agora = new Date();
-        const offset = agora.getTimezoneOffset();
-        const dataHoraLocal = new Date(agora.getTime() - (offset * 60 * 1000));
-        const dataHoraISO = dataHoraLocal.toISOString().slice(0, 19).replace('T', ' ');
-    
+
+        const dataHora = obterDataHoraLocal();
+
         const dadosRegistro = {
             tipo: tipoRegistro,
             responsavel,
             setor,
-            dataHora: dataHoraISO,
+            dataHora,
         };
-    
+
         fetch('https://sistema-de-chaves.onrender.com/pag_registrar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -104,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Erro ao registrar:', error);
         });
     }
-    
 
     window.selecionarTipo = selecionarTipo;
     window.carregarOpcoes = carregarOpcoes;
