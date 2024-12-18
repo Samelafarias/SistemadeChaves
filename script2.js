@@ -64,40 +64,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function registrarDados() {
+    function registrarDados() {
         const responsavel = document.getElementById('respSelect').value;
         const setor = document.getElementById('setorSelect').value;
-        const dataHora = new Date().toISOString();
-
+    
         if (!responsavel || !setor) {
             alert('Preencha todos os campos!');
             return;
         }
-
+    
+        // Obter a data e hora atuais no fuso horário local
+        const agora = new Date();
+        const offset = agora.getTimezoneOffset();
+        const dataHoraLocal = new Date(agora.getTime() - (offset * 60 * 1000));
+        const dataHoraISO = dataHoraLocal.toISOString().slice(0, 19).replace('T', ' ');
+    
         const dadosRegistro = {
             tipo: tipoRegistro,
             responsavel,
             setor,
-            dataHora,
+            dataHora: dataHoraISO,
         };
-
-        try {
-            const response = await fetch('https://sistema-de-chaves.onrender.com/pag_registrar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dadosRegistro)
-            });
-
+    
+        fetch('https://sistema-de-chaves.onrender.com/pag_registrar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosRegistro)
+        })
+        .then(response => {
             if (response.ok) {
                 alert('Registro salvo com sucesso!');
             } else {
-                const errorText = await response.text();
-                alert('Erro ao salvar registro: ' + errorText);
+                response.text().then(errorText => {
+                    alert('Erro ao salvar registro: ' + errorText);
+                });
             }
-        } catch (error) {
+        })
+        .catch(error => {
             console.error('Erro ao registrar:', error);
-        }
+        });
     }
+    
 
     window.selecionarTipo = selecionarTipo;
     window.carregarOpcoes = carregarOpcoes;
