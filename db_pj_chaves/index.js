@@ -191,7 +191,7 @@ app.get('/pag_chaves', (req, res) => {
 });
 
 
-//ROTA DA  NOVA PÁGINA DE REGISTROS
+// ROTA DA NOVA PÁGINA DE REGISTROS
 app.post('/pag_registrar', (req, res) => {
     const { tipo, responsavel, setor, dataHora } = req.body;
 
@@ -201,20 +201,31 @@ app.post('/pag_registrar', (req, res) => {
         return res.status(400).send('Todos os campos são obrigatórios.');
     }
 
-    // Separar data e hora
-    const [date, time] = dataHora.split('T');
-    const formattedTime = time.split('.')[0]; // Remove milissegundos
+    try {
+        // Separar data e hora do formato "YYYY-MM-DD HH:MM:SS"
+        const [date, time] = dataHora.split(' ');
 
-    // Query SQL com os nomes corretos das colunas
-    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [date, setor, tipo, responsavel, formattedTime], (err, result) => {
-        if (err) {
-            console.error('Erro ao executar a query:', err);
-            return res.status(500).send('Erro ao registrar dados no banco.');
+        if (!date || !time) {
+            console.error('Formato inválido de data e hora:', dataHora);
+            return res.status(400).send('Formato de data e hora inválido.');
         }
-        res.status(200).send('Dados registrados com sucesso.');
-    });
+
+        // Query SQL com os nomes corretos das colunas
+        const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+        
+        db.query(query, [date, setor, tipo, responsavel, time], (err, result) => {
+            if (err) {
+                console.error('Erro ao executar a query:', err);
+                return res.status(500).send('Erro ao registrar dados no banco.');
+            }
+            res.status(200).send('Dados registrados com sucesso.');
+        });
+    } catch (error) {
+        console.error('Erro ao processar dados:', error);
+        res.status(500).send('Erro interno no servidor.');
+    }
 });
+
 
 
 
