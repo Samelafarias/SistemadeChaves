@@ -66,21 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function obterDataHoraLocal() {
         const agora = new Date();
-        
-        // Formatar a data e hora no fuso horário local
-        const dataHoraLocal = agora.toLocaleString('en-CA', { 
-            timeZone: 'America/Sao_Paulo', // Substitua pelo fuso horário correto, se necessário
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false 
-        });
-        
-        // Ajustar formato para "YYYY-MM-DD HH:MM:SS"
-        return dataHoraLocal.replace(',', '').replace('T', ' ');
+
+        // Ajustar para o fuso horário de Brasília (se necessário)
+        const offsetBrasilia = -3 * 60; // Brasília está em UTC-3
+        const dataHoraLocal = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000 + offsetBrasilia * 60000);
+
+        // Formatar para "YYYY-MM-DD HH:MM:SS"
+        const data = dataHoraLocal.toISOString().split('T')[0];
+        const hora = dataHoraLocal.toISOString().split('T')[1].split('.')[0];
+        return `${data} ${hora}`;
     }
 
     function registrarDados() {
