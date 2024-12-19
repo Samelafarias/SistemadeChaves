@@ -191,42 +191,26 @@ app.get('/pag_chaves', (req, res) => {
 });
 
 
-// ROTA DA NOVA PÁGINA DE REGISTROS
+// ROTA DA PÁGINA DE REGISTRAR
 app.post('/pag_registrar', (req, res) => {
     const { tipo, responsavel, setor, dataHora } = req.body;
 
-    // Validação dos campos recebidos
     if (!tipo || !responsavel || !setor || !dataHora) {
         console.error('Campos ausentes ou inválidos:', req.body);
         return res.status(400).send('Todos os campos são obrigatórios.');
     }
 
-    try {
-        // Separar data e hora do formato "YYYY-MM-DD HH:MM:SS"
-        const [date, time] = dataHora.split(' ');
-
-        if (!date || !time) {
-            console.error('Formato inválido de data e hora:', dataHora);
-            return res.status(400).send('Formato de data e hora inválido.');
+    const [date, time] = dataHora.split(' '); // Dividir data e hora
+    const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
+    
+    db.query(query, [date, setor, tipo, responsavel, time], (err, result) => {
+        if (err) {
+            console.error('Erro ao executar a query:', err);
+            return res.status(500).send('Erro ao registrar dados no banco.');
         }
-
-        // Query SQL com os nomes corretos das colunas
-        const query = 'INSERT INTO registros (date, setor, operacao, responsavel, time) VALUES (?, ?, ?, ?, ?)';
-        
-        db.query(query, [date, setor, tipo, responsavel, time], (err, result) => {
-            if (err) {
-                console.error('Erro ao executar a query:', err);
-                return res.status(500).send('Erro ao registrar dados no banco.');
-            }
-            res.status(200).send('Dados registrados com sucesso.');
-        });
-    } catch (error) {
-        console.error('Erro ao processar dados:', error);
-        res.status(500).send('Erro interno no servidor.');
-    }
+        res.status(200).send('Dados registrados com sucesso.');
+    });
 });
-
-
 
 
 

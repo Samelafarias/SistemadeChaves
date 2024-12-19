@@ -66,16 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function obterDataHoraLocal() {
         const agora = new Date();
-
-        // Ajustar para o fuso horário de Brasília (se necessário)
-        const offsetBrasilia = -3 * 60; // Brasília está em UTC-3
-        const dataHoraLocal = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000 + offsetBrasilia * 60000);
-
-        // Formatar para "YYYY-MM-DD HH:MM:SS"
-        const data = dataHoraLocal.toISOString().split('T')[0];
-        const hora = dataHoraLocal.toISOString().split('T')[1].split('.')[0];
+    
+        // Formatar a data e hora no padrão "YYYY-MM-DD HH:MM:SS"
+        const data = agora.toISOString().split('T')[0]; // Data no formato YYYY-MM-DD
+        const hora = agora.toTimeString().split(' ')[0]; // Hora no formato HH:MM:SS
+    
         return `${data} ${hora}`;
     }
+    
 
     function registrarDados() {
         const responsavel = document.getElementById('respSelect').value;
